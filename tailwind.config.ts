@@ -1,14 +1,15 @@
 import type { Config } from "tailwindcss";
 
-const config = {
-  darkMode: ["class"],
+const config: Config = {
+  darkMode: "class",// Enable dark mode using class-based approach
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}", // Include JS and MDX files
+    "./components/**/*.{js,ts,jsx,tsx,mdx}", 
+    "./app/**/*.{js,ts,jsx,tsx,mdx}", 
+    "./src/**/*.{js,ts,jsx,tsx,mdx}", // Ensure src folder is covered
+    "*.{js,ts,jsx,tsx,mdx}", // Root-level files
   ],
-  prefix: "",
+  prefix: "", // No prefix defined (if needed, add a custom prefix)
   theme: {
     container: {
       center: true,
@@ -75,6 +76,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+};
 
 export default config;
