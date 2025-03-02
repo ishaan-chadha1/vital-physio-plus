@@ -18,7 +18,7 @@ export function Conversation() {
 
       // Start the conversation with your agent
       await conversation.startSession({
-        agentId: 'PAu6d2kYTl7es2kkXYGn'
+        agentId: '9mqGFJXRJVseMGS49u6w'
       });
 
     } catch (error) {
