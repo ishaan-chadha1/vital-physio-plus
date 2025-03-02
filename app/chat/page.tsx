@@ -8,12 +8,13 @@ import { AnimatePresence, motion } from "framer-motion"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 
 type Message = {
-  id: string
-  content: string
-  sender: "user" | "ai"
-  timestamp: Date
-}
-
+    id: string;
+    content: string;
+    sender: "user" | "ai";
+    timestamp: string; // ✅ Ensures consistency with ISO format
+  };
+  
+  
 // Initialize the Google Generative AI model
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY || "")
 const model = genAI.getGenerativeModel({ model: "gemini-pro" })
@@ -145,9 +146,10 @@ export default function ChatInterface() {
                     } shadow-lg`}
                   >
                     <p className="whitespace-pre-wrap break-words">{message.content}</p>
-                    <p className={`text-xs ${theme === "dark" ? "text-gray-400" : "text-gray-600"} mt-1`}>
-                    {new Date(message.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+  {new Date(message.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+</p>
+
                   </div>
                 </motion.div>
               ))}
