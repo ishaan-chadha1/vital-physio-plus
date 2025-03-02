@@ -77,8 +77,8 @@ export default function ChatInterface() {
         id: (Date.now() + 1).toString(),
         content: text,
         sender: "ai",
-        timestamp: new Date(),
-      }
+        timestamp: new Date().toISOString(), // ✅ Fixes TypeScript error
+      };
 
       setMessages((prev) => [...prev, aiMessage])
     } catch (error) {
@@ -87,7 +87,7 @@ export default function ChatInterface() {
         id: (Date.now() + 1).toString(),
         content: "I'm sorry, I encountered an error while processing your request. Please try again.",
         sender: "ai",
-        timestamp: new Date(),
+        timestamp: new Date().toISOString(), 
       }
       setMessages((prev) => [...prev, errorMessage])
     } finally {
