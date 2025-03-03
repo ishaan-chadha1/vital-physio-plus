@@ -16,11 +16,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-<html lang="en" suppressHydrationWarning>
-  <body className={`${inter.className} ${typeof window !== "undefined" ? localStorage.getItem("theme") || "dark" : ""}`}>
-    {children}
-  </body>
-</html>
+    <html lang="en">
+    <body>
+      <div className="flex flex-col gap-20 max-w-5xl p-5">
+        {children}
+      </div>
+    </body>
+  </html>
 
   )
 }
