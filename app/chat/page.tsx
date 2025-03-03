@@ -12,13 +12,11 @@ type Message = {
   timestamp: string;
 };
 
-const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || "";
+const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
-if (!API_KEY) {
-  console.error("❌ Missing API Key. Ensure NEXT_PUBLIC_GEMINI_API_KEY is set.");
-}
-
-const genAI = new GoogleGenerativeAI(API_KEY);
+// ✅ Debug API Key to check if it's being read
+console.log("✅ API KEY LOADED:", API_KEY);
+const genAI = new GoogleGenerativeAI(API_KEY || "")
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 export default function ChatInterface() {
