@@ -1,9 +1,21 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Plus, Globe, Search, MoreHorizontal, Mic, Send, Loader2 } from "lucide-react";
+import {
+  Plus,
+  Globe,
+  Search,
+  MoreHorizontal,
+  Mic,
+  Send,
+  Loader2,
+} from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
+import {
+  GoogleGenerativeAI,
+  HarmCategory,
+  HarmBlockThreshold,
+} from "@google/generative-ai";
 
 type Message = {
   id: string;
@@ -16,12 +28,15 @@ const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
 // ✅ Debug API Key to check if it's being read
 console.log("✅ API KEY LOADED:", API_KEY);
-const genAI = new GoogleGenerativeAI(API_KEY || "")
+const genAI = new GoogleGenerativeAI(API_KEY || "");
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 export default function ChatInterface() {
   const [inputValue, setInputValue] = useState("");
+  const [patientName, setPatientName] = useState<string | null>(null);
+  const [patientPhone, setPatientPhone] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [chatHistory, setChatHistory] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [chatSession, setChatSession] = useState<any>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -235,58 +250,111 @@ export default function ChatInterface() {
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!inputValue.trim()) return;
-  
+
     const userMessage: Message = {
       id: crypto.randomUUID(),
       content: inputValue,
       sender: "user",
       timestamp: new Date().toISOString(),
     };
-  
+
     setMessages((prev) => [...prev, userMessage]);
+    setChatHistory((prev) => {
+      const updatedHistory = [...prev, userMessage];
+      console.log("📝 Updated Chat History (User Message):", updatedHistory);
+      return updatedHistory;
+    });    
     setInputValue("");
     setIsTyping(true);
-  
+
     try {
       if (!chatSession) {
         console.error("❌ Chat session is not initialized!");
         return;
       }
-  
+
       const result = await chatSession.sendMessage(inputValue);
       const responseText = await result.response.text();
-      
+
       console.log("🟢 Raw Response from Gemini:", responseText); // Debugging log
-  
+
       let jsonOutput = null;
-      const jsonMatch = responseText.match(/```jsonc?\n([\s\S]*?)\n```/);
-  
+
+      // Try extracting JSON from a code block in the response
+      const jsonMatch = responseText.match(/```jsonc?\n([\s\S]*?)\n```|```json\n([\s\S]*?)\n```/);
+      
       if (jsonMatch) {
         try {
-          jsonOutput = JSON.parse(jsonMatch[1]);
+          jsonOutput = JSON.parse(jsonMatch[1] || jsonMatch[2]);
         } catch (error) {
-          console.warn("⚠️ Failed to parse JSON:", error);
+          console.warn("⚠️ Failed to parse extracted JSON:", error);
         }
-      } else if (responseText.trim().startsWith("{")) {
-        try {
-          jsonOutput = JSON.parse(responseText);
-        } catch (error) {
-          console.warn("⚠️ Failed to parse JSON (direct fallback):", error);
+      } else {
+        // Try finding the JSON object within the text response
+        const jsonStart = responseText.indexOf("{");
+        const jsonEnd = responseText.lastIndexOf("}");
+      
+        if (jsonStart !== -1 && jsonEnd !== -1) {
+          try {
+            jsonOutput = JSON.parse(responseText.substring(jsonStart, jsonEnd + 1));
+          } catch (error) {
+            console.warn("⚠️ Failed to parse JSON from inline text:", error);
+          }
         }
       }
-  
-      // ✅ Console log extracted JSON
+      
+      // ✅ Log extracted JSON
       console.log("🟢 Extracted JSON Output:", jsonOutput ? JSON.stringify(jsonOutput, null, 2) : "No JSON detected.");
-  
+      
+      if (jsonOutput && typeof jsonOutput === "object") {
+        const demographics = jsonOutput.demographics || {}; // ✅ Extract the demographics section safely
+      
+        // Extract and set the patient name
+        const extractedName = demographics.name || "Not provided";
+        setPatientName(extractedName);
+      
+        // Extract and set the patient phone number
+        let extractedPhone = "Not provided";
+        if (demographics.contactInfo) {
+          const phoneMatch = demographics.contactInfo.match(/\b\d{10,}\b/); // ✅ Extracts only the phone number
+          if (phoneMatch) {
+            extractedPhone = phoneMatch[0];
+          }
+        }
+        setPatientPhone(extractedPhone);
+      
+        // ✅ Log extracted details to verify correctness
+        console.log("🩺 Patient Name:", extractedName);
+        console.log("📞 Patient Phone:", extractedPhone);
+      }
+      
+      // // ✅ Log extracted details AFTER state updates
+      // setTimeout(() => {
+      //   console.log("🩺 Patient Name:", patientName || "Not provided");
+      //   console.log("📞 Patient Phone:", patientPhone || "Not provided");
+      // }, 500); // Delay to ensure state updates
+      
+      setTimeout(() => {
+        const chatJSON = getChatHistoryJSON();
+        console.log("📝 Full Chat History JSON (Delayed):", JSON.stringify(chatJSON, null, 2));
+      }, 200);
+      
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: jsonOutput ? "✅ Your information has been recorded." : responseText,
+        content: jsonOutput
+          ? "✅ Your information has been recorded."
+          : responseText,
         sender: "ai",
         timestamp: new Date().toISOString(),
       };
-  
+
       setMessages((prev) => [...prev, aiMessage]);
-  
+      setChatHistory((prev) => {
+        const updatedHistory = [...prev, aiMessage];
+        console.log("📝 Updated Chat History (AI Response):", updatedHistory);
+        return updatedHistory;
+      });
+      
     } catch (error) {
       console.error("❌ Error generating response:", error);
       setMessages((prev) => [
@@ -302,8 +370,17 @@ export default function ChatInterface() {
       setIsTyping(false);
     }
   };
+  const getChatHistoryJSON = () => {
+    const chatData = {
+      sessionId: crypto.randomUUID(), // Unique session ID
+      timestamp: new Date().toISOString(),
+      messages: [...chatHistory], // Ensure state is captured properly
+    };
   
-
+    console.log("📜 Final Chat History JSON:", chatData); // ✅ Debugging log
+    return chatData;
+  };
+  
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 p-4">
       <h1 className="text-2xl font-bold">Vital Physio +</h1>
@@ -320,14 +397,22 @@ export default function ChatInterface() {
                 transition={{ duration: 0.3 }}
                 className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
               >
-                <div className={`max-w-[70%] px-4 py-3 rounded-2xl shadow-lg ${message.sender === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-900"}`}>
+                <div
+                  className={`max-w-[70%] px-4 py-3 rounded-2xl shadow-lg ${message.sender === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-900"}`}
+                >
                   <p>{message.content}</p>
-                  <p className="text-xs text-gray-400 mt-1">{new Date(message.timestamp).toLocaleTimeString()}</p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {new Date(message.timestamp).toLocaleTimeString()}
+                  </p>
                 </div>
               </motion.div>
             ))}
             {isTyping && (
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex justify-start">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex justify-start"
+              >
                 <div className="bg-gray-200 text-gray-900 rounded-2xl px-4 py-3 shadow-lg">
                   <Loader2 className="w-6 h-6 animate-spin" />
                 </div>
@@ -338,11 +423,24 @@ export default function ChatInterface() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="relative bg-white rounded-2xl p-2 shadow-lg w-full">
+      <form
+        onSubmit={handleSubmit}
+        className="relative bg-white rounded-2xl p-2 shadow-lg w-full"
+      >
         <div className="flex items-center">
-          <input ref={inputRef} type="text" placeholder="Ask anything" value={inputValue} onChange={(e) => setInputValue(e.target.value)} className="flex-1 bg-transparent text-gray-900 border-none outline-none py-3 px-4" />
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Ask anything"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            className="flex-1 bg-transparent text-gray-900 border-none outline-none py-3 px-4"
+          />
           {inputValue.trim() && (
-            <motion.button type="submit" className="p-2 rounded-full hover:bg-gray-100">
+            <motion.button
+              type="submit"
+              className="p-2 rounded-full hover:bg-gray-100"
+            >
               <Send size={20} className="text-gray-600" />
             </motion.button>
           )}
