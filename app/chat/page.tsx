@@ -261,7 +261,7 @@ export default function ChatInterface() {
     setMessages((prev) => [...prev, userMessage]);
     setChatHistory((prev) => {
       const updatedHistory = [...prev, userMessage];
-      console.log("📝 Updated Chat History (User Message):", updatedHistory);
+      // console.log("📝 Updated Chat History:", JSON.stringify(updatedHistory, null, 2));
       return updatedHistory;
     });    
     setInputValue("");
@@ -275,8 +275,6 @@ export default function ChatInterface() {
 
       const result = await chatSession.sendMessage(inputValue);
       const responseText = await result.response.text();
-
-      console.log("🟢 Raw Response from Gemini:", responseText); // Debugging log
 
       let jsonOutput = null;
 
@@ -334,16 +332,11 @@ export default function ChatInterface() {
       //   console.log("📞 Patient Phone:", patientPhone || "Not provided");
       // }, 500); // Delay to ensure state updates
       
-      setTimeout(() => {
-        const chatJSON = getChatHistoryJSON();
-        console.log("📝 Full Chat History JSON (Delayed):", JSON.stringify(chatJSON, null, 2));
-      }, 200);
+
       
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: jsonOutput
-          ? "✅ Your information has been recorded."
-          : responseText,
+        content: jsonOutput ? "✅ Your information has been recorded." : responseText,
         sender: "ai",
         timestamp: new Date().toISOString(),
       };
@@ -351,7 +344,6 @@ export default function ChatInterface() {
       setMessages((prev) => [...prev, aiMessage]);
       setChatHistory((prev) => {
         const updatedHistory = [...prev, aiMessage];
-        console.log("📝 Updated Chat History (AI Response):", updatedHistory);
         return updatedHistory;
       });
       
@@ -376,8 +368,6 @@ export default function ChatInterface() {
       timestamp: new Date().toISOString(),
       messages: [...chatHistory], // Ensure state is captured properly
     };
-  
-    console.log("📜 Final Chat History JSON:", chatData); // ✅ Debugging log
     return chatData;
   };
   
