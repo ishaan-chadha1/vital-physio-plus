@@ -10,6 +10,7 @@ import {
   Send,
   Loader2,
 } from "lucide-react";
+import { createClient } from "@/utils/supabase/client";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   GoogleGenerativeAI,
@@ -41,6 +42,31 @@ export default function ChatInterface() {
   const [chatSession, setChatSession] = useState<any>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const supabase = createClient(); // Initialize Supabase client
+
+const saveDataToSupabase = async (name: string, email: string, phone: string, chatHistory: Message[], extractedJson: any) => {
+  try {
+    const { error } = await supabase.from("gemini_data").insert([
+      {
+        session_id: crypto.randomUUID(), // Generate a unique session ID
+        timestamp: new Date().toISOString(),
+        patient_name: name,
+        patient_email: email,
+        patient_phone: phone,
+        chat_history: chatHistory, // Store entire chat history
+        extracted_json: extractedJson, // Store structured patient data
+      },
+    ]);
+
+    if (error) {
+      console.error("❌ Error saving data to Supabase:", error.message);
+    } else {
+      console.log("✅ Data successfully saved to Supabase!");
+    }
+  } catch (err) {
+    console.error("⚠️ Unexpected error:", err);
+  }
+};
 
   useEffect(() => {
     initializeChat();
@@ -341,9 +367,14 @@ export default function ChatInterface() {
         }
       
         // ✅ Log extracted details to verify correctness
-        console.log("🩺 Patient Name:", extractedName);
-        console.log("📞 Patient Phone:", extractedPhone);
-        console.log("📧 Patient Email:", extractedEmail);
+// ✅ Log extracted details to verify correctness
+console.log("🩺 Patient Name:", extractedName);
+console.log("📞 Patient Phone:", extractedPhone);
+console.log("📧 Patient Email:", extractedEmail);
+
+// ✅ Save to Supabase
+await saveDataToSupabase(extractedName, extractedEmail, extractedPhone, chatHistory, jsonOutput);
+
       }
       
       // // ✅ Log extracted details AFTER state updates

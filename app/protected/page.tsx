@@ -1,55 +1,33 @@
-'use client';
+import FetchDataSteps from "@/components/tutorial/fetch-data-steps";
+import { createClient } from "@/utils/supabase/server";
+import { InfoIcon } from "lucide-react";
+import { redirect } from "next/navigation";
+import Link from "next/link";
 
-import { createClient } from '@/utils/supabase/client';
-import { useEffect, useState } from 'react';
-import { InfoIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-
-export default function ProtectedPage() {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [geminiData, setGeminiData] = useState<any[] | null>(null);
+export default async function ProtectedPage() {
   const supabase = createClient();
-  const router = useRouter();
 
-  useEffect(() => {
-    const fetchUserAndData = async () => {
-      setLoading(true);
-      
-      // ✅ Get the authenticated user
-      const { data: userData, error: userError } = await supabase.auth.getUser();
+  // ✅ Get the logged-in user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-      if (userError || !userData?.user) {
-        console.error('❌ User not authenticated:', userError);
-        router.push('/sign-in'); // Redirect if not logged in
-        return;
-      }
+  if (!user) {
+    return redirect("/sign-in"); // Redirect if user is not logged in
+  }
 
-      setUser(userData.user);
+  const userEmail = user.email; // Extract email
+  console.log("🔹 Logged in user email:", userEmail);
 
-      // ✅ Extract email
-      const userEmail = userData.user.email;
-      console.log('📩 Logged-in User Email:', userEmail);
+  // ✅ Fetch only the logged-in user's data from Supabase
+  const { data: geminiData, error } = await supabase
+    .from("gemini_data")
+    .select("*")
+    .eq("patient_email", userEmail); // 🔹 Filter by logged-in user's email
 
-      // ✅ Query Supabase for user's specific data
-      const { data: geminiRecords, error: geminiError } = await supabase
-        .from('gemini_data')
-        .select('*')
-        .eq('email', userEmail); // 🔥 Fetch data where email matches
-
-      if (geminiError) {
-        console.error('❌ Error fetching user-specific data:', geminiError);
-      } else {
-        console.log('📜 Queried Gemini Data:', geminiRecords);
-        setGeminiData(geminiRecords);
-      }
-
-      setLoading(false);
-    };
-
-    fetchUserAndData();
-  }, [supabase, router]);
+  if (error) {
+    console.error("❌ Error fetching user-specific data:", error.message);
+  }
 
   return (
     <div className="flex-1 w-full flex flex-col gap-12">
@@ -60,11 +38,13 @@ export default function ProtectedPage() {
         </div>
       </div>
 
-      {/* ✅ Links to Other Pages */}
-      <Link href="/elevenlabs" className="text-blue-500 underline">Access ElevenLabs AI</Link>
-      <Link href="/chat" className="text-blue-500 underline">Access Gemini</Link>
+      <Link href="/elevenlabs" className="text-blue-500 underline">
+        Access ElevenLabs AI
+      </Link>
+      <Link href="/chat" className="text-blue-500 underline">
+        Access Gemini
+      </Link>
 
-      {/* ✅ Display User Details */}
       <div className="flex flex-col gap-2 items-start">
         <h2 className="font-bold text-2xl mb-4">Your User Details</h2>
         <pre className="text-xs font-mono p-3 rounded border max-h-32 overflow-auto">
@@ -72,18 +52,20 @@ export default function ProtectedPage() {
         </pre>
       </div>
 
-      {/* ✅ Display Gemini Data */}
       <div>
         <h2 className="font-bold text-2xl mb-4">Your Gemini Data</h2>
-        {loading ? (
-          <p>Loading data... ⏳</p>
-        ) : geminiData?.length ? (
+        {geminiData && geminiData.length > 0 ? (
           <pre className="text-xs font-mono p-3 rounded border max-h-64 overflow-auto">
             {JSON.stringify(geminiData, null, 2)}
           </pre>
         ) : (
           <p>No data found ❌</p>
         )}
+      </div>
+
+      <div>
+        <h2 className="font-bold text-2xl mb-4">Next Steps</h2>
+        <FetchDataSteps />
       </div>
     </div>
   );
