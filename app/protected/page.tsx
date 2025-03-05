@@ -5,12 +5,10 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 
 export default async function ProtectedPage() {
-  const supabase = createClient();
+  const supabase = await createClient(); // ✅ Await the Supabase client
 
-  // ✅ Get the logged-in user
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser(); // ✅ Now this works fine
+  
 
   if (!user) {
     return redirect("/sign-in"); // Redirect if user is not logged in
