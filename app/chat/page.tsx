@@ -330,10 +330,20 @@ export default function ChatInterface() {
           }
         }
         setPatientPhone(extractedPhone);
+        let extractedEmail = "Not provided";
+        if (demographics.contactInfo) {
+          const emailMatch = demographics.contactInfo.match(
+            /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/
+          ); // ✅ Extracts email using regex
+          if (emailMatch) {
+            extractedEmail = emailMatch[0];
+          }
+        }
       
         // ✅ Log extracted details to verify correctness
         console.log("🩺 Patient Name:", extractedName);
         console.log("📞 Patient Phone:", extractedPhone);
+        console.log("📧 Patient Email:", extractedEmail);
       }
       
       // // ✅ Log extracted details AFTER state updates
