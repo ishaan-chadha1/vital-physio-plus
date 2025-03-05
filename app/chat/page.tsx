@@ -45,7 +45,14 @@ export default function ChatInterface() {
   useEffect(() => {
     initializeChat();
     if (inputRef.current) inputRef.current.focus();
+  
+    // ✅ Load chat history from localStorage
+    const savedHistory = localStorage.getItem("chatHistory");
+    if (savedHistory) {
+      setChatHistory(JSON.parse(savedHistory));
+    }
   }, []);
+  
 
   const initializeChat = async () => {
     if (!chatSession) {
@@ -276,6 +283,7 @@ export default function ChatInterface() {
       const result = await chatSession.sendMessage(inputValue);
       const responseText = await result.response.text();
 
+
       let jsonOutput = null;
 
       // Try extracting JSON from a code block in the response
@@ -286,7 +294,9 @@ export default function ChatInterface() {
           jsonOutput = JSON.parse(jsonMatch[1] || jsonMatch[2]);
         } catch (error) {
           console.warn("⚠️ Failed to parse extracted JSON:", error);
+          jsonOutput = null; // Prevent crashing
         }
+        
       } else {
         // Try finding the JSON object within the text response
         const jsonStart = responseText.indexOf("{");
@@ -344,6 +354,14 @@ export default function ChatInterface() {
       setMessages((prev) => [...prev, aiMessage]);
       setChatHistory((prev) => {
         const updatedHistory = [...prev, aiMessage];
+      
+        // ✅ Save chat history to localStorage
+        localStorage.setItem("chatHistory", JSON.stringify(updatedHistory));
+      
+        // ✅ Log the chat history immediately after update
+        const chatJSON = getChatHistoryJSON(updatedHistory);
+        console.log("📜 Updated Chat History:", JSON.stringify(chatJSON, null, 2));
+      
         return updatedHistory;
       });
       
@@ -362,14 +380,12 @@ export default function ChatInterface() {
       setIsTyping(false);
     }
   };
-  const getChatHistoryJSON = () => {
-    const chatData = {
-      sessionId: crypto.randomUUID(), // Unique session ID
-      timestamp: new Date().toISOString(),
-      messages: [...chatHistory], // Ensure state is captured properly
-    };
-    return chatData;
-  };
+  const getChatHistoryJSON = (history) => ({
+    sessionId: crypto.randomUUID(),
+    timestamp: new Date().toISOString(),
+    messages: [...history], // ✅ Uses latest history instead of stale state
+  });
+  
   
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 p-4">
