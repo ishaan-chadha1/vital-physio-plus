@@ -60,11 +60,6 @@ export default async function ProtectedPage() {
           <p>No data found ❌</p>
         )}
       </div>
-
-      <div>
-        <h2 className="font-bold text-2xl mb-4">Next Steps</h2>
-        <FetchDataSteps />
-      </div>
     </div>
   );
 }
