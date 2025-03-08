@@ -13,9 +13,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+const defaultUrl = `https://${process.env.VERCEL_URL || "vital-physio-plus.vercel.app"}`;
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
