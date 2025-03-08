@@ -23,7 +23,7 @@ export const signUpAction = async (formData: FormData) => {
     email,
     password,
     options: {
-      emailRedirectTo: `${origin}/auth/callback`,
+      emailRedirectTo: `https://vital-physio-plus.vercel.app/auth/callback`,
     },
   });
 
@@ -67,7 +67,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
   }
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${origin}/auth/callback?redirect_to=/protected/reset-password`,
+    redirectTo: `https://vital-physio-plus.vercel.app/auth/callback?redirect_to=/protected/reset-password`,
   });
 
   if (error) {
