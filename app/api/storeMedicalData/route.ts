@@ -7,7 +7,7 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const sessionId = searchParams.get("session_id"); // Optional: Fetch single record
 
-    let query = supabase.from("eleven_data").select("*");
+    let query = supabase.from("gemini_data").select("*");
 
     if (sessionId) {
       query = query.eq("session_id", sessionId);
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     const { name, email, phone, chatHistory, extractedJson } = await req.json();
 
     // Insert data into Supabase
-    const { error } = await supabase.from("eleven_data").insert([
+    const { error } = await supabase.from("gemini_data").insert([
       {
         session_id: crypto.randomUUID(), // Unique session ID
         timestamp: new Date().toISOString(),
@@ -79,7 +79,7 @@ export async function PUT(req: Request) {
     }
 
     // Update entry in Supabase
-    const { error } = await supabase.from("eleven_data").update({
+    const { error } = await supabase.from("gemini_data").update({
       patient_name: name,
       patient_email: email,
       patient_phone: phone,
@@ -112,7 +112,7 @@ export async function DELETE(req: Request) {
     }
 
     // Delete entry from Supabase
-    const { error } = await supabase.from("eleven_data").delete().eq("session_id", sessionId);
+    const { error } = await supabase.from("gemini_data").delete().eq("session_id", sessionId);
 
     if (error) {
       console.error("❌ Error deleting entry:", error.message);
