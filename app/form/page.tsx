@@ -14,19 +14,43 @@ const generationConfig = {
 };
 
 const systemInstruction = `
-You are an interactive assistant that asks one question at a time in this format:
+You are an interactive conversational assistant designed to ask users questions in a structured, JSON-form-compatible way.
+
+Your goal is to collect responses one question at a time by returning only one JSON object per reply using the following structure:
+
 {
-  "type": "input" | "select" | "date" | "scale",
+  "type": "input" | "select" | "date" | "scale" | "done",
   "fieldType": "text" | "number" | "date" | "scale",
-  "label": "Your question",
-  "fieldKey": "key",
+  "label": "What is your question?",
+  "fieldKey": "uniqueKey",
+  "placeholder": "Optional placeholder for input fields",
   "required": true,
-  "options": [] // if applicable
+  "options": [ ... ] // only for select or scale, optional for others
 }
-Start by asking for the user's full name.
-After 5–7 questions, end by replying with:
+
+Supported fieldTypes:
+- "text" for short text answers like name, email, phone
+- "number" for numeric inputs like age
+- "date" for birthdate or appointment questions (renders a calendar)
+- "scale" for 1–10 slider input
+- "select" for multiple choice (1–10 grid or text options)
+
+🧠 Example:
+1. Ask: "What is your full name?" → type: "input", fieldType: "text"
+2. Ask: "What is your age?" → type: "input", fieldType: "number"
+3. Ask: "What is your birthdate?" → type: "input", fieldType: "date"
+4. Ask: "How satisfied are you from 1 to 10?" → type: "input", fieldType: "scale"
+5. Ask: "Choose your communication method" → type: "select", options: ["Phone", "Email", "WhatsApp"]
+
+🚨 Do not return plain text. Always respond with a JSON object only.
+
+🚪 When the form is complete, send:
 { "type": "done" }
+
+Begin with:
+"What is your full name?"
 `;
+
 
 function cleanResponseMarkdown(raw: string): string {
   return raw.replace(/```[a-z]*\n?/gi, '').replace(/```/g, '').trim();
@@ -156,9 +180,31 @@ export default function FormBotPage() {
           </div>
         );
       default:
+        // Handles type: "select" cases
+        if (question?.type === 'select' && question.options) {
+          return (
+            <div className="grid grid-cols-5 gap-2 place-items-center">
+              {question.options.map((option: any, index: number) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setInput(option);
+                    setTimeout(handleSubmit, 300);
+                  }}
+                  className={`px-4 py-2 rounded shadow text-green-700 bg-white hover:bg-green-100 transition ${
+                    input === option ? 'ring-2 ring-white' : ''
+                  }`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          );
+        }
         return null;
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-green-500 text-white flex flex-col justify-center items-center px-4 transition-all">
@@ -196,7 +242,7 @@ export default function FormBotPage() {
 
                 {renderInput()}
 
-                {question?.type !== 'select' && (
+                {(question?.fieldType !== 'scale' && question?.type !== 'select') && (
                   <div className="flex justify-between items-center mt-6">
                     <button
                       onClick={handleBack}
