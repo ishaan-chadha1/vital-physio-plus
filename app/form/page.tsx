@@ -14,42 +14,61 @@ const generationConfig = {
 };
 
 const systemInstruction = `
-You are an interactive conversational assistant designed to ask users questions in a structured, JSON-form-compatible way.
+You are an interactive conversational assistant designed to collect structured medical history and demographics of a patient. Ask one question at a time using the format below. Each reply must be a single JSON object — no extra text.
 
-Your goal is to collect responses one question at a time by returning only one JSON object per reply using the following structure:
+Your job is to ask questions and return them in this format:
 
 {
   "type": "input" | "select" | "date" | "scale" | "done",
   "fieldType": "text" | "number" | "date" | "scale",
-  "label": "What is your question?",
-  "fieldKey": "uniqueKey",
-  "placeholder": "Optional placeholder for input fields",
+  "label": "Question text shown to user",
+  "fieldKey": "category.key",
+  "placeholder": "optional",
   "required": true,
-  "options": [ ... ] // only for select or scale, optional for others
+  "options": [ ... ] // required for select, optional for others
 }
 
-Supported fieldTypes:
-- "text" for short text answers like name, email, phone
-- "number" for numeric inputs like age
-- "date" for birthdate or appointment questions (renders a calendar)
-- "scale" for 1–10 slider input
-- "select" for multiple choice (1–10 grid or text options)
+✅ EXAMPLES:
+- For gender, return a "select" with these options:
+{
+  "type": "select",
+  "fieldType": "text",
+  "label": "What is your gender?",
+  "fieldKey": "demographics.gender",
+  "options": ["Male", "Female", "Prefer not to say"],
+  "required": true
+}
 
-🧠 Example:
-1. Ask: "What is your full name?" → type: "input", fieldType: "text"
-2. Ask: "What is your age?" → type: "input", fieldType: "number"
-3. Ask: "What is your birthdate?" → type: "input", fieldType: "date"
-4. Ask: "How satisfied are you from 1 to 10?" → type: "input", fieldType: "scale"
-5. Ask: "Choose your communication method" → type: "select", options: ["Phone", "Email", "WhatsApp"]
+- For age:
+{
+  "type": "input",
+  "fieldType": "number",
+  "label": "What is your age?",
+  "fieldKey": "demographics.age"
+}
 
-🚨 Do not return plain text. Always respond with a JSON object only.
+- For date of birth:
+{
+  "type": "input",
+  "fieldType": "date",
+  "label": "What is your date of birth?",
+  "fieldKey": "demographics.dateOfBirth"
+}
 
-🚪 When the form is complete, send:
-{ "type": "done" }
+🚨 DO NOT return plain text or descriptions. Just output the JSON object.
 
-Begin with:
-"What is your full name?"
+Start the conversation by asking the patient for their full name using this:
+{
+  "type": "input",
+  "fieldType": "text",
+  "label": "What is your full name?",
+  "fieldKey": "demographics.name",
+  "required": true
+}
 `;
+
+
+
 
 
 function cleanResponseMarkdown(raw: string): string {
@@ -139,13 +158,12 @@ export default function FormBotPage() {
   };
 
   const renderInput = () => {
-    switch (question?.fieldType) {
-      case 'text':
-      case 'number':
+    switch (question?.type) {
+      case 'input':
         return (
           <input
             ref={inputRef}
-            type={question.fieldType}
+            type={question.fieldType === 'number' ? 'number' : question.fieldType === 'date' ? 'date' : 'text'}
             placeholder={question.placeholder || ''}
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -153,17 +171,7 @@ export default function FormBotPage() {
             className="w-full text-black text-xl p-3 rounded border-2 border-white focus:outline-none focus:ring-4 focus:ring-white"
           />
         );
-      case 'date':
-        return (
-          <input
-            ref={inputRef}
-            type="date"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyPress}
-            className="w-full text-black text-xl p-3 rounded border-2 border-white focus:outline-none focus:ring-4 focus:ring-white"
-          />
-        );
+  
       case 'scale':
         return (
           <div className="w-full flex flex-col items-center">
@@ -179,17 +187,35 @@ export default function FormBotPage() {
             <span className="mt-2 font-semibold text-lg">{input || 5}</span>
           </div>
         );
-      default:
-        // Handles type: "select" cases
-        if (question?.type === 'select' && question.options) {
+  
+        case 'select':
           return (
-            <div className="grid grid-cols-5 gap-2 place-items-center">
-              {question.options.map((option: any, index: number) => (
+            <div className="grid grid-cols-2 gap-4">
+              {question.options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => {
-                    setInput(option);
-                    setTimeout(handleSubmit, 300);
+                    const selected = option;
+                    const newHistory = [...history.slice(0, currentIndex), { question, value: selected }];
+                    setHistory(newHistory);
+                    setCurrentIndex((i) => i + 1);
+                    setInput('');
+        
+                    const responseObj = JSON.stringify({ fieldKey: question.fieldKey, value: selected });
+                    chat.sendMessage(responseObj).then((result) => {
+                      const cleaned = cleanResponseMarkdown(result.response.text());
+                      try {
+                        const parsed = JSON.parse(cleaned);
+                        if (parsed.type === 'done') {
+                          setDone(true);
+                          setQuestion(null);
+                        } else {
+                          setQuestion(parsed);
+                        }
+                      } catch (err) {
+                        console.error('Failed to parse Gemini response:', err);
+                      }
+                    });
                   }}
                   className={`px-4 py-2 rounded shadow text-green-700 bg-white hover:bg-green-100 transition ${
                     input === option ? 'ring-2 ring-white' : ''
@@ -200,10 +226,14 @@ export default function FormBotPage() {
               ))}
             </div>
           );
-        }
+        
+  
+      default:
         return null;
     }
   };
+  
+  
   
 
   return (
