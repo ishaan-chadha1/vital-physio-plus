@@ -105,14 +105,15 @@ export default function FormBotPage() {
       case 'input':
         return (
           <input
-            ref={inputRef}
-            type={question.fieldType === 'number' ? 'number' : question.fieldType === 'date' ? 'date' : 'text'}
-            placeholder={question.placeholder || ''}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyPress}
-            className="w-full text-black text-xl p-3 rounded border-2 border-white focus:outline-none focus:ring-4 focus:ring-white"
-          />
+  ref={inputRef}
+  type={question.fieldType === 'number' ? 'number' : question.fieldType === 'date' ? 'date' : 'text'}
+  placeholder={question.placeholder || ''}
+  value={input}
+  onChange={(e) => setInput(e.target.value)}
+  onKeyDown={handleKeyPress}
+  className="w-full text-black text-xl p-3 rounded border border-gray-300 bg-gray-100 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+/>
+
         );
   
       case 'scale':
@@ -180,7 +181,7 @@ export default function FormBotPage() {
   
 
   return (
-    <div className="min-h-screen bg-green-500 text-white flex flex-col justify-center items-center px-4 transition-all">
+    <div className="min-h-screen bg-white text-blue-700 flex flex-col justify-center items-center px-4 transition-all">
       <div className="w-full max-w-xl text-center">
         <AnimatePresence mode="wait">
           <motion.div
@@ -194,7 +195,7 @@ export default function FormBotPage() {
             {done ? (
               <>
                 <h2 className="text-2xl font-bold mb-6">✅ Summary</h2>
-                <div className="bg-white text-green-800 rounded-md p-6 mb-6 text-left space-y-3">
+                <div className="bg-blue-50 text-blue-800 rounded-md p-6 mb-6 text-left space-y-3">
                   {history.map((entry, index) => (
                     <div key={index}>
                       <strong>{entry.question.label}</strong>
@@ -204,7 +205,7 @@ export default function FormBotPage() {
                 </div>
                 <button
                   onClick={handleRestart}
-                  className="bg-white text-green-600 px-6 py-2 rounded font-semibold shadow hover:bg-green-100 transition"
+                  className="bg-blue-600 text-white px-6 py-2 rounded font-semibold shadow hover:bg-blue-700 transition"
                 >
                   Restart ↺
                 </button>
@@ -212,20 +213,20 @@ export default function FormBotPage() {
             ) : (
               <>
                 <h2 className="text-xl font-bold mb-6">{question?.label || 'Loading...'}</h2>
-
+  
                 {renderInput()}
-
+  
                 {(question?.fieldType !== 'scale' && question?.type !== 'select') && (
                   <div className="flex justify-between items-center mt-6">
                     <button
                       onClick={handleBack}
-                      className="bg-white text-green-600 px-4 py-2 rounded shadow hover:bg-green-100 transition"
+                      className="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition"
                     >
                       ← Back
                     </button>
                     <button
                       onClick={handleSubmit}
-                      className="bg-white text-green-600 px-6 py-2 rounded font-semibold shadow hover:bg-green-100 transition"
+                      className="bg-blue-600 text-white px-6 py-2 rounded font-semibold shadow hover:bg-blue-700 transition"
                     >
                       OK ↵
                     </button>
@@ -238,4 +239,5 @@ export default function FormBotPage() {
       </div>
     </div>
   );
+  
 }
