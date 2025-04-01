@@ -181,7 +181,7 @@ export default function FormBotPage() {
   
 
   return (
-    <div className="min-h-screen bg-white text-blue-700 flex flex-col justify-center items-center px-4 transition-all">
+    <div className="bg-white text-blue-700 flex flex-col justify-start items-center px-4 transition-all">
       <div className="w-full max-w-xl text-center">
         <AnimatePresence mode="wait">
           <motion.div
