@@ -18,6 +18,12 @@ import {
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
+const getISTTimestamp = () => {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() + 330); // Add 5 hours 30 minutes
+  return now.toISOString().replace("T", " ").slice(0, 19); // Optional: format to 'YYYY-MM-DD HH:mm:ss'
+};
+
 
 type Message = {
   id: string;
@@ -50,7 +56,7 @@ const saveDataToSupabase = async (name: string, email: string, phone: string, ch
     const { error } = await supabase.from("gemini_data").insert([
       {
         session_id: crypto.randomUUID(), // Generate a unique session ID
-        timestamp: new Date().toISOString(),
+        timestamp: getISTTimestamp(),
         patient_name: name,
         patient_email: email,
         patient_phone: phone,
@@ -124,7 +130,7 @@ const saveDataToSupabase = async (name: string, email: string, phone: string, ch
       id: crypto.randomUUID(),
       content: inputValue,
       sender: "user",
-      timestamp: new Date().toISOString(),
+      timestamp: getISTTimestamp(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
@@ -225,7 +231,7 @@ await saveDataToSupabase(extractedName, extractedEmail, extractedPhone, chatHist
         id: (Date.now() + 1).toString(),
         content: jsonOutput ? "✅ Your information has been recorded." : responseText,
         sender: "ai",
-        timestamp: new Date().toISOString(),
+        timestamp: getISTTimestamp(),
       };
 
       setMessages((prev) => [...prev, aiMessage]);
@@ -250,7 +256,7 @@ await saveDataToSupabase(extractedName, extractedEmail, extractedPhone, chatHist
           id: (Date.now() + 1).toString(),
           content: "❌ Error: Please try again.",
           sender: "ai",
-          timestamp: new Date().toISOString(),
+          timestamp: getISTTimestamp(),
         },
       ]);
     } finally {
@@ -259,7 +265,7 @@ await saveDataToSupabase(extractedName, extractedEmail, extractedPhone, chatHist
   };
   const getChatHistoryJSON = (history) => ({
     sessionId: crypto.randomUUID(),
-    timestamp: new Date().toISOString(),
+    timestamp: getISTTimestamp(),
     messages: [...history], // ✅ Uses latest history instead of stale state
   });
   
