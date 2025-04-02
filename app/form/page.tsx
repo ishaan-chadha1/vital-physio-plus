@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { AnimatePresence, motion } from 'framer-motion';
 import systemInstruction from "@/lib/systemInstruction";
+import { createClient } from "@/utils/supabase/client";
+
 
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY!);
 
@@ -26,7 +28,29 @@ export default function FormBotPage() {
   const [input, setInput] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const [done, setDone] = useState(false);
-
+  const supabase = createClient(); // Initialize Supabase client
+  const saveDataToSupabase = async (formData) => {
+    try {
+      const { data, error } = await supabase
+        .from('form_data') // Ensure this matches your table name
+        .insert([
+          {
+            session_id: crypto.randomUUID(), // Generate a unique session ID
+            summary: 'Form Intake Responses', // Optional summary
+            form_data: formData, // The form responses as JSON
+          },
+        ]);
+  
+      if (error) {
+        console.error('Error saving data to Supabase:', error.message);
+      } else {
+        console.log('Data successfully saved to Supabase:', data);
+      }
+    } catch (err) {
+      console.error('Unexpected error:', err);
+    }
+  };
+  
   // 👀 On mount
   useEffect(() => {
     const initChat = async () => {
@@ -52,6 +76,21 @@ export default function FormBotPage() {
   useEffect(() => {
     localStorage.setItem('formResponses', JSON.stringify(history));
   }, [history]);
+
+  useEffect(() => {
+    if (done) {
+      console.log('Complete Form Intake Responses:');
+      console.log(JSON.stringify(history, null, 2));
+      console.log('Summary:');
+      history.forEach((entry) => {
+        console.log(`${entry.question.label}: ${entry.value}`);
+      });
+  
+      // Save the form responses to Supabase
+      saveDataToSupabase(history);
+    }
+  }, [done, history]);
+  
 
   const handleSubmit = async () => {
     if (!chat || !question?.fieldKey) return;
