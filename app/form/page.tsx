@@ -254,7 +254,7 @@ const saveDataToSupabase = async (finalJSON, history) => {
           session_id: crypto.randomUUID(),   // or use your own ID strategy
           patient_name: patientName,
           patient_email: patientEmail,
-          form_data: finalJSON,              // The final structured JSON
+          final_json: finalJSON,              // The final structured JSON
           chat_history: history,             // The entire Q&A flow
         },
       ]);
