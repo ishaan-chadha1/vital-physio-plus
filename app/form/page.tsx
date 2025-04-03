@@ -29,27 +29,246 @@ export default function FormBotPage() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [done, setDone] = useState(false);
   const supabase = createClient(); // Initialize Supabase client
-  const saveDataToSupabase = async (formData) => {
-    try {
-      const { data, error } = await supabase
-        .from('form_data') // Ensure this matches your table name
-        .insert([
-          {
-            session_id: crypto.randomUUID(), // Generate a unique session ID
-            summary: 'Form Intake Responses', // Optional summary
-            form_data: formData, // The form responses as JSON
-          },
-        ]);
-  
-      if (error) {
-        console.error('Error saving data to Supabase:', error.message);
-      } else {
-        console.log('Data successfully saved to Supabase:', data);
-      }
-    } catch (err) {
-      console.error('Unexpected error:', err);
-    }
+  // Helper function to build the final JSON structure from the conversation history
+// Helper function to build the final JSON structure from the conversation history
+const populateFinalJSON = (history) => {
+  const finalData = {
+    demographics: {
+      name: '',
+      dateOfBirth: '',
+      gender: '',
+      contactInfo: '',
+      address: '',
+      preferredPronouns: '',
+    },
+    chiefComplaint: {
+      "skos:prefLabel": '',
+      "icd:specificAnatomy": '',
+      "icd:hasSeverity": '',
+      "icd:course": '',
+      "icd:mechanismOfInjury": '',
+    },
+    historyOfPresentIllness: {
+      onsetDate: '',
+      duration: '',
+      frequency: '',
+      aggravatingFactors: '',
+      relievingFactors: '',
+      associatedSymptoms: '',
+    },
+    pastMedicalHistory: [],
+    medications: [],
+    allergies: [],
+    familyHistory: [],
+    socialHistory: {
+      smoking: '',
+      alcohol: '',
+      occupation: '',
+      physicalActivity: '',
+      dailyActivity: '',
+    },
+    reviewOfSystems: {
+      weightChanges: '',
+      fatigue: '',
+      feverChillsNightSweats: '',
+      cardiovascular: '',
+      gastrointestinal: '',
+      skinChanges: '',
+      neurological: '',
+      musculoskeletal: '',
+    },
+    diagnosticImpressions: [],
   };
+
+  history.forEach((entry) => {
+    const key = entry.question.fieldKey;
+    const value = entry.value;
+
+    // Handle Object sections:
+    if (key.startsWith('demographics.')) {
+      const field = key.split('.')[1];
+      finalData.demographics[field] = value;
+    } else if (key.startsWith('chiefComplaint.')) {
+      const field = key.split('.')[1];
+      if (field === 'description' || field === 'skos:prefLabel') {
+        finalData.chiefComplaint["skos:prefLabel"] = value;
+      } else if (field === 'specificAnatomy') {
+        finalData.chiefComplaint["icd:specificAnatomy"] = value;
+      } else if (field === 'painScale' || field === 'hasSeverity') {
+        finalData.chiefComplaint["icd:hasSeverity"] = value;
+      } else if (field === 'course') {
+        finalData.chiefComplaint["icd:course"] = value;
+      } else if (field === 'mechanismOfInjury') {
+        finalData.chiefComplaint["icd:mechanismOfInjury"] = value;
+      }
+    } else if (key.startsWith('historyOfPresentIllness.')) {
+      const field = key.split('.')[1];
+      finalData.historyOfPresentIllness[field] = value;
+    } else if (key.startsWith('socialHistory.')) {
+      const field = key.split('.')[1];
+      finalData.socialHistory[field] = value;
+    } else if (key.startsWith('reviewOfSystems.')) {
+      const field = key.split('.')[1];
+      finalData.reviewOfSystems[field] = value;
+    }
+    // Handle Array sections:
+    else if (key.startsWith('pastMedicalHistory.')) {
+      const parts = key.split('.');
+      if (parts.length === 3 && !isNaN(parts[1])) {
+        // Format: pastMedicalHistory.<index>.<field>
+        const index = parseInt(parts[1], 10);
+        const field = parts[2];
+        if (!finalData.pastMedicalHistory[index]) {
+          finalData.pastMedicalHistory[index] = {};
+        }
+        finalData.pastMedicalHistory[index][field] = value;
+      } else if (parts.length === 2) {
+        // Non-indexed key: pastMedicalHistory.<field>
+        const field = parts[1];
+        if (finalData.pastMedicalHistory.length === 0) {
+          finalData.pastMedicalHistory.push({});
+        }
+        let lastEntry = finalData.pastMedicalHistory[finalData.pastMedicalHistory.length - 1];
+        if (!lastEntry.hasOwnProperty(field)) {
+          lastEntry[field] = value;
+        } else {
+          finalData.pastMedicalHistory.push({ [field]: value });
+        }
+      }
+    } else if (key.startsWith('medications.')) {
+      const parts = key.split('.');
+      if (parts.length === 3 && !isNaN(parts[1])) {
+        const index = parseInt(parts[1], 10);
+        const field = parts[2];
+        if (!finalData.medications[index]) {
+          finalData.medications[index] = {};
+        }
+        finalData.medications[index][field] = value;
+      } else if (parts.length === 2) {
+        const field = parts[1];
+        if (finalData.medications.length === 0) {
+          finalData.medications.push({});
+        }
+        let lastEntry = finalData.medications[finalData.medications.length - 1];
+        if (!lastEntry.hasOwnProperty(field)) {
+          lastEntry[field] = value;
+        } else {
+          finalData.medications.push({ [field]: value });
+        }
+      }
+    } else if (key.startsWith('allergies.')) {
+      const parts = key.split('.');
+      if (parts.length === 3 && !isNaN(parts[1])) {
+        const index = parseInt(parts[1], 10);
+        const field = parts[2];
+        if (!finalData.allergies[index]) {
+          finalData.allergies[index] = {};
+        }
+        finalData.allergies[index][field] = value;
+      } else if (parts.length === 2) {
+        const field = parts[1];
+        if (finalData.allergies.length === 0) {
+          finalData.allergies.push({});
+        }
+        let lastEntry = finalData.allergies[finalData.allergies.length - 1];
+        if (!lastEntry.hasOwnProperty(field)) {
+          lastEntry[field] = value;
+        } else {
+          finalData.allergies.push({ [field]: value });
+        }
+      }
+    } else if (key.startsWith('familyHistory.')) {
+      const parts = key.split('.');
+      if (parts.length === 3 && !isNaN(parts[1])) {
+        const index = parseInt(parts[1], 10);
+        const field = parts[2];
+        if (!finalData.familyHistory[index]) {
+          finalData.familyHistory[index] = {};
+        }
+        finalData.familyHistory[index][field] = value;
+      } else if (parts.length === 2) {
+        const field = parts[1];
+        if (finalData.familyHistory.length === 0) {
+          finalData.familyHistory.push({});
+        }
+        let lastEntry = finalData.familyHistory[finalData.familyHistory.length - 1];
+        if (!lastEntry.hasOwnProperty(field)) {
+          lastEntry[field] = value;
+        } else {
+          finalData.familyHistory.push({ [field]: value });
+        }
+      }
+    } else if (key.startsWith('diagnosticImpressions.')) {
+      const parts = key.split('.');
+      if (parts.length === 3 && !isNaN(parts[1])) {
+        const index = parseInt(parts[1], 10);
+        const field = parts[2];
+        if (!finalData.diagnosticImpressions[index]) {
+          finalData.diagnosticImpressions[index] = { isPrimary: false };
+        }
+        finalData.diagnosticImpressions[index][field] = value;
+        if (field === 'isPrimary') {
+          finalData.diagnosticImpressions[index][field] = value === 'true' || value === true;
+        }
+      } else if (parts.length === 2) {
+        const field = parts[1];
+        if (finalData.diagnosticImpressions.length === 0) {
+          finalData.diagnosticImpressions.push({ isPrimary: false });
+        }
+        let lastEntry = finalData.diagnosticImpressions[finalData.diagnosticImpressions.length - 1];
+        if (!lastEntry.hasOwnProperty(field)) {
+          lastEntry[field] = value;
+        } else {
+          finalData.diagnosticImpressions.push({ [field]: value, isPrimary: false });
+        }
+        if (field === 'isPrimary') {
+          finalData.diagnosticImpressions[finalData.diagnosticImpressions.length - 1][field] = value === 'true' || value === true;
+        }
+      }
+    }
+  });
+
+  return finalData;
+};
+
+
+
+const saveDataToSupabase = async (finalJSON, history) => {
+  // 1) Extract the patient's name directly
+  const patientName = finalJSON.demographics?.name || "Unknown";
+
+  // 2) Attempt to parse an email from 'contactInfo' 
+  //    (if you store the email directly in `finalJSON.demographics.email`, just use that)
+  let patientEmail = "";
+  const contactInfo = finalJSON.demographics?.contactInfo || "";
+  const emailMatch = contactInfo.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/);
+  if (emailMatch) {
+    patientEmail = emailMatch[0];
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('form_data')
+      .insert([
+        {
+          session_id: crypto.randomUUID(),   // or use your own ID strategy
+          patient_name: patientName,
+          patient_email: patientEmail,
+          form_data: finalJSON,              // The final structured JSON
+          chat_history: history,             // The entire Q&A flow
+        },
+      ]);
+
+    if (error) {
+      console.error('❌ Error saving data to Supabase:', error.message);
+    } else {
+      console.log('✅ Data successfully saved to Supabase:', data);
+    }
+  } catch (err) {
+    console.error('⚠️ Unexpected error:', err);
+  }
+};
+
   
   // 👀 On mount
   useEffect(() => {
@@ -79,17 +298,40 @@ export default function FormBotPage() {
 
   useEffect(() => {
     if (done) {
-      console.log('Complete Form Intake Responses:');
-      console.log(JSON.stringify(history, null, 2));
-      console.log('Summary:');
-      history.forEach((entry) => {
-        console.log(`${entry.question.label}: ${entry.value}`);
-      });
+      const finalJSON = populateFinalJSON(history);
+      console.log("Final Structured JSON:", JSON.stringify(finalJSON, null, 2));
   
-      // Save the form responses to Supabase
-      saveDataToSupabase(history);
+      // Check for missing fields
+      const missingFields = [];
+      // Check demographics
+      Object.entries(finalJSON.demographics).forEach(([key, value]) => {
+        if (!value) missingFields.push(`demographics.${key}`);
+      });
+      // Check chiefComplaint
+      Object.entries(finalJSON.chiefComplaint).forEach(([key, value]) => {
+        if (!value) missingFields.push(`chiefComplaint.${key}`);
+      });
+      // Check historyOfPresentIllness
+      Object.entries(finalJSON.historyOfPresentIllness).forEach(([key, value]) => {
+        if (!value) missingFields.push(`historyOfPresentIllness.${key}`);
+      });
+      // Check socialHistory
+      Object.entries(finalJSON.socialHistory).forEach(([key, value]) => {
+        if (!value) missingFields.push(`socialHistory.${key}`);
+      });
+      // Check reviewOfSystems
+      Object.entries(finalJSON.reviewOfSystems).forEach(([key, value]) => {
+        if (!value) missingFields.push(`reviewOfSystems.${key}`);
+      });
+      // Optionally check other array sections if needed
+  
+      console.log("Missing Fields:", missingFields);
+      saveDataToSupabase(finalJSON,history);
+
     }
   }, [done, history]);
+  
+  
   
 
   const handleSubmit = async () => {

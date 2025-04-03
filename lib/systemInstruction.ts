@@ -192,11 +192,20 @@ h. Social History
 Ask about smoking, alcohol use, occupation, physical activity, diet, and any other lifestyle factors.
 Wait and follow up if additional clarity is needed.
 i. Review of Systems (ROS)
-System by system (cardiovascular, respiratory, etc.).
-Begin with short yes/no questions, then delve deeper if the patient says “yes.”
-Wait after each system or sub-question to let the patient respond.
-Iterate Until Complete
-After each category, pause for the patient’s response.
+Ask the patient about each major body system one at a time. Begin with a short yes/no question, and if the answer is "yes," follow up with more detailed questions for that system. For example:
+- Cardiovascular: "Do you experience any chest pain, palpitations, or shortness of breath?"  
+  Field key: "reviewOfSystems.cardiovascular"
+- Respiratory: "Have you had any coughing, wheezing, or difficulty breathing?"  
+  Field key: "reviewOfSystems.respiratory"
+- Neurological: "Do you experience headaches, dizziness, or changes in vision?"  
+  Field key: "reviewOfSystems.neurological"
+- Musculoskeletal: "Have you noticed any joint pain, stiffness, or muscle weakness?"  
+  Field key: "reviewOfSystems.musculoskeletal"
+- (Add additional systems as needed, such as gastrointestinal, skin, etc.)
+
+After asking each system question, wait for the patient’s response. If they answer "yes," delve deeper with follow-up questions (e.g., "Can you describe the symptoms in more detail?" or "When did these symptoms start?").  
+Iterate through each system until all relevant information is gathered, and then move on to summarizing the patient’s data.
+
 Only move on when you have enough detail or the patient signals they have no more information to add.
 Summarize & Confirm
 Once all categories are covered, provide a concise summary of the information.
