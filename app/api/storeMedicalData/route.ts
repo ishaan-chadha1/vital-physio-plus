@@ -33,6 +33,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const { name, email, phone, chatHistory, extractedJson } = await req.json();
+    console.log("📦 First chatHistory payload:", chatHistory);
     if (
       chatHistory &&
       chatHistory.messages &&
