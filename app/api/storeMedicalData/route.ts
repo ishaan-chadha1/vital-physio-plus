@@ -32,15 +32,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    // 🌐 Step 1: Safely parse the incoming body
-    let body;
-    try {
-      body = await req.json();
-    } catch (err: any) {
-      console.error("❌ Invalid JSON:", err.message);
-      return NextResponse.json({ success: false, error: "Malformed JSON payload" }, { status: 400 });
-    }
-
+    const body = await req.json();
     const {
       name,
       email,
@@ -49,54 +41,66 @@ export async function POST(req: Request) {
       extractedJson = {}
     } = body;
 
-    // 🧱 Step 2: Validate base structure
+    // 🔍 Validate base chatHistory
     if (!chatHistory || typeof chatHistory !== "object") {
       return NextResponse.json({ success: false, error: "Missing or invalid chatHistory" }, { status: 400 });
     }
 
-    // 🛠️ Step 3: Ensure chatHistory.messages is an array
+    // 🛠️ Fix chatHistory.messages if it's a single object
     if (!Array.isArray(chatHistory.messages)) {
       if (typeof chatHistory.messages === "object" && chatHistory.messages !== null) {
-        chatHistory.messages = [chatHistory.messages]; // wrap single object
+        chatHistory.messages = [chatHistory.messages];
       } else {
         return NextResponse.json({ success: false, error: "chatHistory.messages must be an array or valid object" }, { status: 400 });
       }
     }
 
-    // ✅ Step 4: Validate each message format
+    // ✅ Ensure each message has required structure
     const isValidMessageArray = chatHistory.messages.every(
       (msg: any) =>
         msg &&
         typeof msg === "object" &&
-        typeof msg.id === "string" &&
-        typeof msg.sender === "string" &&
-        typeof msg.content === "string" &&
-        typeof msg.timestamp === "string"
+        msg.id &&
+        msg.sender &&
+        msg.content &&
+        msg.timestamp
     );
 
     if (!isValidMessageArray) {
       return NextResponse.json({ success: false, error: "Invalid message structure in chatHistory.messages" }, { status: 400 });
     }
 
-    // 🎯 Step 5: Validate core fields
     const { sessionId, timestamp } = chatHistory;
+
     if (!name || !email || !phone || !sessionId || !timestamp) {
       return NextResponse.json({ success: false, error: "Missing required patient fields" }, { status: 400 });
     }
 
-    // 🧼 Step 6: Clean deeply nested JSON
+    // 🧼 Clean data and strip placeholder extractedJson
     const cleanChatHistory = JSON.parse(JSON.stringify(chatHistory));
-    const cleanExtractedJson = JSON.parse(JSON.stringify(extractedJson));
+    let cleanExtractedJson = null;
 
-    // 📦 Step 7: Save to Supabase
-    console.log("🚀 Final Supabase Insert Payload:", {
+    try {
+      const parsed = JSON.parse(JSON.stringify(extractedJson));
+      const keys = Object.keys(parsed);
+
+      // Allow real JSON but ignore placeholder-only ones
+      if (keys.length > 1 || (keys.length === 1 && !keys.includes("placeholder"))) {
+        cleanExtractedJson = parsed;
+      }
+    } catch (err) {
+      console.warn("⚠️ Invalid extractedJson format, skipping...");
+    }
+
+    // 🚀 Log final payload
+    console.log("📦 Final Insert Payload:", {
       sessionId,
       timestamp,
       name,
       email,
       phone,
       chatHistory: cleanChatHistory,
-      extractedJson: cleanExtractedJson
+      extractedJson: cleanExtractedJson,
     });
 
     const { error } = await supabase.from("eleven_data").insert([
@@ -124,6 +128,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: false, error: err.message }, { status: 500 });
   }
 }
+
 
 
 // 🔹 Handle PUT request (Update an entry)
