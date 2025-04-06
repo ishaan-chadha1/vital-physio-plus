@@ -33,6 +33,15 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const { name, email, phone, chatHistory, extractedJson } = await req.json();
+    if (
+      chatHistory &&
+      chatHistory.messages &&
+      !Array.isArray(chatHistory.messages) &&
+      typeof chatHistory.messages === "object"
+    ) {
+      chatHistory.messages = [chatHistory.messages];
+    }
+    console.log("📦 Final chatHistory payload:", chatHistory);
 
     // Insert data into Supabase
     const { error } = await supabase.from("eleven_data").insert([
