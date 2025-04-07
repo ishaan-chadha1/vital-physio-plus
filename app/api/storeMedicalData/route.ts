@@ -34,7 +34,7 @@ export async function POST(req: Request) {
   try {
     const rawBody = await req.json();
     console.log("🌐 Raw request body:", rawBody);
-    const { name, email, phone, chatHistory, extractedJson } = await req.json();
+    const { name, email, phone, chatHistory, extractedJson } = rawBody;
     console.log("📦 First chatHistory payload:", chatHistory);
     if (
       chatHistory &&
