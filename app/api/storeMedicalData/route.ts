@@ -32,19 +32,29 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    const rawBody = await req.json();
-    console.log("🌐 Raw request body:", rawBody);
-    const { name, email, phone, chatHistory, extractedJson } = rawBody;
-    console.log("📦 First chatHistory payload:", chatHistory);
+    const rawBody = await req.text();
+    console.log("🌐 Raw request body (string):", rawBody);
+
+    // 🧼 Parse the body once
+    const body = JSON.parse(rawBody);
+
+    const { name, email, phone, chatHistory, extractedJson } = body;
+
+    // ✅ Defensive check for chatHistory.messages
     if (
-      chatHistory &&
-      chatHistory.messages &&
-      !Array.isArray(chatHistory.messages) &&
-      typeof chatHistory.messages === "object"
+      !chatHistory ||
+      typeof chatHistory !== "object" ||
+      !Array.isArray(chatHistory.messages)
     ) {
-      chatHistory.messages = [chatHistory.messages];
+      console.error("❌ chatHistory.messages is missing or invalid");
+      return NextResponse.json(
+        { success: false, error: "Invalid chatHistory.messages" },
+        { status: 400 }
+      );
     }
-    console.log("📦 Final chatHistory payload:", chatHistory);
+
+    // ✅ Log full chatHistory with messages
+    console.log("📦 Final chatHistory:", JSON.stringify(chatHistory, null, 2));
 
     // Insert data into Supabase
     const { error } = await supabase.from("eleven_data").insert([
