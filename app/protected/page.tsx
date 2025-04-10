@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { InfoIcon } from "lucide-react";
 import GeminiIntake from "@/components/gemini-intake";
-
+import { BookingButtonInline } from "@/components/booking-button-inline";
 export default async function ProtectedPage() {
   const supabase = await createClient();
   const {
@@ -34,10 +34,12 @@ export default async function ProtectedPage() {
             Welcome to Vital Physio +
           </h1>
           <p className="text-lg leading-relaxed">
-            Before your visit, we’ll gather some quick medical info to help your physiotherapist prepare and personalize your treatment.
+            Before your visit, we’ll gather some quick medical info to help your
+            physiotherapist prepare and personalize your treatment.
             <br />
             <br />
-            You can choose from three intake methods below. Once done, you'll be directed to book your appointment.
+            You can choose from three intake methods below. Once done, you'll be
+            directed to book your appointment.
           </p>
         </div>
       </section>
@@ -79,14 +81,8 @@ export default async function ProtectedPage() {
 
       {/* BOOKING CTA */}
       <section className="text-center py-16">
-        <h2 className="text-2xl font-semibold mb-4">Ready to book?</h2>
-        <Link
-          href="https://cal.com/vitalphysioplus"
-          target="_blank"
-          className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-md transition"
-        >
-          Book Your Appointment Now
-        </Link>
+        <BookingButtonInline />
+
       </section>
 
       {/* OPTIONAL: Show user + data */}

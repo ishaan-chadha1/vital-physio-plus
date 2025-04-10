@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@11labs/react": "^0.0.7",
+    "@calcom/embed-react": "^1.5.2",
     "@google/generative-ai": "^0.22.0",
     "@headlessui/react": "^2.2.1",
     "@heroicons/react": "^2.2.0",
