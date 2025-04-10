@@ -1,12 +1,19 @@
 // app/page.tsx or pages/index.tsx depending on your setup
 
+import AboutUs from "@/components/about-us";
 import Hero from "@/components/hero";
+import Services from "@/components/services";
+import Testimonials from "@/components/testimonials";
+import WhyChooseUs from "@/components/why-choose-us";
 
 export default async function Home() {
   return (
     <>
       <Hero />
-      {/* More sections coming next */}
+      <AboutUs />
+      <Services/>
+      <WhyChooseUs />
+      <Testimonials />
     </>
   );
 }
