@@ -13,9 +13,14 @@ export function BookingButtonInline() {
       cal("ui", {
         layout: "month_view",
         hideEventTypeDetails: false,
-        onEventScheduled: () => {
+      });
+
+      // ✅ Attach listener separately
+      cal("on", {
+        eventType: "cal.event_scheduled",
+        callback: () => {
           setHasBooked(true);
-          console.log("✅ Appointment scheduled");
+          console.log("✅ Appointment booked!");
         },
       });
     })();
@@ -24,6 +29,7 @@ export function BookingButtonInline() {
   return (
     <div className="text-center py-16">
       <h2 className="text-2xl font-semibold mb-4">Ready to book?</h2>
+
       <button
         data-cal-namespace="30min"
         data-cal-link="vital-physio/30min"
@@ -34,7 +40,9 @@ export function BookingButtonInline() {
       </button>
 
       {hasBooked && (
-        <p className="text-green-700 mt-4">✅ Booking complete! We'll see you soon.</p>
+        <p className="text-green-700 mt-4">
+          ✅ Booking confirmed! We’ll see you soon.
+        </p>
       )}
     </div>
   );
