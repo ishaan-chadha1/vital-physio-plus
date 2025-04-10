@@ -5,6 +5,8 @@ import Link from "next/link";
 import { InfoIcon } from "lucide-react";
 import GeminiIntake from "@/components/gemini-intake";
 import { BookingButtonInline } from "@/components/booking-button-inline";
+import BookingsList from "@/components/bookings-list";
+
 export default async function ProtectedPage() {
   const supabase = await createClient();
   const {
@@ -94,38 +96,8 @@ export default async function ProtectedPage() {
           <InfoIcon size="16" strokeWidth={2} />
           You’re logged in as <strong>{userEmail}</strong>
         </div>
-        
-        <section className="max-w-4xl mx-auto px-6 mt-12">
-  <h2 className="text-2xl font-bold mb-4">Your Upcoming Appointments</h2>
 
-  {bookings?.filter(b => b.status === "accepted" && new Date(b.start) > new Date()).length > 0 ? (
-    <ul className="space-y-4">
-      {bookings
-        .filter(b => b.status === "accepted" && new Date(b.start) > new Date())
-        .map((booking: any) => (
-          <li key={booking.uid} className="border p-4 rounded shadow-sm">
-            <p className="font-semibold text-blue-700">{booking.title}</p>
-            <p className="text-gray-600 text-sm">
-              {new Date(booking.start).toLocaleString()} →{" "}
-              {new Date(booking.end).toLocaleTimeString()}
-            </p>
-            <a
-              href={booking.meetingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-blue-600 underline mt-2 inline-block"
-            >
-              Join Meeting
-            </a>
-          </li>
-        ))}
-    </ul>
-  ) : (
-    <p className="text-gray-600">You have no upcoming appointments.</p>
-  )}
-</section>
-
-
+        <BookingsList userEmail={userEmail} />
 
         <GeminiIntake geminiData={geminiData} />
       </div>
