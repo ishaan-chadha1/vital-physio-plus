@@ -1,26 +1,18 @@
-import { useEffect, useState } from "react";
+// components/booking-button-inline.tsx
+"use client";
+
+import { useEffect } from "react";
 import { getCalApi } from "@calcom/embed-react";
 
 export function BookingButtonInline() {
-  const [hasBooked, setHasBooked] = useState(false);
-
   useEffect(() => {
     (async () => {
       const cal = await getCalApi({ namespace: "30min" });
 
-      // UI config (no event handler here!)
       cal("ui", {
         layout: "month_view",
         hideEventTypeDetails: false,
-      });
-
-      // ✅ Attach the event listener separately
-      cal("on", {
-        eventType: "bookingSuccessful",
-        callback: () => {
-          setHasBooked(true);
-          console.log("✅ Booking completed!");
-        },
+        // ✅ No event handlers here
       });
     })();
   }, []);
@@ -35,12 +27,6 @@ export function BookingButtonInline() {
       >
         Book Your Appointment
       </button>
-
-      {hasBooked && (
-        <p className="mt-4 text-green-600 font-medium">
-          ✅ Booking confirmed!
-        </p>
-      )}
     </div>
   );
 }
