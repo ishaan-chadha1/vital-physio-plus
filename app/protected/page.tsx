@@ -26,6 +26,8 @@ export default async function ProtectedPage() {
     console.error("❌ Error fetching user-specific data:", error.message);
   }
   const bookings = await getUserBookings(userEmail);
+  console.log("📆 Bookings returned from Cal.com:", bookings);
+
 
   return (
     <div className="flex-1 w-full flex flex-col gap-16">
@@ -96,18 +98,25 @@ export default async function ProtectedPage() {
         <section className="max-w-4xl mx-auto px-6 mt-12">
   <h2 className="text-2xl font-bold mb-4">Your Upcoming Appointments</h2>
 
-  {bookings?.filter(b => b.status === "confirmed" && new Date(b.startTime) > new Date()).length > 0 ? (
+  {bookings?.filter(b => b.status === "accepted" && new Date(b.start) > new Date()).length > 0 ? (
     <ul className="space-y-4">
       {bookings
-        .filter(b => b.status === "confirmed" && new Date(b.startTime) > new Date())
+        .filter(b => b.status === "accepted" && new Date(b.start) > new Date())
         .map((booking: any) => (
           <li key={booking.uid} className="border p-4 rounded shadow-sm">
-            <p className="font-semibold text-blue-700">{booking.eventType.name}</p>
+            <p className="font-semibold text-blue-700">{booking.title}</p>
             <p className="text-gray-600 text-sm">
-              {new Date(booking.startTime).toLocaleString()} →{" "}
-              {new Date(booking.endTime).toLocaleTimeString()}
+              {new Date(booking.start).toLocaleString()} →{" "}
+              {new Date(booking.end).toLocaleTimeString()}
             </p>
-            <p className="text-gray-500 text-sm">Booking ID: {booking.uid}</p>
+            <a
+              href={booking.meetingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-blue-600 underline mt-2 inline-block"
+            >
+              Join Meeting
+            </a>
           </li>
         ))}
     </ul>
@@ -115,6 +124,7 @@ export default async function ProtectedPage() {
     <p className="text-gray-600">You have no upcoming appointments.</p>
   )}
 </section>
+
 
 
         <GeminiIntake geminiData={geminiData} />

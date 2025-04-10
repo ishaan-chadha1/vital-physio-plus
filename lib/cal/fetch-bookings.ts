@@ -1,7 +1,5 @@
-// lib/cal/fetch-bookings.ts
-
 export async function getUserBookings(email: string) {
-    const calApiKey = process.env.CAL_API_KEY; // securely read from env
+    const calApiKey = process.env.CAL_API_KEY;
     const endpoint = `https://api.cal.com/v2/bookings?attendeeEmail=${encodeURIComponent(email)}`;
   
     const res = await fetch(endpoint, {
@@ -10,15 +8,17 @@ export async function getUserBookings(email: string) {
         Authorization: `Bearer ${calApiKey}`,
         "cal-api-version": "2024-08-13",
       },
-      cache: "no-store", // always fetch fresh
+      cache: "no-store",
     });
   
+    const json = await res.json();
+    console.log("📡 Raw Cal API response:", json); // ✅ <— add this here
+  
     if (!res.ok) {
-      console.error("❌ Failed to fetch bookings:", res.statusText);
+      console.error("❌ Cal.com API failed:", res.statusText);
       return [];
     }
   
-    const json = await res.json();
-    return json.bookings || [];
+    return json.data || [];
   }
   
