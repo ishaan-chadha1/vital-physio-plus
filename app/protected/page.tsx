@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { getUserBookings } from "@/lib/cal/fetch-bookings";
 import Link from "next/link";
 import { InfoIcon } from "lucide-react";
 import GeminiIntake from "@/components/gemini-intake";
@@ -24,6 +25,7 @@ export default async function ProtectedPage() {
   if (error) {
     console.error("❌ Error fetching user-specific data:", error.message);
   }
+  const bookings = await getUserBookings(userEmail);
 
   return (
     <div className="flex-1 w-full flex flex-col gap-16">
@@ -82,7 +84,6 @@ export default async function ProtectedPage() {
       {/* BOOKING CTA */}
       <section className="text-center py-16">
         <BookingButtonInline />
-
       </section>
 
       {/* OPTIONAL: Show user + data */}
@@ -91,6 +92,30 @@ export default async function ProtectedPage() {
           <InfoIcon size="16" strokeWidth={2} />
           You’re logged in as <strong>{userEmail}</strong>
         </div>
+        
+        <section className="max-w-4xl mx-auto px-6 mt-12">
+  <h2 className="text-2xl font-bold mb-4">Your Upcoming Appointments</h2>
+
+  {bookings?.filter(b => b.status === "confirmed" && new Date(b.startTime) > new Date()).length > 0 ? (
+    <ul className="space-y-4">
+      {bookings
+        .filter(b => b.status === "confirmed" && new Date(b.startTime) > new Date())
+        .map((booking: any) => (
+          <li key={booking.uid} className="border p-4 rounded shadow-sm">
+            <p className="font-semibold text-blue-700">{booking.eventType.name}</p>
+            <p className="text-gray-600 text-sm">
+              {new Date(booking.startTime).toLocaleString()} →{" "}
+              {new Date(booking.endTime).toLocaleTimeString()}
+            </p>
+            <p className="text-gray-500 text-sm">Booking ID: {booking.uid}</p>
+          </li>
+        ))}
+    </ul>
+  ) : (
+    <p className="text-gray-600">You have no upcoming appointments.</p>
+  )}
+</section>
+
 
         <GeminiIntake geminiData={geminiData} />
       </div>
