@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { InfoIcon } from "lucide-react";
+import GeminiIntake from "@/components/gemini-intake";
 
 export default async function ProtectedPage() {
   const supabase = await createClient();
@@ -95,16 +96,7 @@ export default async function ProtectedPage() {
           You’re logged in as <strong>{userEmail}</strong>
         </div>
 
-        <div className="flex flex-col gap-2 items-start mb-12">
-          <h2 className="font-bold text-xl mb-2">Your Gemini Intake Data</h2>
-          {geminiData && geminiData.length > 0 ? (
-            <pre className="text-xs font-mono p-3 rounded border max-h-64 overflow-auto w-full">
-              {JSON.stringify(geminiData, null, 2)}
-            </pre>
-          ) : (
-            <p>No data submitted yet.</p>
-          )}
-        </div>
+        <GeminiIntake geminiData={geminiData} />
       </div>
     </div>
   );
