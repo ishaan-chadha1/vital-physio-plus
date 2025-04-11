@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </nav>
 
           {/* CONTENT + FOOTER (blue bg) */}
-          <div className="w-full bg-[#38bdf8] flex flex-col items-center">
+          <div className="w-full bg-[#fffff] flex flex-col items-center">
             <div className="flex flex-col gap-20 max-w-5xl p-5 w-full">
               {children}
             </div>
