@@ -289,44 +289,51 @@ export default function ChatInterface() {
     messages: [...history], // ✅ Uses latest history instead of stale state
   });
 
-  return (<div className="w-full max-w-none px-0">
-    <div className="flex flex-col items-center justify-between min-h-screen w-full bg-[#38bdf8] text-white px-4 py-8">
-      <main className="w-full flex flex-col items-center gap-6 flex-1"></main>
-      <h1 className="text-3xl font-bold text-center mb-6">Vital Physio +</h1>
-      <div className="w-full max-w-4xl bg-white rounded-xl shadow-xl p-6 flex flex-col justify-between h-[70vh]">
-        <div className="overflow-y-auto flex-1 space-y-4 pr-2 mb-4">
+  return (
+    <div className="flex flex-col items-center justify-between min-h-screen w-full bg-[#38bdf8] text-white px-4 py-6 sm:px-6">
+      {/* HEADER */}
+      <h1 className="text-4xl font-semibold text-center mt-4 mb-6 drop-shadow-md">
+        Welcome to Vital Physio +
+      </h1>
+  
+      {/* CHAT CONTAINER */}
+      <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl p-6 flex flex-col justify-between h-[70vh] sm:h-[75vh] overflow-hidden">
+        <div className="overflow-y-auto flex-1 space-y-4 pr-2 scroll-smooth custom-scrollbar">
           <AnimatePresence initial={false}>
             {messages.map((message) => (
               <motion.div
                 key={message.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
                 className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[70%] px-4 py-3 rounded-2xl shadow-lg ${
+                  className={`max-w-[75%] px-4 py-3 rounded-2xl shadow-sm text-sm sm:text-base ${
                     message.sender === "user"
-                      ? "bg-white text-[#38bdf8]"
-                      : "bg-[#e0f7ff] text-blue-900"
+                      ? "bg-[#38bdf8] text-white rounded-br-none"
+                      : "bg-[#f0f9ff] text-gray-800 rounded-bl-none"
                   }`}
                 >
-                  <p>{message.content}</p>
-                  <p className="text-xs text-gray-400 mt-1">
-                    {new Date(message.timestamp).toLocaleTimeString()}
+                  <p className="whitespace-pre-wrap break-words">{message.content}</p>
+                  <p className="text-[11px] mt-1 text-black-400 text-right">
+                    {new Date(message.timestamp).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </p>
                 </div>
               </motion.div>
             ))}
             {isTyping && (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="flex justify-start"
               >
-                <div className="bg-gray-200 text-gray-900 rounded-2xl px-4 py-3 shadow-lg">
-                  <Loader2 className="w-6 h-6 animate-spin" />
+                <div className="bg-gray-200 text-gray-900 rounded-2xl px-4 py-3 shadow animate-pulse">
+                  <Loader2 className="w-5 h-5 animate-spin" />
                 </div>
               </motion.div>
             )}
@@ -334,31 +341,31 @@ export default function ChatInterface() {
           <div ref={messagesEndRef} />
         </div>
       </div>
-
+  
+      {/* INPUT FORM */}
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-4xl mx-auto mt-4 bg-white rounded-full px-4 py-3 shadow-lg"
+        className="w-full max-w-4xl mx-auto mt-4 bg-white rounded-full px-5 py-3 shadow-lg flex items-center"
       >
-        <div className="flex items-center w-full">
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="Ask anything"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="flex-1 bg-transparent text-gray-900 border-none outline-none py-2 px-3 text-base"
-          />
-          {inputValue.trim() && (
-            <motion.button
-              type="submit"
-              className="p-2 rounded-full hover:bg-gray-100 flex items-center justify-center"
-            >
-              <Send size={20} className="text-gray-600" />
-            </motion.button>
-          )}
-        </div>
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder="Ask anything..."
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="flex-1 bg-transparent text-gray-900 placeholder-gray-400 border-none outline-none text-sm sm:text-base"
+        />
+        {inputValue.trim() && (
+          <motion.button
+            type="submit"
+            whileTap={{ scale: 0.9 }}
+            className="ml-2 p-2 rounded-full hover:bg-gray-100 transition"
+          >
+            <Send size={20} className="text-gray-600" />
+          </motion.button>
+        )}
       </form>
     </div>
-    </div>
   );
+  
 }
