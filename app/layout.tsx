@@ -23,7 +23,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${inter.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {/* NAVBAR (white) */}
+          
+          {/* NAVBAR (Always white) */}
           <nav className="w-full flex justify-center bg-white border-b border-gray-200 h-16">
             <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
               <div className="flex gap-5 items-center font-semibold">
@@ -33,18 +34,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </nav>
 
-          {/* CONTENT + FOOTER (blue bg) */}
-          <div className="w-full bg-[#fffff] flex flex-col items-center">
-            <div className="flex flex-col gap-20 max-w-5xl p-5 w-full">
-              {children}
-            </div>
+          {/* 👇 REMOVE THIS WRAPPER with fixed white bg */}
+          {/* Instead of forcing all pages into white, let each page choose */}
+          {children}
 
-            <footer className="w-full flex items-center justify-center border-t border-white/20 text-white text-center text-xs gap-8 py-16">
-              <ThemeSwitcher />
-            </footer>
-          </div>
+          {/* OPTIONAL: move footer into pages that need it */}
         </ThemeProvider>
       </body>
     </html>
   );
 }
+

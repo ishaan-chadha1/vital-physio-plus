@@ -289,7 +289,7 @@ export default function ChatInterface() {
     messages: [...history], // ✅ Uses latest history instead of stale state
   });
 
-  return (
+  return (<div className="w-full max-w-none px-0">
     <div className="flex flex-col items-center justify-between min-h-screen w-full bg-[#38bdf8] text-white px-4 py-8">
       <main className="w-full flex flex-col items-center gap-6 flex-1"></main>
       <h1 className="text-3xl font-bold text-center mb-6">Vital Physio +</h1>
@@ -358,6 +358,7 @@ export default function ChatInterface() {
           )}
         </div>
       </form>
+    </div>
     </div>
   );
 }
