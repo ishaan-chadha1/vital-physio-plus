@@ -337,21 +337,21 @@ export default function ChatInterface() {
 
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-4xl mx-auto mt-4 flex items-center bg-white rounded-full px-4 py-3 shadow-lg"
+        className="w-full max-w-4xl mx-auto mt-4 bg-white rounded-full px-4 py-3 shadow-lg"
       >
-        <div className="flex items-center">
+        <div className="flex items-center w-full">
           <input
             ref={inputRef}
             type="text"
             placeholder="Ask anything"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            className="flex-1 bg-transparent text-gray-900 border-none outline-none py-3 px-4"
+            className="flex-1 bg-transparent text-gray-900 border-none outline-none py-2 px-3 text-base"
           />
           {inputValue.trim() && (
             <motion.button
               type="submit"
-              className="p-2 rounded-full hover:bg-gray-100"
+              className="p-2 rounded-full hover:bg-gray-100 flex items-center justify-center"
             >
               <Send size={20} className="text-gray-600" />
             </motion.button>
