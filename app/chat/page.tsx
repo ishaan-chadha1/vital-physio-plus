@@ -24,7 +24,6 @@ const getISTTimestamp = () => {
   return now.toISOString().replace("T", " ").slice(0, 19); // Optional: format to 'YYYY-MM-DD HH:mm:ss'
 };
 
-
 type Message = {
   id: string;
   content: string;
@@ -51,41 +50,50 @@ export default function ChatInterface() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const supabase = createClient(); // Initialize Supabase client
 
-const saveDataToSupabase = async (name: string, email: string, phone: string, chatHistory: Message[], extractedJson: any) => {
-  try {
-    const { error } = await supabase.from("gemini_data").insert([
-      {
-        session_id: crypto.randomUUID(), // Generate a unique session ID
-        timestamp: getISTTimestamp(),
-        patient_name: name,
-        patient_email: email,
-        patient_phone: phone,
-        chat_history: chatHistory, // Store entire chat history
-        extracted_json: extractedJson, // Store structured patient data
-      },
-    ]);
+  const saveDataToSupabase = async (
+    name: string,
+    email: string,
+    phone: string,
+    chatHistory: Message[],
+    extractedJson: any
+  ) => {
+    try {
+      const { error } = await supabase.from("gemini_data").insert([
+        {
+          session_id: crypto.randomUUID(), // Generate a unique session ID
+          timestamp: getISTTimestamp(),
+          patient_name: name,
+          patient_email: email,
+          patient_phone: phone,
+          chat_history: chatHistory, // Store entire chat history
+          extracted_json: extractedJson, // Store structured patient data
+        },
+      ]);
 
-    if (error) {
-      console.error("❌ Error saving data to Supabase:", error.message);
-    } else {
-      console.log("✅ Data successfully saved to Supabase!");
+      if (error) {
+        console.error("❌ Error saving data to Supabase:", error.message);
+      } else {
+        console.log("✅ Data successfully saved to Supabase!");
+      }
+    } catch (err) {
+      console.error("⚠️ Unexpected error:", err);
     }
-  } catch (err) {
-    console.error("⚠️ Unexpected error:", err);
-  }
-};
+  };
 
   useEffect(() => {
     initializeChat();
     if (inputRef.current) inputRef.current.focus();
-  
+
     // ✅ Load chat history from localStorage
     const savedHistory = localStorage.getItem("chatHistory");
     if (savedHistory) {
       setChatHistory(JSON.parse(savedHistory));
     }
   }, []);
-  
+  // Auto-scroll to the bottom whenever messages update
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const initializeChat = async () => {
     if (!chatSession) {
@@ -138,7 +146,7 @@ const saveDataToSupabase = async (name: string, email: string, phone: string, ch
       const updatedHistory = [...prev, userMessage];
       // console.log("📝 Updated Chat History:", JSON.stringify(updatedHistory, null, 2));
       return updatedHistory;
-    });    
+    });
     setInputValue("");
     setIsTyping(true);
 
@@ -151,12 +159,13 @@ const saveDataToSupabase = async (name: string, email: string, phone: string, ch
       const result = await chatSession.sendMessage(inputValue);
       const responseText = await result.response.text();
 
-
       let jsonOutput = null;
 
       // Try extracting JSON from a code block in the response
-      const jsonMatch = responseText.match(/```jsonc?\n([\s\S]*?)\n```|```json\n([\s\S]*?)\n```/);
-      
+      const jsonMatch = responseText.match(
+        /```jsonc?\n([\s\S]*?)\n```|```json\n([\s\S]*?)\n```/
+      );
+
       if (jsonMatch) {
         try {
           jsonOutput = JSON.parse(jsonMatch[1] || jsonMatch[2]);
@@ -164,31 +173,35 @@ const saveDataToSupabase = async (name: string, email: string, phone: string, ch
           console.warn("⚠️ Failed to parse extracted JSON:", error);
           jsonOutput = null; // Prevent crashing
         }
-        
       } else {
         // Try finding the JSON object within the text response
         const jsonStart = responseText.indexOf("{");
         const jsonEnd = responseText.lastIndexOf("}");
-      
+
         if (jsonStart !== -1 && jsonEnd !== -1) {
           try {
-            jsonOutput = JSON.parse(responseText.substring(jsonStart, jsonEnd + 1));
+            jsonOutput = JSON.parse(
+              responseText.substring(jsonStart, jsonEnd + 1)
+            );
           } catch (error) {
             console.warn("⚠️ Failed to parse JSON from inline text:", error);
           }
         }
       }
-      
+
       // ✅ Log extracted JSON
-      console.log("🟢 Extracted JSON Output:", jsonOutput ? JSON.stringify(jsonOutput, null, 2) : "No JSON detected.");
-      
+      console.log(
+        "🟢 Extracted JSON Output:",
+        jsonOutput ? JSON.stringify(jsonOutput, null, 2) : "No JSON detected."
+      );
+
       if (jsonOutput && typeof jsonOutput === "object") {
         const demographics = jsonOutput.demographics || {}; // ✅ Extract the demographics section safely
-      
+
         // Extract and set the patient name
         const extractedName = demographics.name || "Not provided";
         setPatientName(extractedName);
-      
+
         // Extract and set the patient phone number
         let extractedPhone = "Not provided";
         if (demographics.contactInfo) {
@@ -207,29 +220,34 @@ const saveDataToSupabase = async (name: string, email: string, phone: string, ch
             extractedEmail = emailMatch[0];
           }
         }
-      
+
         // ✅ Log extracted details to verify correctness
-// ✅ Log extracted details to verify correctness
-console.log("🩺 Patient Name:", extractedName);
-console.log("📞 Patient Phone:", extractedPhone);
-console.log("📧 Patient Email:", extractedEmail);
+        // ✅ Log extracted details to verify correctness
+        console.log("🩺 Patient Name:", extractedName);
+        console.log("📞 Patient Phone:", extractedPhone);
+        console.log("📧 Patient Email:", extractedEmail);
 
-// ✅ Save to Supabase
-await saveDataToSupabase(extractedName, extractedEmail, extractedPhone, chatHistory, jsonOutput);
-
+        // ✅ Save to Supabase
+        await saveDataToSupabase(
+          extractedName,
+          extractedEmail,
+          extractedPhone,
+          chatHistory,
+          jsonOutput
+        );
       }
-      
+
       // // ✅ Log extracted details AFTER state updates
       // setTimeout(() => {
       //   console.log("🩺 Patient Name:", patientName || "Not provided");
       //   console.log("📞 Patient Phone:", patientPhone || "Not provided");
       // }, 500); // Delay to ensure state updates
-      
 
-      
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: jsonOutput ? "✅ Your information has been recorded." : responseText,
+        content: jsonOutput
+          ? "✅ Your information has been recorded."
+          : responseText,
         sender: "ai",
         timestamp: getISTTimestamp(),
       };
@@ -237,17 +255,19 @@ await saveDataToSupabase(extractedName, extractedEmail, extractedPhone, chatHist
       setMessages((prev) => [...prev, aiMessage]);
       setChatHistory((prev) => {
         const updatedHistory = [...prev, aiMessage];
-      
+
         // ✅ Save chat history to localStorage
         localStorage.setItem("chatHistory", JSON.stringify(updatedHistory));
-      
+
         // ✅ Log the chat history immediately after update
         const chatJSON = getChatHistoryJSON(updatedHistory);
-        console.log("📜 Updated Chat History:", JSON.stringify(chatJSON, null, 2));
-      
+        console.log(
+          "📜 Updated Chat History:",
+          JSON.stringify(chatJSON, null, 2)
+        );
+
         return updatedHistory;
       });
-      
     } catch (error) {
       console.error("❌ Error generating response:", error);
       setMessages((prev) => [
@@ -268,14 +288,13 @@ await saveDataToSupabase(extractedName, extractedEmail, extractedPhone, chatHist
     timestamp: getISTTimestamp(),
     messages: [...history], // ✅ Uses latest history instead of stale state
   });
-  
-  
-  return (
-    <div className="flex flex-col items-center justify-between min-h-screen bg-gray-100 p-4">
-      <h1 className="text-2xl font-bold">Vital Physio +</h1>
 
-      <div className="w-full flex-grow overflow-hidden flex flex-col px-6">
-        <div className="overflow-y-auto flex-grow pr-2 space-y-4 pb-2">
+  return (
+    <div className="flex flex-col items-center justify-between min-h-screen w-full bg-[#38bdf8] text-white px-4 py-8">
+      <main className="w-full flex flex-col items-center gap-6 flex-1"></main>
+      <h1 className="text-3xl font-bold text-center mb-6">Vital Physio +</h1>
+      <div className="w-full max-w-4xl bg-white rounded-xl shadow-xl p-6 flex flex-col justify-between h-[70vh]">
+        <div className="overflow-y-auto flex-1 space-y-4 pr-2 mb-4">
           <AnimatePresence initial={false}>
             {messages.map((message) => (
               <motion.div
@@ -287,7 +306,11 @@ await saveDataToSupabase(extractedName, extractedEmail, extractedPhone, chatHist
                 className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[70%] px-4 py-3 rounded-2xl shadow-lg ${message.sender === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-900"}`}
+                  className={`max-w-[70%] px-4 py-3 rounded-2xl shadow-lg ${
+                    message.sender === "user"
+                      ? "bg-white text-[#38bdf8]"
+                      : "bg-[#e0f7ff] text-blue-900"
+                  }`}
                 >
                   <p>{message.content}</p>
                   <p className="text-xs text-gray-400 mt-1">
@@ -314,7 +337,7 @@ await saveDataToSupabase(extractedName, extractedEmail, extractedPhone, chatHist
 
       <form
         onSubmit={handleSubmit}
-        className="relative bg-white rounded-2xl p-2 shadow-lg w-full"
+        className="w-full max-w-4xl mx-auto mt-4 flex items-center bg-white rounded-full px-4 py-3 shadow-lg"
       >
         <div className="flex items-center">
           <input

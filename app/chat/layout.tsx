@@ -1,6 +1,6 @@
 export default function ChatLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-20 max-w-5xl p-5">
+    <div className="flex flex-col min-h-screen w-full">
       {children}
     </div>
   );
