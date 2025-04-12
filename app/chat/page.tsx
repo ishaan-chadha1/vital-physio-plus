@@ -292,12 +292,13 @@ export default function ChatInterface() {
   return (
     <div className="flex flex-col items-center justify-between min-h-screen w-full bg-[#38bdf8] text-white px-4 py-6 sm:px-6">
       {/* HEADER */}
-      <h1 className="text-4xl font-semibold text-center mt-4 mb-6 drop-shadow-md">
-        Welcome to Vital Physio +
-      </h1>
-  
       {/* CHAT CONTAINER */}
       <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl p-6 flex flex-col justify-between h-[70vh] sm:h-[75vh] overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+          <h1 className="text-5xl font-bold text-[#38bdf8] opacity-30 select-none">
+            Vital Physio +
+          </h1>
+        </div>
         <div className="overflow-y-auto flex-1 space-y-4 pr-2 scroll-smooth custom-scrollbar">
           <AnimatePresence initial={false}>
             {messages.map((message) => (
@@ -316,7 +317,9 @@ export default function ChatInterface() {
                       : "bg-[#f0f9ff] text-gray-800 rounded-bl-none"
                   }`}
                 >
-                  <p className="whitespace-pre-wrap break-words">{message.content}</p>
+                  <p className="whitespace-pre-wrap break-words">
+                    {message.content}
+                  </p>
                   <p className="text-[11px] mt-1 text-black-400 text-right">
                     {new Date(message.timestamp).toLocaleTimeString([], {
                       hour: "2-digit",
@@ -341,11 +344,11 @@ export default function ChatInterface() {
           <div ref={messagesEndRef} />
         </div>
       </div>
-  
+
       {/* INPUT FORM */}
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-4xl mx-auto mt-4 bg-white rounded-full px-5 py-3 shadow-lg flex items-center"
+        className="w-full max-w-4xl mx-auto bg-white rounded-full px-5 py-3 shadow-lg flex items-center"
       >
         <input
           ref={inputRef}
@@ -367,5 +370,4 @@ export default function ChatInterface() {
       </form>
     </div>
   );
-  
 }
