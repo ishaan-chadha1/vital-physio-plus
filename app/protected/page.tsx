@@ -6,6 +6,7 @@ import { InfoIcon } from "lucide-react";
 import GeminiIntake from "@/components/gemini-intake";
 import { BookingButtonInline } from "@/components/booking-button-inline";
 import BookingsList from "@/components/bookings-list";
+import VoiceAgentEmbed from '@/components/VoiceAgentEmbed';
 
 export default async function ProtectedPage() {
   const supabase = await createClient();
@@ -84,6 +85,16 @@ export default async function ProtectedPage() {
           ))}
         </div>
       </section>
+      {/* EMBEDDED ELEVENLABS VOICE AGENT */}
+<section className="max-w-6xl mx-auto px-6 py-12">
+  <h2 className="text-2xl font-semibold text-center mb-8">
+    Or speak with our AI Assistant now
+  </h2>
+  <div className="rounded-xl overflow-hidden shadow-lg border border-gray-200">
+    <VoiceAgentEmbed />
+  </div>
+</section>
+
 
       {/* BOOKING CTA */}
       <section className="text-center py-16">
