@@ -1,3 +1,4 @@
+import IntroLayout from '@/components/IntroLayout'
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getUserBookings } from "@/lib/cal/fetch-bookings";
@@ -33,6 +34,7 @@ export default async function ProtectedPage() {
 
 
   return (
+    <IntroLayout>
     <div className="flex-1 w-full flex flex-col gap-16">
       {/* HERO: Onboarding Flow */}
       <section className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#38bdf8] text-white py-20 px-6 text-center">
@@ -113,5 +115,6 @@ export default async function ProtectedPage() {
         <GeminiIntake geminiData={geminiData} />
       </div>
     </div>
+    </IntroLayout>
   );
 }
