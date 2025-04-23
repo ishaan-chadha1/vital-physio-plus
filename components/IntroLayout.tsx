@@ -8,13 +8,9 @@ export default function IntroLayout({ children }: { children: React.ReactNode })
   const [hasMounted, setHasMounted] = useState(false)
 
   useEffect(() => {
-    const introSeen = localStorage.getItem('intro_seen')
-    if (!introSeen) {
-      setShowIntro(true)
-    } else {
-      setHasMounted(true)
-    }
+    setShowIntro(true)
   }, [])
+      
 
   const handleIntroEnd = () => {
     localStorage.setItem('intro_seen', 'true')
