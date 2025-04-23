@@ -18,7 +18,36 @@ export default function IntroVideo({ onEnd }: { onEnd: () => void }) {
     }
 
     window.addEventListener("message", listener)
-    return () => window.removeEventListener("message", listener)
+
+    // Attempt to start playback via postMessage
+    const tryPlay = () => {
+      if (iframeRef.current?.contentWindow) {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({
+            event: 'command',
+            func: 'mute', // Must mute to guarantee autoplay on most browsers
+            args: [],
+          }),
+          '*'
+        )
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({
+            event: 'command',
+            func: 'playVideo',
+            args: [],
+          }),
+          '*'
+        )
+      }
+    }
+
+    // Give it a short delay to load before triggering
+    const timeout = setTimeout(tryPlay, 500)
+
+    return () => {
+      clearTimeout(timeout)
+      window.removeEventListener("message", listener)
+    }
   }, [onEnd])
 
   return (
@@ -31,12 +60,12 @@ export default function IntroVideo({ onEnd }: { onEnd: () => void }) {
         Skip
       </button>
 
-      {/* YouTube Video */}
+      {/* YouTube Embed */}
       <iframe
         ref={iframeRef}
         className="w-full h-full"
-        src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&controls=0&modestbranding=1&rel=0&enablejsapi=1"
-        allow="autoplay"
+        src="https://www.youtube.com/embed/CF_1py1maEQ?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&enablejsapi=1&playsinline=1"
+        allow="autoplay; fullscreen"
         allowFullScreen
         frameBorder="0"
       />
