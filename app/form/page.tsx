@@ -462,6 +462,8 @@ const saveDataToSupabase = async (finalJSON, history) => {
   
 
   return (
+    <div className="min-h-screen flex items-center justify-center px-8">
+  {/* Your form inside here */}
     <div className="bg-white text-blue-700 flex flex-col justify-start items-center px-4 transition-all">
       <div className="w-full max-w-xl text-center">
         <AnimatePresence mode="wait">
@@ -518,6 +520,7 @@ const saveDataToSupabase = async (finalJSON, history) => {
           </motion.div>
         </AnimatePresence>
       </div>
+    </div>
     </div>
   );
   
