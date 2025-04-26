@@ -34,7 +34,7 @@ export default function WhyChooseUs() {
   return (
     <section
       className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#38bdf8] text-white"
-      id="why-us"
+      id="why-choose-us"
     >
       <div className="max-w-6xl mx-auto py-24 px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-semibold mb-12">
@@ -58,6 +58,16 @@ export default function WhyChooseUs() {
               </motion.div>
             );
           })}
+        </div>
+
+        {/* Button */}
+        <div className="mt-12">
+          <a
+            href="/why-us"
+            className="inline-block bg-white text-blue-500 font-semibold py-2 px-6 rounded hover:bg-gray-100 transition"
+          >
+            Why Choose Us
+          </a>
         </div>
       </div>
     </section>

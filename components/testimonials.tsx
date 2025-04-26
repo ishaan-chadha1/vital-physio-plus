@@ -45,6 +45,16 @@ export default function Testimonials() {
             </motion.div>
           ))}
         </div>
+
+        {/* Button */}
+        <div className="mt-12">
+          <a
+            href="/testimonials"
+            className="inline-block bg-white text-blue-500 font-semibold py-2 px-6 rounded hover:bg-gray-100 transition"
+          >
+            See More Testimonials
+          </a>
+        </div>
       </div>
     </section>
   );
