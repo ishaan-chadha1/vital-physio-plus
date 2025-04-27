@@ -2,7 +2,7 @@ export default async function speakWithElevenLabs(text: string) {
     if (typeof window === 'undefined') return; // Only run on client
   
     const apiKey = process.env.NEXT_PUBLIC_ELEVENLABS_API_KEY;
-    const voiceId = "JBFqnCBsd6RMkjVDRZzb"; // Replace with your actual voice id
+    const voiceId = "gX28yZeQHE9L4d5iYqPy"; // Replace with your actual voice id
   
     if (!apiKey) {
       console.error('No ElevenLabs API key found');
