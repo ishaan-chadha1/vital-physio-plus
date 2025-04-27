@@ -6,7 +6,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import systemInstruction from "@/lib/systemInstruction";
 import { createClient } from "@/utils/supabase/client";
 import IntroLayout from '@/components/IntroLayout';
-
+import { speakWithElevenLabs } from '@/utils/elevenlabsTTS';
+  
 
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY!);
 
@@ -291,7 +292,11 @@ const saveDataToSupabase = async (finalJSON, history) => {
 
     initChat();
   }, []);
-
+  useEffect(() => {
+    if (question?.label) {
+      speakWithElevenLabs(question.label);
+    }
+  }, [question]);
   // 💾 Save to localStorage
   useEffect(() => {
     localStorage.setItem('formResponses', JSON.stringify(history));
@@ -464,7 +469,7 @@ const saveDataToSupabase = async (finalJSON, history) => {
 
   return (
     <IntroLayout>
-    <div className="min-h-screen flex items-center justify-center px-8">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-blue-50 via-white to-green-50"> 
   {/* Your form inside here */}
     <div className="bg-white text-blue-700 flex flex-col justify-start items-center px-4 transition-all">
       <div className="w-full max-w-xl text-center">
