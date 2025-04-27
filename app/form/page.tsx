@@ -5,6 +5,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { AnimatePresence, motion } from 'framer-motion';
 import systemInstruction from "@/lib/systemInstruction";
 import { createClient } from "@/utils/supabase/client";
+import IntroLayout from '@/components/IntroLayout';
 
 
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY!);
@@ -462,6 +463,7 @@ const saveDataToSupabase = async (finalJSON, history) => {
   
 
   return (
+    <IntroLayout>
     <div className="min-h-screen flex items-center justify-center px-8">
   {/* Your form inside here */}
     <div className="bg-white text-blue-700 flex flex-col justify-start items-center px-4 transition-all">
@@ -522,6 +524,7 @@ const saveDataToSupabase = async (finalJSON, history) => {
       </div>
     </div>
     </div>
+    </IntroLayout>
   );
   
 }
