@@ -7,8 +7,6 @@ import systemInstruction from "@/lib/systemInstruction";
 import { createClient } from "@/utils/supabase/client";
 import IntroLayout from '@/components/IntroLayout';
 import { speakWithElevenLabs } from '@/utils/elevenlabsTTS';
-  
-
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY!);
 
 const generationConfig = {
