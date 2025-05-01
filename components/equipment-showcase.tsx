@@ -2,7 +2,7 @@
 
 export default function EquipmentShowcase() {
   return (
-    <section className="bg-blue-100 py-20 px-6 text-blue-900">
+    <section id="services" className="bg-blue-100 py-20 px-6 text-blue-900">
       <div className="max-w-5xl mx-auto space-y-10">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
           Our Advanced Equipment & Modalities

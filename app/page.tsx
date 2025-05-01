@@ -1,6 +1,8 @@
+"use client";
 import LandingNavbar from "@/components/landing-navbar";
 import Hero from "@/components/hero";
-
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 // Full homepage content components
 import VitalIntro from "@/components/vital-intro";
 import AboutVitalPhysio from "@/components/about-vital-physio";
@@ -12,6 +14,19 @@ import PatientJourney from "@/components/patient-journey";
 import WhyChooseVital from "@/components/why-choose-vital";
 
 export default async function Home() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const el = document.querySelector(hash);
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: "smooth" });
+        }, 100); // delay ensures page is rendered
+      }
+    }
+  }, [pathname]);
   return (
     <>
       <LandingNavbar />
