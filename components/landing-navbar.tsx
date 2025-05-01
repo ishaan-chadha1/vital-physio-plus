@@ -27,19 +27,19 @@ export default function LandingNavbar() {
           {/* Navigation Links */}
           <div className="flex-1 flex items-center justify-center text-blue-800 text-base font-semibold space-x-6">
             {[
-              { name: "Home", href: "#home" },
-              { name: "About Us", href: "#about" },
-              { name: "Conditions", href: "#conditions" },
-              { name: "Services", href: "#services" },
-              { name: "Why VitalPhysio+", href: "#why-us" },
+              { name: "Home", href: "/" },
+              { name: "About Us", href: "/#about" },
+              { name: "Conditions", href: "/#conditions" },
+              { name: "Services", href: "/#services" },
+              { name: "Why VitalPhysio+", href: "/#why-us" },
               { name: "FAQs", href: "/faq" },
-              { name: "Resources", href: "#resources" },
-              { name: "Contact", href: "#contact" },
+              { name: "Resources", href: "/#resources" },
+              { name: "Contact", href: "/#contact" },
             ].map((item, idx, arr) => (
               <div key={item.name} className="flex items-center space-x-6">
-                <a href={item.href} className="hover:underline">
+                <Link href={item.href} className="hover:underline">
                   {item.name}
-                </a>
+                </Link>
                 {idx < arr.length - 1 && (
                   <span className="text-gray-300">|</span>
                 )}
@@ -75,49 +75,49 @@ export default function LandingNavbar() {
           {/* Nav Links */}
           <nav className="flex flex-col gap-4 text-blue-800 font-semibold text-base">
             <Link
-              href="#home"
+              href="/"
               className="hover:text-blue-600 hover:pl-2 transition"
             >
               Home
             </Link>
             <Link
-              href="#about"
+              href="/about"
               className="hover:text-blue-600 hover:pl-2 transition"
             >
               About Us
             </Link>
             <Link
-              href="#conditions"
+              href="/conditions"
               className="hover:text-blue-600 hover:pl-2 transition"
             >
               Conditions
             </Link>
             <Link
-              href="#services"
+              href="/services"
               className="hover:text-blue-600 hover:pl-2 transition"
             >
               Services
             </Link>
             <Link
-              href="#why-us"
+              href="/why-vital"
               className="hover:text-blue-600 hover:pl-2 transition"
             >
               Why VitalPhysio+
             </Link>
             <Link
-              href="#faqs"
+              href="/faq"
               className="hover:text-blue-600 hover:pl-2 transition"
             >
               FAQs
             </Link>
             <Link
-              href="#resources"
+              href="/resources"
               className="hover:text-blue-600 hover:pl-2 transition"
             >
               Resources
             </Link>
             <Link
-              href="#contact"
+              href="/contact"
               className="hover:text-blue-600 hover:pl-2 transition"
             >
               Contact
