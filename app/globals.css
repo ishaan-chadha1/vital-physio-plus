@@ -105,11 +105,26 @@
 }
 
 @layer base {
-  html {
-    font-family: 'Lato', sans-serif; /* Default body text */
-  }
+  /* Headings stay Fontin */
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Fontin', serif;
+  }
+
+  /* Apply Lato to body-level elements */
+  p,
+  span,
+  a,
+  li,
+  label,
+  input,
+  textarea,
+  button,
+  select,
+  blockquote,
+  td,
+  th,
+  div {
+    font-family: 'Lato', sans-serif;
   }
 }
 
