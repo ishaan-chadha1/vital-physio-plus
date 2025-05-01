@@ -1,21 +1,29 @@
-// app/page.tsx or pages/index.tsx depending on your setup
-
-import AboutUs from "@/components/about-us";
-import Hero from "@/components/hero";
 import LandingNavbar from "@/components/landing-navbar";
-import Services from "@/components/services";
-import Testimonials from "@/components/testimonials";
-import WhyChooseUs from "@/components/why-choose-us";
+import Hero from "@/components/hero";
+
+// Full homepage content components
+import VitalIntro from "@/components/vital-intro";
+import AboutVitalPhysio from "@/components/about-vital-physio";
+import PhilosophyApproach from "@/components/philosophy-approach";
+import ConditionsSummary from "@/components/conditions-summary";
+import EquipmentShowcase from "@/components/equipment-showcase";
+import JointRehabSummary from "@/components/joint-rehab-summary";
+import PatientJourney from "@/components/patient-journey";
+import WhyChooseVital from "@/components/why-choose-vital";
 
 export default async function Home() {
   return (
     <>
-      <LandingNavbar/>
+      <LandingNavbar />
       <Hero />
-      <AboutUs />
-      <Services/>
-      <WhyChooseUs />
-      <Testimonials />
+      <VitalIntro />
+      <AboutVitalPhysio />
+      <PhilosophyApproach />
+      <ConditionsSummary />
+      <EquipmentShowcase />
+      <JointRehabSummary />
+      <PatientJourney />
+      <WhyChooseVital />
     </>
   );
 }
