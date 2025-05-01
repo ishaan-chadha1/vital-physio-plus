@@ -93,13 +93,19 @@ export default function LandingNavbar() {
               Conditions
             </Link>
             <Link
-              href="/services"
+              href="/rehabilitation"
+              className="hover:text-blue-600 hover:pl-2 transition"
+            >
+              Rehabilitation
+            </Link>
+            <Link
+              href="/rehabilitation"
               className="hover:text-blue-600 hover:pl-2 transition"
             >
               Services
             </Link>
             <Link
-              href="/why-vital"
+              href="/why-vital-physio+"
               className="hover:text-blue-600 hover:pl-2 transition"
             >
               Why VitalPhysio+
@@ -117,7 +123,7 @@ export default function LandingNavbar() {
               Resources
             </Link>
             <Link
-              href="/contact"
+              href="/form"
               className="hover:text-blue-600 hover:pl-2 transition"
             >
               Contact
