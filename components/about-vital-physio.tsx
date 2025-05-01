@@ -37,6 +37,14 @@ export default function AboutVitalPhysio() {
             </p>
           </div>
         </div>
+        <div className="text-center mt-10">
+        <a
+          href="/about"
+          className="inline-block bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition"
+        >
+          About Us
+        </a>
+      </div>
       </section>
     );
   }
