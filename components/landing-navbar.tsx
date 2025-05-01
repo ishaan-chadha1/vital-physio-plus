@@ -32,7 +32,7 @@ export default function LandingNavbar() {
               { name: "Conditions", href: "#conditions" },
               { name: "Services", href: "#services" },
               { name: "Why VitalPhysio+", href: "#why-us" },
-              { name: "FAQs", href: "#faqs" },
+              { name: "FAQs", href: "/faq" },
               { name: "Resources", href: "#resources" },
               { name: "Contact", href: "#contact" },
             ].map((item, idx, arr) => (
