@@ -108,6 +108,7 @@
   /* Headings stay Fontin */
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Fontin', serif;
+    color: #000;
   }
 
   /* Apply Lato to body-level elements */
@@ -125,6 +126,7 @@
   th,
   div {
     font-family: 'Lato', sans-serif;
+    color: #000;
   }
 }
 
