@@ -10,7 +10,7 @@ export async function getUserBookings(email: string) {
       });
   
       const json = await res.json();
-      console.log("📡 Raw Cal API response:", json);
+      // console.log("📡 Raw Cal API response:", json);
   
       if (!res.ok) {
         console.error("❌ Cal.com API failed:", json?.error?.message || res.statusText);
