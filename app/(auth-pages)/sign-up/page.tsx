@@ -1,24 +1,29 @@
 import { signUpAction } from "@/app/actions";
-import { FormMessage, Message } from "@/components/form-message";
+import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { SmtpMessage } from "../smtp-message";
 
-export default function SignUpPage({
+export default async function SignUpPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: any; // Dynamic API, always use `any`
 }) {
-  const redirect = searchParams?.redirect;
-  if (searchParams?.message) {
+  const params = await searchParams;
+  const redirect = params?.redirect;
+  const success = params?.success;
+  const error = params?.error;
+  const message = params?.message;
+
+  if (message) {
     return (
       <div className="w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4">
         <FormMessage
-          success={searchParams?.success}
-          error={searchParams?.error}
-          message={searchParams?.message}
+          success={success}
+          error={error}
+          message={message}
         />
       </div>
     );
@@ -50,9 +55,9 @@ export default function SignUpPage({
             Sign up
           </SubmitButton>
           <FormMessage
-            success={searchParams?.success}
-            error={searchParams?.error}
-            message={searchParams?.message}
+            success={success}
+            error={error}
+            message={message}
           />
         </div>
       </form>
