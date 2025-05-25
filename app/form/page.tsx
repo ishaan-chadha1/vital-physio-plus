@@ -508,12 +508,16 @@ export default function FormBotPage() {
   };
   if (!authChecked) {
     return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-blue-50 via-white to-green-50">
-      <div className="bg-white text-blue-700 flex flex-col justify-center items-center px-8 py-12 rounded-xl shadow-xl">
-        <div className="text-xl font-semibold animate-pulse">Checking authentication…</div>
-      </div>
-    </div>
-  );
+      <IntroLayout>
+        <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-blue-50 via-white to-green-50">
+          <div className="bg-white text-blue-700 flex flex-col justify-center items-center px-8 py-12 rounded-xl shadow-xl">
+            <div className="text-xl font-semibold animate-pulse">
+              Checking authentication…
+            </div>
+          </div>
+        </div>
+      </IntroLayout>
+    );
   }
   if (!isAuthed) {
     return null;
