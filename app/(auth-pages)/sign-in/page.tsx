@@ -3,16 +3,15 @@ import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 export default async function Login({ searchParams }: { searchParams: any }) {
-  // Await searchParams!
   const params = await searchParams;
   const redirect = params?.redirect;
   const success = params?.success;
   const error = params?.error;
   const message = params?.message;
+
   return (
     <div className="flex min-h-screen items-center justify-center px-4 bg-[#f9f9f9]">
       <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-xl">
@@ -23,7 +22,11 @@ export default async function Login({ searchParams }: { searchParams: any }) {
             Don't have an account?{" "}
             <Link
               className="text-blue-600 font-medium underline"
-              href="/sign-up"
+              href={
+                redirect
+                  ? `/sign-up?redirect=${encodeURIComponent(redirect)}`
+                  : "/sign-up"
+              }
             >
               Sign up
             </Link>
@@ -57,11 +60,7 @@ export default async function Login({ searchParams }: { searchParams: any }) {
               Sign in
             </SubmitButton>
 
-            <FormMessage
-              success={success}
-              error={error}
-              message={message}
-            />
+            <FormMessage success={success} error={error} message={message} />
           </div>
         </form>
       </div>

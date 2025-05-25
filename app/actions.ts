@@ -11,10 +11,12 @@ export const signUpAction = async (formData: FormData) => {
   const supabase = await createClient();
   const origin = (await headers()).get("origin");
 
+  const redirectParam = formData.get("redirect")?.toString();
+
   if (!email || !password) {
     return encodedRedirect(
       "error",
-      "/sign-up",
+      redirectParam || "/sign-up",
       "Email and password are required",
     );
   }
@@ -29,11 +31,11 @@ export const signUpAction = async (formData: FormData) => {
 
   if (error) {
     console.error(error.code + " " + error.message);
-    return encodedRedirect("error", "/sign-up", error.message);
+    return encodedRedirect("error", redirectParam || "/sign-up", error.message);
   } else {
     return encodedRedirect(
       "success",
-      "/sign-up",
+      redirectParam || "/sign-up",
       "Thanks for signing up! Please check your email for a verification link.",
     );
   }

@@ -9,7 +9,7 @@ import { SmtpMessage } from "../smtp-message";
 export default async function SignUpPage({
   searchParams,
 }: {
-  searchParams: any; // Dynamic API, always use `any`
+  searchParams: any;
 }) {
   const params = await searchParams;
   const redirect = params?.redirect;
@@ -36,7 +36,10 @@ export default async function SignUpPage({
         <h1 className="text-2xl font-medium">Sign up</h1>
         <p className="text-sm text text-foreground">
           Already have an account?{" "}
-          <Link className="text-primary font-medium underline" href="/sign-in">
+          <Link
+            className="text-primary font-medium underline"
+            href={redirect ? `/sign-in?redirect=${encodeURIComponent(redirect)}` : "/sign-in"}
+          >
             Sign in
           </Link>
         </p>
