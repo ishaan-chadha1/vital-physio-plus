@@ -30,7 +30,7 @@ export default async function ProtectedPage() {
     console.error("❌ Error fetching user-specific data:", error.message);
   }
   const bookings = await getUserBookings(userEmail);
-  console.log("📆 Bookings returned from Cal.com:", bookings);
+  // console.log("📆 Bookings returned from Cal.com:", bookings);
 
 
   return (

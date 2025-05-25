@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const email = req.nextUrl.searchParams.get("email");
-  console.log("CAL_API_KEY is", process.env.CAL_API_KEY);
+  // console.log("CAL_API_KEY is", process.env.CAL_API_KEY);
     
   if (!email) return NextResponse.json([], { status: 400 });
 

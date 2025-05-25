@@ -9,11 +9,16 @@ import { SmtpMessage } from "../smtp-message";
 export default async function Signup(props: {
   searchParams: Promise<Message>;
 }) {
-  const searchParams = await props.searchParams;
+  // const searchParams = await props.searchParams;
+  const redirect = searchParams?.redirect;
   if ("message" in searchParams) {
     return (
       <div className="w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4">
-        <FormMessage message={searchParams} />
+        <FormMessage
+          success={searchParams?.success}
+          error={searchParams?.error}
+          message={searchParams?.message}
+        />
       </div>
     );
   }
@@ -21,6 +26,7 @@ export default async function Signup(props: {
   return (
     <>
       <form className="flex flex-col min-w-64 max-w-64 mx-auto">
+        <input type="hidden" name="redirect" value={redirect || ""} />
         <h1 className="text-2xl font-medium">Sign up</h1>
         <p className="text-sm text text-foreground">
           Already have an account?{" "}
@@ -42,7 +48,11 @@ export default async function Signup(props: {
           <SubmitButton formAction={signUpAction} pendingText="Signing up...">
             Sign up
           </SubmitButton>
-          <FormMessage message={searchParams} />
+          <FormMessage
+            success={searchParams?.success}
+            error={searchParams?.error}
+            message={searchParams?.message}
+          />
         </div>
       </form>
       <SmtpMessage />
