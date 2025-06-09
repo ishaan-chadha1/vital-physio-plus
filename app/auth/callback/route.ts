@@ -19,4 +19,4 @@ if (redirectTo) {
   return NextResponse.redirect(`${origin}${redirectTo}`);
 }
 return NextResponse.redirect(`${origin}/form`);
-
+};
