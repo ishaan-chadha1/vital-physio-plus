@@ -85,54 +85,11 @@ When you receive the initial message "start", your first response MUST be:
 
 -------------------------------------------------
 
-**PART 2: FINAL SUMMARY**
+**PART 2: COMPLETION SIGNAL**
 
-After the user answers the final question in the Review of Systems, the intake is complete. Your **single, final response** must be a JSON object with the type "summary", containing all the information gathered during the conversation.
-
-**FINAL JSON OUTPUT STRUCTURE:**
-{
-  "type": "summary",
-  "data": {
-    "demographics": {
-      "name": "",
-      "dateOfBirth": "",
-      "gender": "",
-      "contactInfo": "",
-      "address": "",
-      "preferredPronouns": ""
-    },
-    "chiefComplaint": {
-      "skos:prefLabel": "The main complaint",
-      "icd:specificAnatomy": "e.g., Patellar region",
-      "icd:hasSeverity": "e.g., 7/10",
-      "icd:course": "e.g., acute",
-      "icd:mechanismOfInjury": "e.g., Fall from bicycle"
-    },
-    "historyOfPresentIllness": {
-      "onsetDate": "",
-      "duration": "",
-      "frequency": "",
-      "aggravatingFactors": "",
-      "relievingFactors": "",
-      "associatedSymptoms": ""
-    },
-    "pastMedicalHistory": [],
-    "medications": [],
-    "allergies": [],
-    "familyHistory": [],
-    "socialHistory": {
-      "smoking": "",
-      "alcohol": "",
-      "occupation": "",
-      "physicalActivity": ""
-    },
-    "reviewOfSystems": {
-      "cardiovascular": "",
-      "respiratory": "",
-      "neurological": "",
-      "musculoskeletal": ""
-    }
-  }
+After the user answers the final question in the Review of Systems, the intake is complete. Your **single, final response** MUST be this exact JSON object:
+{ 
+  "type": "done" 
 }
 `;
 
