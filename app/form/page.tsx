@@ -8,6 +8,7 @@ import { createClient } from "@/utils/supabase/client";
 import IntroLayout from "@/components/IntroLayout";
 import speakWithElevenLabs from "@/utils/temp";
 import { useRouter } from "next/navigation";
+
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY!);
 
 const generationConfig = {
@@ -36,7 +37,12 @@ export default function FormBotPage() {
   const [isAuthed, setIsAuthed] = useState(false);
   const [user, setUser] = useState(null);
   const [done, setDone] = useState(false);
-  const supabase = createClient(); // Initialize Supabase client
+  const supabase = createClient();
+
+  // --- State for managing the final submission ---
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState(null);
+
   useEffect(() => {
     async function checkAuth() {
       const {
@@ -51,56 +57,19 @@ export default function FormBotPage() {
       }
     }
     checkAuth();
-  }, []);
+  }, [router]);
 
-  // Helper function to build the final JSON structure from the conversation history
-  // Helper function to build the final JSON structure from the conversation history
   const populateFinalJSON = (history) => {
     const finalData = {
-      demographics: {
-        name: "",
-        dateOfBirth: "",
-        gender: "",
-        contactInfo: "",
-        address: "",
-        preferredPronouns: "",
-      },
-      chiefComplaint: {
-        "skos:prefLabel": "",
-        "icd:specificAnatomy": "",
-        "icd:hasSeverity": "",
-        "icd:course": "",
-        "icd:mechanismOfInjury": "",
-      },
-      historyOfPresentIllness: {
-        onsetDate: "",
-        duration: "",
-        frequency: "",
-        aggravatingFactors: "",
-        relievingFactors: "",
-        associatedSymptoms: "",
-      },
+      demographics: {},
+      chiefComplaint: {},
+      historyOfPresentIllness: {},
       pastMedicalHistory: [],
       medications: [],
       allergies: [],
       familyHistory: [],
-      socialHistory: {
-        smoking: "",
-        alcohol: "",
-        occupation: "",
-        physicalActivity: "",
-        dailyActivity: "",
-      },
-      reviewOfSystems: {
-        weightChanges: "",
-        fatigue: "",
-        feverChillsNightSweats: "",
-        cardiovascular: "",
-        gastrointestinal: "",
-        skinChanges: "",
-        neurological: "",
-        musculoskeletal: "",
-      },
+      socialHistory: {},
+      reviewOfSystems: {},
       diagnosticImpressions: [],
     };
 
@@ -108,23 +77,12 @@ export default function FormBotPage() {
       const key = entry.question.fieldKey;
       const value = entry.value;
 
-      // Handle Object sections:
       if (key.startsWith("demographics.")) {
         const field = key.split(".")[1];
         finalData.demographics[field] = value;
       } else if (key.startsWith("chiefComplaint.")) {
         const field = key.split(".")[1];
-        if (field === "description" || field === "skos:prefLabel") {
-          finalData.chiefComplaint["skos:prefLabel"] = value;
-        } else if (field === "specificAnatomy") {
-          finalData.chiefComplaint["icd:specificAnatomy"] = value;
-        } else if (field === "painScale" || field === "hasSeverity") {
-          finalData.chiefComplaint["icd:hasSeverity"] = value;
-        } else if (field === "course") {
-          finalData.chiefComplaint["icd:course"] = value;
-        } else if (field === "mechanismOfInjury") {
-          finalData.chiefComplaint["icd:mechanismOfInjury"] = value;
-        }
+        finalData.chiefComplaint[field] = value;
       } else if (key.startsWith("historyOfPresentIllness.")) {
         const field = key.split(".")[1];
         finalData.historyOfPresentIllness[field] = value;
@@ -134,135 +92,41 @@ export default function FormBotPage() {
       } else if (key.startsWith("reviewOfSystems.")) {
         const field = key.split(".")[1];
         finalData.reviewOfSystems[field] = value;
-      }
-      // Handle Array sections:
-      else if (key.startsWith("pastMedicalHistory.")) {
-        const parts = key.split(".");
-        if (parts.length === 3 && !isNaN(parts[1])) {
-          // Format: pastMedicalHistory.<index>.<field>
-          const index = parseInt(parts[1], 10);
-          const field = parts[2];
-          if (!finalData.pastMedicalHistory[index]) {
-            finalData.pastMedicalHistory[index] = {};
-          }
-          finalData.pastMedicalHistory[index][field] = value;
-        } else if (parts.length === 2) {
-          // Non-indexed key: pastMedicalHistory.<field>
-          const field = parts[1];
-          if (finalData.pastMedicalHistory.length === 0) {
-            finalData.pastMedicalHistory.push({});
-          }
-          let lastEntry =
-            finalData.pastMedicalHistory[
-              finalData.pastMedicalHistory.length - 1
-            ];
-          if (!lastEntry.hasOwnProperty(field)) {
-            lastEntry[field] = value;
+      } else if (key.startsWith("pastMedicalHistory.")) {
+          const field = key.split(".")[1];
+          if (finalData.pastMedicalHistory.length === 0 || finalData.pastMedicalHistory[finalData.pastMedicalHistory.length - 1][field]) {
+              finalData.pastMedicalHistory.push({ [field]: value });
           } else {
-            finalData.pastMedicalHistory.push({ [field]: value });
+              finalData.pastMedicalHistory[finalData.pastMedicalHistory.length - 1][field] = value;
           }
-        }
       } else if (key.startsWith("medications.")) {
-        const parts = key.split(".");
-        if (parts.length === 3 && !isNaN(parts[1])) {
-          const index = parseInt(parts[1], 10);
-          const field = parts[2];
-          if (!finalData.medications[index]) {
-            finalData.medications[index] = {};
-          }
-          finalData.medications[index][field] = value;
-        } else if (parts.length === 2) {
-          const field = parts[1];
-          if (finalData.medications.length === 0) {
-            finalData.medications.push({});
-          }
-          let lastEntry =
-            finalData.medications[finalData.medications.length - 1];
-          if (!lastEntry.hasOwnProperty(field)) {
-            lastEntry[field] = value;
+          const field = key.split(".")[1];
+          if (finalData.medications.length === 0 || finalData.medications[finalData.medications.length - 1][field]) {
+              finalData.medications.push({ [field]: value });
           } else {
-            finalData.medications.push({ [field]: value });
+              finalData.medications[finalData.medications.length - 1][field] = value;
           }
-        }
       } else if (key.startsWith("allergies.")) {
-        const parts = key.split(".");
-        if (parts.length === 3 && !isNaN(parts[1])) {
-          const index = parseInt(parts[1], 10);
-          const field = parts[2];
-          if (!finalData.allergies[index]) {
-            finalData.allergies[index] = {};
-          }
-          finalData.allergies[index][field] = value;
-        } else if (parts.length === 2) {
-          const field = parts[1];
-          if (finalData.allergies.length === 0) {
-            finalData.allergies.push({});
-          }
-          let lastEntry = finalData.allergies[finalData.allergies.length - 1];
-          if (!lastEntry.hasOwnProperty(field)) {
-            lastEntry[field] = value;
+          const field = key.split(".")[1];
+          if (finalData.allergies.length === 0 || finalData.allergies[finalData.allergies.length - 1][field]) {
+              finalData.allergies.push({ [field]: value });
           } else {
-            finalData.allergies.push({ [field]: value });
+              finalData.allergies[finalData.allergies.length - 1][field] = value;
           }
-        }
       } else if (key.startsWith("familyHistory.")) {
-        const parts = key.split(".");
-        if (parts.length === 3 && !isNaN(parts[1])) {
-          const index = parseInt(parts[1], 10);
-          const field = parts[2];
-          if (!finalData.familyHistory[index]) {
-            finalData.familyHistory[index] = {};
-          }
-          finalData.familyHistory[index][field] = value;
-        } else if (parts.length === 2) {
-          const field = parts[1];
-          if (finalData.familyHistory.length === 0) {
-            finalData.familyHistory.push({});
-          }
-          let lastEntry =
-            finalData.familyHistory[finalData.familyHistory.length - 1];
-          if (!lastEntry.hasOwnProperty(field)) {
-            lastEntry[field] = value;
+          const field = key.split(".")[1];
+          if (finalData.familyHistory.length === 0 || finalData.familyHistory[finalData.familyHistory.length - 1][field]) {
+              finalData.familyHistory.push({ [field]: value });
           } else {
-            finalData.familyHistory.push({ [field]: value });
+              finalData.familyHistory[finalData.familyHistory.length - 1][field] = value;
           }
-        }
       } else if (key.startsWith("diagnosticImpressions.")) {
-        const parts = key.split(".");
-        if (parts.length === 3 && !isNaN(parts[1])) {
-          const index = parseInt(parts[1], 10);
-          const field = parts[2];
-          if (!finalData.diagnosticImpressions[index]) {
-            finalData.diagnosticImpressions[index] = { isPrimary: false };
-          }
-          finalData.diagnosticImpressions[index][field] = value;
-          if (field === "isPrimary") {
-            finalData.diagnosticImpressions[index][field] =
-              value === "true" || value === true;
-          }
-        } else if (parts.length === 2) {
-          const field = parts[1];
-          if (finalData.diagnosticImpressions.length === 0) {
-            finalData.diagnosticImpressions.push({ isPrimary: false });
-          }
-          let lastEntry =
-            finalData.diagnosticImpressions[
-              finalData.diagnosticImpressions.length - 1
-            ];
-          if (!lastEntry.hasOwnProperty(field)) {
-            lastEntry[field] = value;
+          const field = key.split(".")[1];
+          if (finalData.diagnosticImpressions.length === 0 || finalData.diagnosticImpressions[finalData.diagnosticImpressions.length - 1][field]) {
+              finalData.diagnosticImpressions.push({ [field]: value });
           } else {
-            finalData.diagnosticImpressions.push({
-              [field]: value,
-              isPrimary: false,
-            });
+              finalData.diagnosticImpressions[finalData.diagnosticImpressions.length - 1][field] = value;
           }
-          if (field === "isPrimary") {
-            finalData.diagnosticImpressions[
-              finalData.diagnosticImpressions.length - 1
-            ][field] = value === "true" || value === true;
-          }
-        }
       }
     });
 
@@ -270,120 +134,80 @@ export default function FormBotPage() {
   };
 
   const saveDataToSupabase = async (finalJSON, history) => {
-    // 1) Extract the patient's name directly
-    const patientName = finalJSON.demographics?.name || "Unknown";
-
-    // 2) Attempt to parse an email from 'contactInfo'
-    //    (if you store the email directly in `finalJSON.demographics.email`, just use that)
-    let patientEmail = "";
-    const contactInfo = finalJSON.demographics?.contactInfo || "";
-    const emailMatch = contactInfo.match(
-      /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/
-    );
-    if (emailMatch) {
-      patientEmail = emailMatch[0];
-    }
-
     try {
       const { data, error } = await supabase.from("form_data").insert([
         {
-          session_id: crypto.randomUUID(), // or use your own ID strategy
-          patient_name: patientName,
-          patient_email: patientEmail,
-          final_json: finalJSON, // The final structured JSON
-          chat_history: history, // The entire Q&A flow
+          session_id: crypto.randomUUID(),
+          patient_name: finalJSON.demographics?.name || "Unknown",
+          patient_email: finalJSON.demographics?.contactInfo || "",
+          final_json: finalJSON,
+          chat_history: history,
         },
       ]);
-
-      if (error) {
-        console.error("❌ Error saving data to Supabase:", error.message);
-      } else {
-        console.log("✅ Data successfully saved to Supabase:", data);
-      }
+      if (error) console.error("❌ Error saving data to Supabase:", error.message);
+      else console.log("✅ Data successfully saved to Supabase:", data);
     } catch (err) {
       console.error("⚠️ Unexpected error:", err);
     }
   };
 
-  // 👀 On mount
+  const handleFinalSubmit = async () => {
+    setIsSubmitting(true);
+    setSubmissionError(null);
+
+    const finalJSON = populateFinalJSON(history);
+    await saveDataToSupabase(finalJSON, history);
+
+    // --- MODIFIED: Log data to console for debugging ---
+    console.log("✅ Form submission initiated. Data logged below.");
+    console.log("Final JSON Payload:", finalJSON);
+    console.log("Chat History:", history);
+
+    // The POST request is removed for now. You can add it back later.
+    // We will just show a success message to the user.
+    alert("Submission complete! Data has been logged to the console.");
+
+    setIsSubmitting(false);
+
+    // The redirect is also removed for now.
+    // router.push('/protected');
+  };
+
   useEffect(() => {
     const initChat = async () => {
       const model = genAI.getGenerativeModel({
-        model: "gemini-2.0-flash",
+        model: "gemini-1.5-flash",
         generationConfig,
         systemInstruction,
       });
-
       const session = await model.startChat({ history: [] });
       setChat(session);
-
       const result = await session.sendMessage("start");
       const cleaned = cleanResponseMarkdown(result.response.text());
       const parsed = JSON.parse(cleaned);
       setQuestion(parsed);
     };
+    if (isAuthed) {
+      initChat();
+    }
+  }, [isAuthed]);
 
-    initChat();
-  }, []);
   useEffect(() => {
     if (question?.label) {
       speakWithElevenLabs(question.label);
     }
   }, [question]);
-  // 💾 Save to localStorage
-  useEffect(() => {
-    localStorage.setItem("formResponses", JSON.stringify(history));
-  }, [history]);
-
-  useEffect(() => {
-    if (done) {
-      const finalJSON = populateFinalJSON(history);
-      console.log("Final Structured JSON:", JSON.stringify(finalJSON, null, 2));
-
-      // Check for missing fields
-      const missingFields = [];
-      // Check demographics
-      Object.entries(finalJSON.demographics).forEach(([key, value]) => {
-        if (!value) missingFields.push(`demographics.${key}`);
-      });
-      // Check chiefComplaint
-      Object.entries(finalJSON.chiefComplaint).forEach(([key, value]) => {
-        if (!value) missingFields.push(`chiefComplaint.${key}`);
-      });
-      // Check historyOfPresentIllness
-      Object.entries(finalJSON.historyOfPresentIllness).forEach(
-        ([key, value]) => {
-          if (!value) missingFields.push(`historyOfPresentIllness.${key}`);
-        }
-      );
-      // Check socialHistory
-      Object.entries(finalJSON.socialHistory).forEach(([key, value]) => {
-        if (!value) missingFields.push(`socialHistory.${key}`);
-      });
-      // Check reviewOfSystems
-      Object.entries(finalJSON.reviewOfSystems).forEach(([key, value]) => {
-        if (!value) missingFields.push(`reviewOfSystems.${key}`);
-      });
-      // Optionally check other array sections if needed
-
-      console.log("Missing Fields:", missingFields);
-      saveDataToSupabase(finalJSON, history);
-    }
-  }, [done, history]);
 
   const handleSubmit = async () => {
     if (!chat || !question?.fieldKey) return;
-
     const value = input;
     const newHistory = [...history.slice(0, currentIndex), { question, value }];
     setHistory(newHistory);
     setCurrentIndex((i) => i + 1);
     setInput("");
-
     const responseObj = JSON.stringify({ fieldKey: question.fieldKey, value });
     const result = await chat.sendMessage(responseObj);
     const cleaned = cleanResponseMarkdown(result.response.text());
-
     try {
       const parsed = JSON.parse(cleaned);
       if (parsed.type === "done") {
@@ -406,19 +230,15 @@ export default function FormBotPage() {
   };
 
   const handleRestart = () => {
-    setHistory([]);
-    setCurrentIndex(0);
-    setInput("");
-    setDone(false);
-    localStorage.removeItem("formResponses");
-    location.reload(); // quick reset
+    location.reload();
   };
-
+  
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleSubmit();
   };
 
   const renderInput = () => {
+    // This function remains unchanged
     switch (question?.type) {
       case "input":
         return (
@@ -428,8 +248,8 @@ export default function FormBotPage() {
               question.fieldType === "number"
                 ? "number"
                 : question.fieldType === "date"
-                  ? "date"
-                  : "text"
+                ? "date"
+                : "text"
             }
             placeholder={question.placeholder || ""}
             value={input}
@@ -438,7 +258,6 @@ export default function FormBotPage() {
             className="w-full text-black text-xl p-3 rounded border border-gray-300 bg-gray-100 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         );
-
       case "scale":
         return (
           <div className="w-full flex flex-col items-center">
@@ -454,7 +273,6 @@ export default function FormBotPage() {
             <span className="mt-2 font-semibold text-lg">{input || 5}</span>
           </div>
         );
-
       case "select":
         return (
           <div className="grid grid-cols-2 gap-4">
@@ -470,15 +288,12 @@ export default function FormBotPage() {
                   setHistory(newHistory);
                   setCurrentIndex((i) => i + 1);
                   setInput("");
-
                   const responseObj = JSON.stringify({
                     fieldKey: question.fieldKey,
                     value: selected,
                   });
                   chat.sendMessage(responseObj).then((result) => {
-                    const cleaned = cleanResponseMarkdown(
-                      result.response.text()
-                    );
+                    const cleaned = cleanResponseMarkdown(result.response.text());
                     try {
                       const parsed = JSON.parse(cleaned);
                       if (parsed.type === "done") {
@@ -501,91 +316,87 @@ export default function FormBotPage() {
             ))}
           </div>
         );
-
       default:
         return null;
     }
   };
-  if (!authChecked) {
+
+  if (!authChecked || !isAuthed) {
     return (
       <IntroLayout>
         <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-blue-50 via-white to-green-50">
-          <div className="bg-white text-blue-700 flex flex-col justify-center items-center px-8 py-12 rounded-xl shadow-xl">
-            <div className="text-xl font-semibold animate-pulse">
-              Checking authentication…
-            </div>
+          <div className="text-xl font-semibold animate-pulse">
+            Checking authentication…
           </div>
         </div>
       </IntroLayout>
     );
   }
-  if (!isAuthed) {
-    return null;
-  }
 
   return (
     <IntroLayout>
       <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-blue-50 via-white to-green-50">
-        {/* Your form inside here */}
-        <div className="bg-white text-blue-700 flex flex-col justify-start items-center px-4 transition-all">
-          <div className="w-full max-w-xl text-center">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={done ? "summary" : question?.fieldKey || "loading"}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-                className="w-full"
-              >
-                {done ? (
+        <div className="w-full max-w-xl text-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={done ? "summary" : question?.fieldKey || "loading"}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="w-full"
+            >
+              {done ? (
+                // --- SIMPLIFIED Summary View ---
                   <>
-                    <h2 className="text-2xl font-bold mb-6">✅ Summary</h2>
-                    <div className="bg-blue-50 text-blue-800 rounded-md p-6 mb-6 text-left space-y-3">
+                    <h2 className="text-2xl font-bold mb-6">✅ Intake Summary</h2>
+                    
+                    {/* Display error message if submission fails */}
+                    {submissionError && (
+                      <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 text-left">
+                        <p className="font-bold">Submission Failed</p>
+                        <p>{submissionError}</p>
+                      </div>
+                    )}
+
+                    <div className="bg-blue-50 text-blue-800 rounded-md p-6 mb-6 text-left space-y-3 max-h-96 overflow-y-auto">
                       {history.map((entry, index) => (
                         <div key={index}>
                           <strong>{entry.question.label}</strong>
-                          <p>{entry.value}</p>
+                          <p className="text-gray-700">{entry.value}</p>
                         </div>
                       ))}
                     </div>
-                    <button
-                      onClick={handleRestart}
-                      className="bg-blue-600 text-white px-6 py-2 rounded font-semibold shadow hover:bg-blue-700 transition"
-                    >
-                      Restart ↺
-                    </button>
+                    <div className="flex justify-between items-center">
+                       <button onClick={handleRestart} className="bg-gray-600 text-white px-6 py-2 rounded font-semibold shadow hover:bg-gray-700 transition">
+                         Restart ↺
+                       </button>
+                       <button onClick={handleFinalSubmit} disabled={isSubmitting} className="bg-blue-600 text-white px-6 py-2 rounded font-semibold shadow hover:bg-blue-700 transition disabled:bg-blue-300">
+                         {isSubmitting ? "Submitting..." : "Submit"}
+                       </button>
+                    </div>
                   </>
-                ) : (
-                  <>
-                    <h2 className="text-xl font-bold mb-6">
-                      {question?.label || "Loading..."}
-                    </h2>
-
-                    {renderInput()}
-
-                    {question?.fieldType !== "scale" &&
-                      question?.type !== "select" && (
-                        <div className="flex justify-between items-center mt-6">
-                          <button
-                            onClick={handleBack}
-                            className="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition"
-                          >
-                            ← Back
-                          </button>
-                          <button
-                            onClick={handleSubmit}
-                            className="bg-blue-600 text-white px-6 py-2 rounded font-semibold shadow hover:bg-blue-700 transition"
-                          >
-                            OK ↵
-                          </button>
-                        </div>
-                      )}
-                  </>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
+              ) : (
+                // --- Active conversation part (unchanged) ---
+                <>
+                  <h2 className="text-xl font-bold mb-6 text-gray-800">
+                    {question?.label || "Loading..."}
+                  </h2>
+                  {renderInput()}
+                  {question?.type !== "select" && (
+                    <div className="flex justify-between items-center mt-6">
+                      <button onClick={handleBack} className="bg-gray-500 text-white px-4 py-2 rounded shadow hover:bg-gray-600 transition">
+                        ← Back
+                      </button>
+                      <button onClick={handleSubmit} className="bg-blue-600 text-white px-6 py-2 rounded font-semibold shadow hover:bg-blue-700 transition">
+                        OK ↵
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </IntroLayout>
