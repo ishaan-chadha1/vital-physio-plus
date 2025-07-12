@@ -139,11 +139,11 @@ Copy
   // Use ICD-11 properties (e.g. skos:prefLabel, icd:specificAnatomy, etc.)
   "diagnosticImpressions": [
     {
-      "skos:prefLabel": "Acute knee pain",
-      "icd:specificAnatomy": "Patellar region",
-      "icd:hasSeverity": "7/10",
-      "icd:course": "acute",
-      "icd:mechanismOfInjury": "Fall from bicycle",
+      "skos:prefLabel": "",
+      "icd:specificAnatomy": "",
+      "icd:hasSeverity": "",
+      "icd:course": "",
+      "icd:mechanismOfInjury": "",
       "isPrimary": true
     }
   ]
@@ -213,7 +213,7 @@ Ask, “Does this look correct?” or “Is there anything else you’d like to 
 Incorporate corrections or new details as needed.
 
 Ensure each impression/complaint is detailed enough for ICD-11 (e.g., location, severity, acuity, cause if known).
-Closing
+Closing 
 Thank the patient for their time.
 Confirm the next steps (e.g., upcoming appointment date).
 End the conversation politely.
