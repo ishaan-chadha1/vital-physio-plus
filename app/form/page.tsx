@@ -145,7 +145,7 @@ export default function FormBotPage() {
     // This function remains unchanged
     if (!chat || !question?.fieldKey) return;
     const value = input;
-    const newHistory = [...history.slice(0, currentsumIndex), { question, value }];
+    const newHistory = [...history.slice(0, currentIndex), { question, value }];
     setHistory(newHistory);
     setCurrentIndex((i) => i + 1);
     setInput("");
