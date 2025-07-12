@@ -158,25 +158,45 @@ export default function FormBotPage() {
     const finalJSON = populateFinalJSON(history);
     await saveDataToSupabase(finalJSON, history);
 
-    // --- MODIFIED: Log data to console for debugging ---
-    console.log("✅ Form submission initiated. Data logged below.");
-    console.log("Final JSON Payload:", finalJSON);
-    console.log("Chat History:", history);
+    const payload = {
+      patient_text: { ...finalJSON },
+      medication_text: finalJSON.medications || [],
+    };
+    delete payload.patient_text.medications;
 
-    // The POST request is removed for now. You can add it back later.
-    // We will just show a success message to the user.
-    alert("Submission complete! Data has been logged to the console.");
+    // --- MODIFIED: Log data as a formatted string for reliable output ---
+    console.log("Attempting to send data to /api/codify...");
+    console.log("Final JSON Payload:", JSON.stringify(finalJSON, null, 2));
+    console.log("Chat History:", JSON.stringify(history, null, 2));
 
-    setIsSubmitting(false);
+    try {
+      const response = await fetch("/api/codify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    // The redirect is also removed for now.
-    // router.push('/protected');
+      if (!response.ok) {
+        const result = await response.json().catch(() => ({ error: "Failed to parse error response." }));
+        throw new Error(result.error || `Request failed with status ${response.status}`);
+      }
+      
+      console.log("✅ Submission Successful!");
+      router.push('/protected');
+
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred.";
+      setSubmissionError(errorMessage);
+      console.error("Submission Error:", errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   useEffect(() => {
     const initChat = async () => {
       const model = genAI.getGenerativeModel({
-        model: "gemini-2.0-flash",
+        model: "gemini-1.5-flash",
         generationConfig,
         systemInstruction,
       });
