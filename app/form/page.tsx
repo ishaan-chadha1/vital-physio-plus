@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { AnimatePresence, motion } from "framer-motion";
 import systemInstruction from "@/lib/systemInstruction";
-import summaryInstruction from "@/lib/summaryInstruction"; // <-- Import the new instruction
+import summaryInstruction from "@/lib/summaryInstruction"; 
 import { createClient } from "@/utils/supabase/client";
 import IntroLayout from "@/components/IntroLayout";
 import speakWithElevenLabs from "@/utils/temp";
@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY!);
 
 const generationConfig = {
-  temperature: 0.7, // Lower temperature for more consistent summaries
+  temperature: 0.7, 
   topP: 0.95,
   topK: 40,
   maxOutputTokens: 8192,
@@ -34,11 +34,9 @@ export default function FormBotPage() {
   const [done, setDone] = useState(false);
   const supabase = createClient();
 
-  // --- NEW State for the summary and editing flow ---
   const [summaryText, setSummaryText] = useState("");
   const [editInput, setEditInput] = useState("");
   const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState(null);
 
@@ -52,52 +50,64 @@ export default function FormBotPage() {
   }, [router]);
 
   const populateFinalJSON = (history) => {
-    // This function remains unchanged
     const finalData = { demographics: {}, chiefComplaint: {}, historyOfPresentIllness: {}, pastMedicalHistory: [], medications: [], allergies: [], familyHistory: [], socialHistory: {}, reviewOfSystems: {}, diagnosticImpressions: [] };
+    
+    const handleArrayLogic = (section, field, value) => {
+      let lastEntry = finalData[section][finalData[section].length - 1];
+      if (!lastEntry || lastEntry.hasOwnProperty(field)) {
+        finalData[section].push({ [field]: value });
+      } else {
+        lastEntry[field] = value;
+      }
+    };
+
     history.forEach((entry) => {
-      const key = entry.question.fieldKey; const value = entry.value;
-      if (key.startsWith("demographics.")) { const field = key.split(".")[1]; finalData.demographics[field] = value; }
-      else if (key.startsWith("chiefComplaint.")) { const field = key.split(".")[1]; finalData.chiefComplaint[field] = value; }
-      else if (key.startsWith("historyOfPresentIllness.")) { const field = key.split(".")[1]; finalData.historyOfPresentIllness[field] = value; }
-      else if (key.startsWith("socialHistory.")) { const field = key.split(".")[1]; finalData.socialHistory[field] = value; }
-      else if (key.startsWith("reviewOfSystems.")) { const field = key.split(".")[1]; finalData.reviewOfSystems[field] = value; }
-      else if (key.startsWith("pastMedicalHistory.")) { const field = key.split(".")[1]; if (finalData.pastMedicalHistory.length === 0 || finalData.pastMedicalHistory[finalData.pastMedicalHistory.length - 1][field]) { finalData.pastMedicalHistory.push({ [field]: value }); } else { finalData.pastMedicalHistory[finalData.pastMedicalHistory.length - 1][field] = value; } }
-      else if (key.startsWith("medications.")) { const field = key.split(".")[1]; if (finalData.medications.length === 0 || finalData.medications[finalData.medications.length - 1][field]) { finalData.medications.push({ [field]: value }); } else { finalData.medications[finalData.medications.length - 1][field] = value; } }
-      else if (key.startsWith("allergies.")) { const field = key.split(".")[1]; if (finalData.allergies.length === 0 || finalData.allergies[finalData.allergies.length - 1][field]) { finalData.allergies.push({ [field]: value }); } else { finalData.allergies[finalData.allergies.length - 1][field] = value; } }
-      else if (key.startsWith("familyHistory.")) { const field = key.split(".")[1]; if (finalData.familyHistory.length === 0 || finalData.familyHistory[finalData.familyHistory.length - 1][field]) { finalData.familyHistory.push({ [field]: value }); } else { finalData.familyHistory[finalData.familyHistory.length - 1][field] = value; } }
-      else if (key.startsWith("diagnosticImpressions.")) { const field = key.split(".")[1]; if (finalData.diagnosticImpressions.length === 0 || finalData.diagnosticImpressions[finalData.diagnosticImpressions.length - 1][field]) { finalData.diagnosticImpressions.push({ [field]: value }); } else { finalData.diagnosticImpressions[finalData.diagnosticImpressions.length - 1][field] = value; } }
+      const key = entry.question.fieldKey;
+      const value = entry.value;
+      const [section, field] = key.split('.');
+
+      switch(section) {
+        case "demographics":
+        case "chiefComplaint":
+        case "historyOfPresentIllness":
+        case "socialHistory":
+        case "reviewOfSystems":
+          finalData[section][field] = value;
+          break;
+        case "pastMedicalHistory":
+        case "medications":
+        case "allergies":
+        case "familyHistory":
+        case "diagnosticImpressions":
+          handleArrayLogic(section, field, value);
+          break;
+        default:
+          break;
+      }
     });
     return finalData;
   };
 
   const saveDataToSupabase = async (finalJSON, history) => {
-    // This function remains unchanged
     try { const { data, error } = await supabase.from("form_data").insert([{ session_id: crypto.randomUUID(), patient_name: finalJSON.demographics?.name || "Unknown", patient_email: finalJSON.demographics?.contactInfo || "", final_json: finalJSON, chat_history: history, }]); if (error) console.error("❌ Error saving data to Supabase:", error.message); else console.log("✅ Data successfully saved to Supabase:", data); } catch (err) { console.error("⚠️ Unexpected error:", err); }
   };
 
-  // --- NEW: Function to generate or edit the summary ---
   const generateSummary = async (prompt) => {
     setIsGeneratingSummary(true);
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash",
-      generationConfig,
-      systemInstruction: summaryInstruction, // Use the new summary instruction
-    });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash", generationConfig, systemInstruction: summaryInstruction });
     const result = await model.generateContent(prompt);
     const newSummary = cleanResponseMarkdown(result.response.text());
     setSummaryText(newSummary);
     setIsGeneratingSummary(false);
   };
 
-  // --- NEW: Function to handle user's edit requests ---
   const handleSummaryUpdate = () => {
     if (!editInput.trim()) return;
     const prompt = `EDIT_SUMMARY: [EXISTING_SUMMARY] ${summaryText} [USER_REQUEST] ${editInput}`;
     generateSummary(prompt);
-    setEditInput(""); // Clear the input after sending
+    setEditInput("");
   };
 
-  // --- This now triggers the initial summary generation ---
   useEffect(() => {
     if (done) {
       const finalJSON = populateFinalJSON(history);
@@ -107,7 +117,6 @@ export default function FormBotPage() {
   }, [done, history]);
   
   const handleFinalSubmit = async () => {
-    // This function remains largely the same
     setIsSubmitting(true);
     setSubmissionError(null);
     const finalJSON = populateFinalJSON(history);
@@ -127,7 +136,6 @@ export default function FormBotPage() {
     } finally { setIsSubmitting(false); }
   };
 
-  // --- Initialize the data collection chat ---
   useEffect(() => {
     const initChat = async () => {
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash", generationConfig, systemInstruction });
@@ -135,14 +143,17 @@ export default function FormBotPage() {
       setChat(session);
       const result = await session.sendMessage("start");
       const cleaned = cleanResponseMarkdown(result.response.text());
-      const parsed = JSON.parse(cleaned);
-      setQuestion(parsed);
+      try {
+        const parsed = JSON.parse(cleaned);
+        setQuestion(parsed);
+      } catch(e) {
+        console.error("Failed to parse initial question:", e, cleaned);
+      }
     };
     if (isAuthed) { initChat(); }
   }, [isAuthed]);
 
   const handleSubmit = async () => {
-    // This function remains unchanged
     if (!chat || !question?.fieldKey) return;
     const value = input;
     const newHistory = [...history.slice(0, currentIndex), { question, value }];
@@ -153,7 +164,7 @@ export default function FormBotPage() {
     const result = await chat.sendMessage(responseObj);
     const cleaned = cleanResponseMarkdown(result.response.text());
     try { const parsed = JSON.parse(cleaned); if (parsed.type === "done") { setDone(true); setQuestion(null); } else { setQuestion(parsed); }
-    } catch (err) { console.error("Failed to parse Gemini response:", err); }
+    } catch (err) { console.error("Failed to parse Gemini response:", err, cleaned); }
   };
   
   const handleRestart = () => location.reload();
@@ -161,7 +172,6 @@ export default function FormBotPage() {
   const handleKeyPress = (e) => { if (e.key === "Enter") handleSubmit(); };
   const handleEditKeyPress = (e) => { if (e.key === "Enter") handleSummaryUpdate(); };
   
-  // ... (renderInput function remains the same)
   const renderInput = () => {
     switch (question?.type) {
       case "input": return ( <input type={ question.fieldType === "number" ? "number" : question.fieldType === "date" ? "date" : "text" } placeholder={question.placeholder || ""} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyPress} className="w-full text-black text-xl p-3 rounded border border-gray-300 bg-gray-100 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500" /> );
@@ -182,7 +192,6 @@ export default function FormBotPage() {
           <AnimatePresence mode="wait">
             <motion.div key={done ? "summary" : question?.fieldKey || "loading"} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }} className="w-full">
               {done ? (
-                // --- NEW Summary & Edit View ---
                 <>
                   <h2 className="text-2xl font-bold mb-4">✅ Please Review Your Summary</h2>
                   <div className="bg-white text-gray-800 rounded-lg shadow-lg p-6 mb-6 text-left min-h-[150px]">
@@ -220,8 +229,18 @@ export default function FormBotPage() {
                   </div>
                 </>
               ) : (
-                // --- Active conversation part (unchanged) ---
                 <>
+                  {/* This logic ensures the greeting only shows for the first question */}
+                  {currentIndex === 0 && (
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="mb-4 text-gray-600 p-4 bg-blue-50 rounded-lg"
+                    >
+                      <p>Hello! I'm a friendly assistant from VitalPhysio+. I'll be collecting some information for your upcoming physiotherapy appointment. Everything you share is confidential.</p>
+                    </motion.div>
+                  )}
                   <h2 className="text-xl font-bold mb-6 text-gray-800">{question?.label || "Loading..."}</h2>
                   {renderInput()}
                   {question?.type !== "select" && (
