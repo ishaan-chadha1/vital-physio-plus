@@ -79,7 +79,7 @@ export default function FormBotPage() {
   const generateSummary = async (prompt) => {
     setIsGeneratingSummary(true);
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.0-flash",
       generationConfig,
       systemInstruction: summaryInstruction, // Use the new summary instruction
     });
@@ -130,7 +130,7 @@ export default function FormBotPage() {
   // --- Initialize the data collection chat ---
   useEffect(() => {
     const initChat = async () => {
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", generationConfig, systemInstruction });
+      const model = genAI.getGenerativeModel({ model: "<gemini-2 className="0"></gemini-2>-flash", generationConfig, systemInstruction });
       const session = await model.startChat({ history: [] });
       setChat(session);
       const result = await session.sendMessage("start");
