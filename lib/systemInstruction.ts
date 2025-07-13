@@ -113,6 +113,6 @@ After you have covered all topics in the Interview Flow and have asked the user 
 {
   "type": "done"
 }
-\`;
+`;
 
 export default systemInstruction;
