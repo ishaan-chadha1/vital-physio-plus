@@ -49,42 +49,41 @@ export default function FormBotPage() {
     checkAuth();
   }, [router]);
 
-  const populateFinalJSON = (history) => {
-    const finalData = { demographics: {}, chiefComplaint: {}, historyOfPresentIllness: {}, pastMedicalHistory: [], medications: [], allergies: [], familyHistory: [], socialHistory: {}, reviewOfSystems: {}, diagnosticImpressions: [] };
-    
-    const handleArrayLogic = (section, field, value) => {
-      let lastEntry = finalData[section][finalData[section].length - 1];
-      if (!lastEntry || lastEntry.hasOwnProperty(field)) {
-        finalData[section].push({ [field]: value });
-      } else {
-        lastEntry[field] = value;
-      }
+const populateFinalJSON = (history) => {
+    // Initialize with all the keys from the summary template
+    const finalData = {
+      demographics: {},
+      chiefComplaint: {},
+      pastMedicalHistory: {},
+      medications: {},
+      allergies: {},
+      familyHistory: {},
+      reviewOfSystems: {},
+      lifestyle: {},
+      nutrition: {},
+      imaging: {},
+      redFlags: {},
+      patientGoals: {}
     };
 
     history.forEach((entry) => {
+      // Ensure there's a question and a fieldKey to process
+      if (!entry.question || !entry.question.fieldKey) return;
+
       const key = entry.question.fieldKey;
       const value = entry.value;
       const [section, field] = key.split('.');
 
-      switch(section) {
-        case "demographics":
-        case "chiefComplaint":
-        case "historyOfPresentIllness":
-        case "socialHistory":
-        case "reviewOfSystems":
-          finalData[section][field] = value;
-          break;
-        case "pastMedicalHistory":
-        case "medications":
-        case "allergies":
-        case "familyHistory":
-        case "diagnosticImpressions":
-          handleArrayLogic(section, field, value);
-          break;
-        default:
-          break;
+      // If the section doesn't exist in our finalData, something is wrong
+      if (finalData[section] === undefined) {
+        console.warn(`Mismatched section found: ${section}. Skipping.`);
+        return;
       }
+
+      // Directly assign the value to the correct field within its section
+      finalData[section][field] = value;
     });
+
     return finalData;
   };
 
