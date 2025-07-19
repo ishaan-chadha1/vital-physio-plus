@@ -10,7 +10,7 @@
     "@calcom/embed-react": "^1.5.2",
     "@fastify/formbody": "^8.0.2",
     "@fastify/websocket": "^11.1.0",
-    "@google/generative-ai": "^0.22.0",
+    "@google/generative-ai": "1.21.1",
     "@headlessui/react": "^2.2.1",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-checkbox": "^1.1.1",

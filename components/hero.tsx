@@ -1,36 +1,55 @@
-  export default function Hero() {
-    const backgroundImageUrl = "/underwater-treadmill.jpg"; // Replace with actual underwater image path
+import { motion } from "framer-motion";
 
-    return (
-      <section
-        className="relative bg-cover bg-center bg-no-repeat py-40 px-6 text-center"
-        style={{ backgroundImage: `url('${backgroundImageUrl}')` }}
-      >
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/40"></div>
+const Hero = () => {
+  const backgroundImageUrl = "/underwater-treadmill.jpg"; // Replace with actual underwater image path
 
-        <div className="relative max-w-4xl mx-auto text-white">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Regain Mobility - in half the time
-          </h1>
-          <p className="text-lg md:text-2xl mb-8">Move Freely, Live Fully</p>
+  return (
+    <section
+      className="relative bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url('${backgroundImageUrl}')` }}
+    >
+      <div className="absolute inset-0 bg-blue-950/40"></div>
 
-          <a
-            href="/book-appointment"
-            className="inline-block bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold py-3 px-6 rounded transition"
+      <div className="relative z-10 mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mx-auto max-w-3xl text-center text-white"
+        >
+          <h1
+            className="text-4xl font-extrabold sm:text-5xl text-white"
+            style={{ textShadow: "2px 2px 8px rgba(0,0,0,0.6)" }}
           >
-            Book Appointment
-          </a>
+            Restore Movement, Reclaim Life.
+          </h1>
 
-          <div className="mt-4">
+          <p
+            className="mx-auto mt-4 max-w-xl sm:text-xl/relaxed text-white"
+            style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.5)" }}
+          >
+            Evidence-based physiotherapy that empowers you to move freely and
+            live fully.
+          </p>
+
+          <div className="mt-8 flex flex-col items-center justify-center gap-4">
             <a
+              className="block w-full max-w-xs rounded-md bg-orange-500 px-12 py-3 text-lg font-medium text-white shadow-xl transition hover:bg-orange-600 focus:outline-none focus:ring"
+              href="/book-appointment"
+            >
+              Book Appointment
+            </a>
+            <a
+              className="block w-full max-w-xs rounded-md border border-white/50 bg-[#0B2A4C] px-12 py-3 text-lg font-medium text-white shadow-xl transition hover:bg-white/10 focus:outline-none focus:ring"
               href="#why-us"
-              className="inline-block bg-white/90 text-blue-900 font-semibold px-4 py-2 rounded hover:bg-white"
             >
               Learn Why We're Different
             </a>
           </div>
-        </div>
-      </section>
-    );
-  }
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;

@@ -3,134 +3,121 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function LandingNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Effect to detect scroll and apply styles
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "About Us", href: "/#about" },
+    { name: "Our Services", href: "/#services" },
+    { name: "Cutting-edge Technology", href: "/#technology" },
+    { name: "Conditions We Treat", href: "/#conditions" },
+    { name: "Our Team", href: "/#team" },
+    { name: "Book Appointment", href: "/#book" },
+    { name: "Patient Portal", href: "/portal" },
+    { name: "Contact Us", href: "/#contact" },
+  ];
 
   return (
     <>
-      <nav className="w-full bg-white border-b border-gray-200 fixed top-0 z-50 h-28 flex items-center">
-        <div className="w-full max-w-[1440px] mx-auto flex items-center justify-between px-10">
+      {/* Main Navbar Container */}
+      <nav
+        // UPDATED: Increased transparency on scroll to 50%
+        className={`fixed top-0 z-50 flex w-full items-center transition-all duration-300 ease-in-out h-20 ${
+          scrolled
+            ? "bg-white/50 shadow-lg backdrop-blur-xl" // Increased blur for a more premium feel
+            : "bg-white border-b border-gray-200"
+        }`}
+      >
+        <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-6 md:px-10">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex-shrink-0">
             <Image
               src="/logo.png"
               alt="Vital Physio+ Logo"
-              width={150}
-              height={70}
-              className="object-contain max-h-[64px]"
+              width={80} // UPDATED: Reduced logo size
+              height={42} // UPDATED: Reduced logo size
+              className="object-contain"
               priority
             />
           </Link>
 
-          {/* Navigation Links */}
-          <div className="flex-1 flex items-center justify-center text-blue-800 text-base font-semibold space-x-6">
-            {[
-              { name: "Home", href: "/" },
-              { name: "About Us", href: "/#about" },
-              { name: "Conditions", href: "/#conditions" },
-              { name: "Services", href: "/#services" },
-              { name: "Why VitalPhysio+", href: "/#why-us" },
-              { name: "FAQs", href: "/faq" },
-              { name: "Resources", href: "/#resources" },
-              { name: "Contact", href: "/#contact" },
-            ].map((item, idx, arr) => (
-              <div key={item.name} className="flex items-center space-x-6">
-                <Link href={item.href} className="hover:underline">
+          {/* Desktop Navigation Links */}
+          <div className="hidden lg:flex flex-1 items-center justify-center gap-x-4 text-sm font-medium text-gray-800">
+            {navLinks.map((item, idx) => (
+              <div key={item.name} className="flex items-center gap-x-4">
+                <Link href={item.href} className="transition-colors hover:text-teal-600">
                   {item.name}
                 </Link>
-                {idx < arr.length - 1 && (
+                {idx < navLinks.length - 1 && (
                   <span className="text-gray-300">|</span>
                 )}
               </div>
             ))}
           </div>
 
-          {/* Always-visible Menu Button */}
-          <div className="ml-4">
+          {/* Menu Button */}
+          <div className="flex flex-1 justify-end lg:flex-none">
             <button
-              className="text-blue-800 hover:text-blue-600 transition"
+              className="p-2 text-gray-700 transition-all duration-300 border-2 border-gray-600 rounded-full hover:bg-gray-100 hover:text-teal-600"
               onClick={() => setMenuOpen(true)}
+              aria-label="Open menu"
             >
-              <Menu size={28} />
+              <Menu size={24} />
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Side Menu */}
+      {/* Side Menu Overlay */}
       {menuOpen && (
-        <div className="fixed top-0 right-0 w-72 h-full bg-white shadow-2xl z-50 border-l border-gray-200 flex flex-col p-6 transition-all duration-300 ease-in-out">
-          {/* Close Button */}
-          <div className="flex justify-end mb-4">
-            <button
-              onClick={() => setMenuOpen(false)}
-              className="text-blue-800 hover:text-red-500 transition"
-            >
-              <X size={26} />
-            </button>
-          </div>
-
-          {/* Nav Links */}
-          <nav className="flex flex-col gap-4 text-blue-800 font-semibold text-base">
-            <Link
-              href="/"
-              className="hover:text-blue-600 hover:pl-2 transition"
-            >
-              Home
-            </Link>
-            <Link
-              href="/about"
-              className="hover:text-blue-600 hover:pl-2 transition"
-            >
-              About Us
-            </Link>
-            <Link
-              href="/conditions"
-              className="hover:text-blue-600 hover:pl-2 transition"
-            >
-              Conditions
-            </Link>
-            <Link
-              href="/rehabilitation"
-              className="hover:text-blue-600 hover:pl-2 transition"
-            >
-              Rehabilitation
-            </Link>
-            <Link
-              href="/rehabilitation"
-              className="hover:text-blue-600 hover:pl-2 transition"
-            >
-              Services
-            </Link>
-            <Link
-              href="/why-vital-physio+"
-              className="hover:text-blue-600 hover:pl-2 transition"
-            >
-              Why VitalPhysio+
-            </Link>
-            <Link
-              href="/faq"
-              className="hover:text-blue-600 hover:pl-2 transition"
-            >
-              FAQs
-            </Link>
-            <Link
-              href="/resources"
-              className="hover:text-blue-600 hover:pl-2 transition"
-            >
-              Resources
-            </Link>
-            <Link
-              href="/form"
-              className="hover:text-blue-600 hover:pl-2 transition"
-            >
-              Contact
-            </Link>
-          </nav>
-        </div>
+        <div 
+          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+          onClick={() => setMenuOpen(false)}
+        ></div>
       )}
+
+      {/* Side Menu Panel */}
+      <div
+        className={`fixed top-0 right-0 z-50 flex h-full w-80 flex-col border-l border-gray-200 bg-white p-6 shadow-2xl transition-transform duration-300 ease-in-out ${
+          menuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="mb-6 flex justify-end">
+          <button
+            onClick={() => setMenuOpen(false)}
+            className="text-gray-600 transition-colors hover:text-red-500"
+            aria-label="Close menu"
+          >
+            <X size={28} />
+          </button>
+        </div>
+
+        <nav className="flex flex-col gap-5 text-lg font-medium text-gray-800">
+          {navLinks.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="transition-all hover:pl-2 hover:text-teal-600"
+              onClick={() => setMenuOpen(false)}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
+      </div>
     </>
   );
 }
