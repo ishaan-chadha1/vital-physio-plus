@@ -193,7 +193,11 @@ const WhyChooseUs = () => {
               src="https://placehold.co/600x700/003366/FFFFFF?text=VitalPhysio%2B+Clinic"
               alt="Modern and welcoming interior of VitalPhysio+ clinic"
               className="w-full h-full object-cover"
-              onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/600x700/e0e0e0/000000?text=Image+Not+Found'; }}
+              onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => { 
+                const target = e.target as HTMLImageElement;
+                target.onerror = null; 
+                target.src='https://placehold.co/600x700/e0e0e0/000000?text=Image+Not+Found'; 
+              }}
             />
           </motion.div>
         </div>
