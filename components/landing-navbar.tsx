@@ -47,8 +47,8 @@ export default function LandingNavbar() {
             <Image
               src="/logo.png"
               alt="Vital Physio+ Logo"
-              width={80}
-              height={42}
+              width={200}
+              height={60}
               className="object-contain"
               priority
             />
