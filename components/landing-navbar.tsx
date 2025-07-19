@@ -36,7 +36,7 @@ export default function LandingNavbar() {
       <nav
         className={`fixed top-0 z-50 flex w-full items-center transition-all duration-300 ease-in-out h-20 ${
           scrolled
-            ? "bg-white/50 shadow-lg backdrop-blur-xl"
+            ? "bg-white/30 shadow-lg backdrop-blur-xl"
             : "bg-white border-b border-gray-200"
         }`}
       >
