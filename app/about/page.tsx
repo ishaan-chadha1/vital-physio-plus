@@ -3,7 +3,16 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Footer from "@/components/footer";
-import { Award, Target, Gem, HeartHandshake, BrainCircuit, Sparkles, Stethoscope, ArrowRight } from "lucide-react";
+import {
+  Award,
+  Target,
+  Gem,
+  HeartHandshake,
+  BrainCircuit,
+  Sparkles,
+  Stethoscope,
+  ArrowRight,
+} from "lucide-react";
 import LandingNavbar from "@/components/landing-navbar"; // Assuming navbar is in this path
 
 // Main About Page Component
@@ -47,22 +56,35 @@ const AboutHero = () => (
 );
 
 // Mission, Vision, and Values Section
+// Mission, Vision, and Values Section - Updated with unique card styling
 const MissionVisionValues = () => {
   const coreValues = [
     {
       icon: Target,
       title: "Mission",
       description: "To empower individuals to achieve optimal physical function and a life free from limitations through compassionate, evidence-based physiotherapy.",
+      borderColor: "border-blue-500",
+      iconBgColor: "bg-blue-100",
+      iconTextColor: "text-blue-600",
+      hoverBgColor: "hover:bg-blue-500",
     },
     {
       icon: Award,
       title: "Vision",
       description: "To be the recognized leader in holistic rehabilitation, setting the standard for patient care and innovative therapeutic outcomes.",
+      borderColor: "border-teal-500",
+      iconBgColor: "bg-teal-100",
+      iconTextColor: "text-teal-600",
+      hoverBgColor: "hover:bg-teal-500",
     },
     {
       icon: Gem,
       title: "Values",
       description: "Our practice is built on Excellence, Compassion, Integrity, Innovation, and Empowerment, ensuring patient-centric care at every step.",
+      borderColor: "border-orange-500",
+      iconBgColor: "bg-orange-100",
+      iconTextColor: "text-orange-600",
+      hoverBgColor: "hover:bg-orange-500",
     },
   ];
 
@@ -82,13 +104,13 @@ const MissionVisionValues = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.15 }}
               viewport={{ once: true, amount: 0.5 }}
-              className="p-8 bg-gray-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className={`group p-8 bg-gray-50 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 ${value.borderColor} ${value.hoverBgColor}`}
             >
-              <div className="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-blue-100 text-blue-600">
+              <div className={`inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full ${value.iconBgColor} ${value.iconTextColor} group-hover:bg-white group-hover:${value.iconTextColor} transition-colors duration-300`}>
                 <value.icon size={32} />
               </div>
-              <h3 className="text-2xl font-semibold text-blue-900 mb-3">{value.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{value.description}</p>
+              <h3 className="text-2xl font-semibold text-blue-900 mb-3 group-hover:text-white transition-colors duration-300">{value.title}</h3>
+              <p className="text-gray-600 leading-relaxed group-hover:text-gray-100 transition-colors duration-300">{value.description}</p>
             </motion.div>
           ))}
         </div>
@@ -96,7 +118,6 @@ const MissionVisionValues = () => {
     </section>
   );
 };
-
 // Why Choose Us Section
 const WhyChooseUs = () => {
   const features = [
@@ -144,14 +165,18 @@ const WhyChooseUs = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 + index * 0.15 }}
                   viewport={{ once: true, amount: 0.5 }}
-                  className="flex items-start gap-5"
+                  className="group flex items-start gap-5 p-4 rounded-lg transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-1"
                 >
-                  <div className="flex-shrink-0 w-12 h-12 mt-1 rounded-full bg-white shadow-md flex items-center justify-center text-teal-500">
+                  <div className="flex-shrink-0 w-12 h-12 mt-1 rounded-full bg-white shadow-md flex items-center justify-center text-teal-500 group-hover:bg-teal-500 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                     <feature.icon size={24} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-blue-900">{feature.title}</h3>
-                    <p className="mt-1 text-gray-600 leading-relaxed">{feature.description}</p>
+                    <h3 className="text-xl font-semibold text-blue-900">
+                      {feature.title}
+                    </h3>
+                    <p className="mt-1 text-gray-600 leading-relaxed">
+                      {feature.description}
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -197,7 +222,9 @@ const TeamCTA = () => (
         viewport={{ once: true, amount: 0.5 }}
         className="mt-4 text-lg text-gray-600 leading-relaxed"
       >
-        Our team of dedicated physiotherapists brings collective expertise, a compassionate approach, and diverse specializations to ensure you receive the highest standard of care.
+        Our team of dedicated physiotherapists brings collective expertise, a
+        compassionate approach, and diverse specializations to ensure you
+        receive the highest standard of care.
       </motion.p>
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
