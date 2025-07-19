@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Zap, Waves, Sun, Wind, Atom, Bone, HeartPulse, BrainCircuit, ShieldCheck, Dumbbell, Sparkles, ChevronLeft, ChevronRight, X } from "lucide-react";
 import LandingNavbar from "@/components/landing-navbar"; // Assuming navbar is in this path
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-
+import Footer from "@/components/footer"; 
 // Main Services Page Component
 export default function ServicesPage() {
   const [modalData, setModalData] = useState<any>(null);
@@ -245,15 +245,15 @@ const TeamCTA = () => (
   </section>
 );
 
-const Footer = () => (
-  <footer className="bg-gray-800 text-gray-400 py-12 px-6">
-    <div className="container mx-auto text-center">
-      <p className="mb-4">&copy; {new Date().getFullYear()} VitalPhysio⁺. All rights reserved. Bengaluru, Karnataka, India.</p>
-      <div className="flex justify-center space-x-6">
-        <a href="#privacy" className="hover:text-white transition-colors duration-300">Privacy Policy</a>
-        <a href="#terms" className="hover:text-white transition-colors duration-300">Terms of Service</a>
-        <a href="#blog" className="hover:text-white transition-colors duration-300">Blog & Resources</a>
-      </div>
-    </div>
-  </footer>
-);
+// const Footer = () => (
+//   <footer className="bg-gray-800 text-gray-400 py-12 px-6">
+//     <div className="container mx-auto text-center">
+//       <p className="mb-4">&copy; {new Date().getFullYear()} VitalPhysio⁺. All rights reserved. Bengaluru, Karnataka, India.</p>
+//       <div className="flex justify-center space-x-6">
+//         <a href="#privacy" className="hover:text-white transition-colors duration-300">Privacy Policy</a>
+//         <a href="#terms" className="hover:text-white transition-colors duration-300">Terms of Service</a>
+//         <a href="#blog" className="hover:text-white transition-colors duration-300">Blog & Resources</a>
+//       </div>
+//     </div>
+//   </footer>
+// );
