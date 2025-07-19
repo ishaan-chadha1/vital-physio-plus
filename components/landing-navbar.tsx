@@ -34,21 +34,21 @@ export default function LandingNavbar() {
     <>
       {/* Main Navbar Container */}
       <nav
-        // UPDATED: Increased transparency on scroll to 50%
         className={`fixed top-0 z-50 flex w-full items-center transition-all duration-300 ease-in-out h-20 ${
           scrolled
-            ? "bg-white/50 shadow-lg backdrop-blur-xl" // Increased blur for a more premium feel
+            ? "bg-white/50 shadow-lg backdrop-blur-xl"
             : "bg-white border-b border-gray-200"
         }`}
       >
         <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between px-6 md:px-10">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
+          {/* UPDATED: Added right padding (pr-6) for spacing */}
+          <Link href="/" className="flex-shrink-0 pr-6">
             <Image
               src="/logo.png"
               alt="Vital Physio+ Logo"
-              width={80} // UPDATED: Reduced logo size
-              height={42} // UPDATED: Reduced logo size
+              width={80}
+              height={42}
               className="object-contain"
               priority
             />
