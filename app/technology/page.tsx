@@ -3,7 +3,14 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Zap, Wind, Atom, Dumbbell, ShieldCheck, Bone, ChevronRight, X
+  Zap,
+  Wind,
+  Atom,
+  Dumbbell,
+  ShieldCheck,
+  Bone,
+  ChevronRight,
+  X,
 } from "lucide-react";
 import Footer from "@/components/footer";
 import LandingNavbar from "@/components/landing-navbar";
@@ -19,7 +26,8 @@ const modalitiesData = [
     bg: "bg-gradient-to-br from-[#fceabb] via-[#f8b500] to-[#f76d1a]",
     description:
       "This advanced laser penetrates deep into tissues to stimulate cellular repair at the source. It's a powerful, non-invasive tool for rapid pain relief and reduced inflammation.",
-    treats: "Chronic back/neck pain, arthritis, plantar fasciitis, post-surgical pain.",
+    treats:
+      "Chronic back/neck pain, arthritis, plantar fasciitis, post-surgical pain.",
     benefit:
       "Accelerates healing and provides immediate pain relief without medication.",
   },
@@ -44,8 +52,7 @@ const modalitiesData = [
     description:
       "Our smart gym uses AI-controlled resistance for precise strength training. With over 150 exercises and real-time feedback, it's ideal for post-op rehab and athletic conditioning, ensuring every movement is perfect.",
     treats: "Post-op weakness, athletic conditioning needs.",
-    benefit:
-      "Precise, data-driven strength training with real-time feedback.",
+    benefit: "Precise, data-driven strength training with real-time feedback.",
   },
   {
     id: 4,
@@ -68,11 +75,10 @@ const modalitiesData = [
     description:
       "A revolutionary, non-invasive pelvic floor trainer. A single session induces over 12,000 deep contractions, effectively restoring bladder control, improving sexual function, and strengthening core musculature—all while you remain fully clothed.",
     treats: "Urinary incontinence, pelvic pain, post-natal weakness.",
-    benefit:
-      "Strengthens the entire pelvic floor effortlessly and discreetly.",
+    benefit: "Strengthens the entire pelvic floor effortlessly and discreetly.",
     link: {
       text: "Learn about Women's Health Services →",
-      href: "#"
+      href: "#",
     },
   },
   {
@@ -85,7 +91,7 @@ const modalitiesData = [
       "Gentle, non-surgical therapy to relieve back and neck pain by reducing pressure on the spinal discs and nerves.",
     treats: "Herniated discs, Sciatica.",
     benefit: "Reduces nerve compression, eases pain.",
-  }
+  },
 ];
 
 // --- COMPONENT ---
@@ -96,6 +102,56 @@ export default function TechnologyPage() {
   return (
     <>
       <style jsx global>{`
+        .teal-table-card {
+          background: linear-gradient(120deg, #10b6b6 0%, #14d0c9 100%);
+          box-shadow: 0 12px 32px 0 rgba(18, 180, 180, 0.15);
+          border-radius: 1.5rem;
+          overflow: hidden;
+        }
+        .teal-table-head {
+          padding: 1.5rem 2rem;
+          border-bottom: 1px solid #22d3ee;
+          background: none;
+          border-radius: 1.5rem 1.5rem 0 0;
+        }
+        .teal-table-title {
+          color: #fff;
+          font-size: 1.5rem;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+        }
+        .teal-table th {
+          background: rgba(255, 255, 255, 0.08);
+          color: #fff;
+          font-weight: 600;
+          font-size: 1.1rem;
+          padding: 1.25rem;
+        }
+        .teal-table td {
+          color: #fff;
+          font-weight: 500;
+          padding: 1.25rem;
+          transition:
+            color 0.3s,
+            background 0.3s;
+        }
+        .teal-table tr {
+          border-bottom: 1px solid #ffffff44;
+          transition:
+            background 0.3s,
+            color 0.3s;
+        }
+        .teal-table tbody tr:hover td {
+          background: #fff !important;
+          color: #10b6b6 !important;
+          transition:
+            background 0.3s,
+            color 0.3s;
+        }
+        .teal-table tbody tr:hover {
+          background: #fff !important;
+          color: #10b6b6 !important;
+        }
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }
@@ -110,14 +166,15 @@ export default function TechnologyPage() {
           background: linear-gradient(90deg, #edf7fa 0%, #c6e6fa 100%);
         }
       `}</style>
-        <LandingNavbar />
+      <LandingNavbar />
       {/* HERO BANNER (as in PDF) */}
       <section className="relative w-full gradient-pdf min-h-[300px] py-16 md:py-24 flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 opacity-20 pointer-events-none"
+        <div
+          className="absolute inset-0 opacity-20 pointer-events-none"
           style={{
             background:
               "url('/physio_banner_overlay.svg') repeat, linear-gradient(94deg, #163774 0%, #47a5d6 100%)",
-            backgroundBlendMode: "overlay"
+            backgroundBlendMode: "overlay",
           }}
         />
         <div className="relative z-10 flex flex-col items-center max-w-2xl mx-auto px-6 text-center">
@@ -135,7 +192,10 @@ export default function TechnologyPage() {
             transition={{ duration: 0.6, delay: 0.38 }}
             className="text-white/90 mt-4 md:text-lg font-medium md:mt-7"
           >
-            At <span className="font-semibold text-blue-100">VitalPhysio</span>, we invest in state-of-the-art equipment that accelerates healing beyond traditional methods.<br />
+            At <span className="font-semibold text-blue-100">VitalPhysio</span>,
+            we invest in state-of-the-art equipment that accelerates healing
+            beyond traditional methods.
+            <br />
             Each device is chosen for its proven clinical benefit.
           </motion.p>
         </div>
@@ -149,13 +209,22 @@ export default function TechnologyPage() {
               Invested in Your Superior Care
             </h2>
             <p className="text-base md:text-lg text-gray-800 mb-2">
-              At <span className="font-semibold text-blue-600">VitalPhysio</span>, we are committed to providing you with the most effective and efficient path to recovery. Our clinic is equipped with a curated selection of high-end, state-of-the-art physiotherapy devices that represent the pinnacle of therapeutic technology.
+              At{" "}
+              <span className="font-semibold text-blue-600">VitalPhysio</span>,
+              we are committed to providing you with the most effective and
+              efficient path to recovery. Our clinic is equipped with a curated
+              selection of high-end, state-of-the-art physiotherapy devices that
+              represent the pinnacle of therapeutic technology.
             </p>
             <p className="text-base md:text-lg text-gray-800 mb-2">
-              These advanced tools, combined with our expert physiotherapists, enable us to deliver precise, targeted treatments that accelerate healing, reduce pain, and restore function more effectively than traditional methods.
+              These advanced tools, combined with our expert physiotherapists,
+              enable us to deliver precise, targeted treatments that accelerate
+              healing, reduce pain, and restore function more effectively than
+              traditional methods.
             </p>
             <p className="font-semibold text-blue-900 mt-4">
-              Explore how our cutting-edge equipment can benefit your journey to vitality.
+              Explore how our cutting-edge equipment can benefit your journey to
+              vitality.
             </p>
           </div>
         </div>
@@ -167,37 +236,51 @@ export default function TechnologyPage() {
           {modalitiesData.map((modality, idx) => (
             <div
               key={modality.id}
-              className={`flex flex-col md:flex-row items-stretch ${idx % 2 === 0
-                ? "md:flex-row"
-                : "md:flex-row-reverse"
-                } md:gap-10 gap-6 group`}
+              className={`flex flex-col md:flex-row items-stretch ${
+                idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+              } md:gap-10 gap-6 group`}
             >
               {/* Card */}
               <motion.div
-                whileHover={{ y: -4, scale: 1.015, boxShadow: "0 8px 24px #0001" }}
+                whileHover={{
+                  y: -4,
+                  scale: 1.015,
+                  boxShadow: "0 8px 24px #0001",
+                }}
                 transition={{ type: "spring", stiffness: 300 }}
                 onClick={() => setModalData(modality)}
-                className={`w-full md:w-1/2 rounded-2xl shadow-lg border-2 ${modality.borderColor
-                  } cursor-pointer bg-white hover:shadow-xl transition group`}
+                className={`w-full md:w-1/2 rounded-2xl shadow-lg border-2 ${
+                  modality.borderColor
+                } cursor-pointer bg-white hover:shadow-xl transition group`}
               >
-                <div className={`flex flex-col justify-center min-h-[260px] ${modality.bg}`}>
+                <div
+                  className={`flex flex-col justify-center min-h-[260px] ${modality.bg}`}
+                >
                   <div className="flex flex-col items-center justify-center py-9">
                     <modality.icon className="w-14 h-14 mb-3 text-white drop-shadow-md" />
-                    <h3 className="text-xl font-bold text-white text-center mb-1">{modality.title}</h3>
+                    <h3 className="text-xl font-bold text-white text-center mb-1">
+                      {modality.title}
+                    </h3>
                   </div>
                 </div>
               </motion.div>
               {/* Content */}
               <div className="flex flex-col justify-center w-full md:w-1/2">
                 <div className="h-full flex flex-col justify-between gap-4 px-2 py-1">
-                  <p className="text-gray-800 text-base font-medium mb-1">{modality.description}</p>
+                  <p className="text-gray-800 text-base font-medium mb-1">
+                    {modality.description}
+                  </p>
                   <div className="space-y-1 mt-2">
                     <p>
-                      <span className="font-semibold text-blue-700">Treats: </span>
+                      <span className="font-semibold text-blue-700">
+                        Treats:{" "}
+                      </span>
                       <span className="text-gray-700">{modality.treats}</span>
                     </p>
                     <p>
-                      <span className="font-semibold text-blue-700">Benefit: </span>
+                      <span className="font-semibold text-blue-700">
+                        Benefit:{" "}
+                      </span>
                       <span className="text-gray-700">{modality.benefit}</span>
                     </p>
                     {modality.link && (
@@ -217,52 +300,54 @@ export default function TechnologyPage() {
       </section>
 
       {/* CTA SECTION as PDF */}
-      
 
       {/* TABLE CARD as PDF */}
-      <section className="py-10 px-2 bg-gray-50 flex justify-center items-center">
-        <div className="bg-white rounded-3xl shadow-xl border border-blue-100 max-w-4xl w-full overflow-x-auto">
-          <div className="pdf-table-head rounded-t-3xl px-8 py-5 border-b border-blue-100">
-            <h3 className="text-2xl font-bold text-blue-900 tracking-tight">Technology: Modalities at a Glance</h3>
+      <section className="py-10 px-2 flex justify-center items-center bg-transparent">
+        <div className="teal-table-card max-w-4xl w-full">
+          <div className="teal-table-head">
+            <h3 className="teal-table-title">
+              Technology: Modalities at a Glance
+            </h3>
           </div>
-          <table className="w-full min-w-[700px] text-left">
+          <table className="teal-table w-full min-w-[700px] text-left">
             <thead>
-              <tr className="bg-blue-50">
-                <th className="p-5 font-bold text-blue-800">Modality</th>
-                <th className="p-5 font-bold text-blue-800">Common Conditions</th>
-                <th className="p-5 font-bold text-blue-800">Key Benefits</th>
+              <tr>
+                <th>Modality</th>
+                <th>Common Conditions</th>
+                <th>Key Benefits</th>
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b">
-                <td className="p-5">High-Intensity Laser</td>
-                <td className="p-5">Back/Neck pain, Arthritis, Tendinopathy</td>
-                <td className="p-5">Accelerated healing, rapid pain relief</td>
-              </tr>
-              <tr className="border-b">
-                <td className="p-5">Shockwave Therapy</td>
-                <td className="p-5">Chronic tendinopathies (heel, shoulder, elbow)</td>
-                <td className="p-5">Breaks calcifications, boosts circulation</td>
-              </tr>
-              <tr className="border-b">
-                <td className="p-5">Spinal Decompression</td>
-                <td className="p-5">Herniated discs, Sciatica</td>
-                <td className="p-5">Reduces nerve compression, eases pain</td>
-              </tr>
-              <tr className="border-b">
-                <td className="p-5">UI Chair (HIFEM)</td>
-                <td className="p-5">Urinary Incontinence, Pelvic Pain</td>
-                <td className="p-5">Strengthens pelvic floor, non-invasive</td>
+              <tr>
+                <td>High-Intensity Laser</td>
+                <td>Back/Neck pain, Arthritis, Tendinopathy</td>
+                <td>Accelerated healing, rapid pain relief</td>
               </tr>
               <tr>
-                <td className="p-5">AI Smart Gym</td>
-                <td className="p-5">Post-op rehab, Strength deficits</td>
-                <td className="p-5">Data-driven progress, precise resistance</td>
+                <td>Shockwave Therapy</td>
+                <td>Chronic tendinopathies (heel, shoulder, elbow)</td>
+                <td>Breaks calcifications, boosts circulation</td>
+              </tr>
+              <tr>
+                <td>Spinal Decompression</td>
+                <td>Herniated discs, Sciatica</td>
+                <td>Reduces nerve compression, eases pain</td>
+              </tr>
+              <tr>
+                <td>UI Chair (HIFEM)</td>
+                <td>Urinary Incontinence, Pelvic Pain</td>
+                <td>Strengthens pelvic floor, non-invasive</td>
+              </tr>
+              <tr>
+                <td>AI Smart Gym</td>
+                <td>Post-op rehab, Strength deficits</td>
+                <td>Data-driven progress, precise resistance</td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
+
       <section className="w-full bg-blue-50 flex flex-col items-center justify-center py-12 md:py-16">
         <div className="max-w-xl w-full flex flex-col items-center px-4">
           <div className="text-center mb-6">
