@@ -35,11 +35,9 @@ export default function LandingNavbar() {
     <>
       {/* TOP SECTION - Logo & CTA Buttons */}
       <div
-        className={`
-          fixed top-0 left-0 w-full z-50 bg-white shadow-sm border-b border-gray-100
-          transition-all duration-500 ease-in-out
-          ${scrolled ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'}
-        `}
+        className={`fixed top-0 left-0 w-full z-50 bg-white shadow-sm border-b border-gray-100 transition-all duration-500 ease-in-out ${
+          scrolled ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between py-4">
@@ -91,18 +89,15 @@ export default function LandingNavbar() {
 
       {/* BOTTOM SECTION - Navigation Links */}
       <nav
-        className={`
-          fixed left-0 w-full z-40 border-b border-gray-200
-          transition-all duration-300 ease-in-out
-          ${scrolled 
+        className={`fixed left-0 w-full z-40 border-b border-gray-200 transition-all duration-300 ease-in-out ${
+          scrolled 
             ? `top-0 ${hovered ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/70 backdrop-blur-sm shadow-md'}` 
             : 'top-20 bg-white shadow-sm'
-          }
-        `}
+        }`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="max-w-7xl mx-auto px-2 md:px-4">
           <div className="flex items-center justify-between py-3">
             {/* Mobile Menu Button (when scrolled) */}
             <div className="lg:hidden">
@@ -119,29 +114,29 @@ export default function LandingNavbar() {
 
             {/* Desktop Navigation Links */}
             <div className="hidden lg:flex items-center justify-center w-full">
-              <div className="flex items-center space-x-1">
+              <div className="flex items-center flex-nowrap overflow-x-auto scrollbar-hide min-w-0">
                 {/* VitalPhysio+ Brand */}
                 <Link
                   href="/"
-                  className="relative font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 text-transparent bg-clip-text tracking-wide text-lg px-4 py-2 group"
+                  className="relative font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 text-transparent bg-clip-text tracking-wide text-base px-2 py-2 group whitespace-nowrap flex-shrink-0"
                 >
                   VitalPhysio+
-                  <span className="absolute left-2 right-2 bottom-0 h-0.5 bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                  <span className="absolute left-1 right-1 bottom-0 h-0.5 bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
                 </Link>
                 
-                <span className="text-gray-300 text-lg font-light px-2">|</span>
+                <span className="text-gray-300 text-base font-light px-1 flex-shrink-0">|</span>
 
                 {navLinks.map((item, idx) => (
-                  <div key={item.name} className="flex items-center">
+                  <div key={item.name} className="flex items-center flex-shrink-0">
                     <Link
                       href={item.href}
-                      className="relative text-gray-700 hover:text-teal-600 font-medium text-sm px-3 py-2 group transition-colors duration-200"
+                      className="relative text-gray-700 hover:text-teal-600 font-medium text-xs px-1.5 py-2 group transition-colors duration-200 whitespace-nowrap"
                     >
                       {item.name}
-                      <span className="absolute left-1 right-1 bottom-0 h-0.5 bg-teal-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                      <span className="absolute left-0.5 right-0.5 bottom-0 h-0.5 bg-teal-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
                     </Link>
                     {idx < navLinks.length - 1 && (
-                      <span className="text-gray-300 text-sm px-1">|</span>
+                      <span className="text-gray-300 text-xs px-0.5 flex-shrink-0">|</span>
                     )}
                   </div>
                 ))}
@@ -164,11 +159,9 @@ export default function LandingNavbar() {
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`
-          fixed top-0 right-0 z-50 h-full w-80 bg-white shadow-2xl
-          transform transition-transform duration-300 ease-in-out
-          ${menuOpen ? 'translate-x-0' : 'translate-x-full'}
-        `}
+        className={`fixed top-0 right-0 z-50 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
+          menuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
       >
         <div className="p-6 h-full flex flex-col">
           {/* Close Button */}
