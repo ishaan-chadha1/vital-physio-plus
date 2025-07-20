@@ -85,12 +85,54 @@ const techniquesData = [
 ];
 
 const programsData = [
-    { id: 8, title: "High-Intensity Laser", icon: Zap, borderColor: "border-red-500", description: "Advanced laser therapy to penetrate deep into tissue, accelerating cellular reproduction and growth for faster healing." },
-    { id: 9, title: "Shockwave Therapy", icon: Wind, borderColor: "border-green-500", description: "A non-invasive treatment using acoustic waves to treat chronic pain and promote the regeneration of damaged tissues." },
-    { id: 10, title: "Spinal Decompression", icon: Bone, borderColor: "border-blue-500", description: "Gentle, non-surgical therapy to relieve back and neck pain by reducing pressure on the spinal discs and nerves." },
-    { id: 11, title: "Aeroleap Pro", icon: Dumbbell, borderColor: "border-purple-500", description: "State-of-the-art equipment for advanced rehabilitation and performance enhancement exercises." },
-    { id: 12, title: "rPMS", icon: Atom, borderColor: "border-orange-500", description: "Repetitive Peripheral Magnetic Stimulation (rPMS) is an advanced modality for pain management and muscle re-education." },
-    { id: 13, title: "UI Chair", icon: ShieldCheck, borderColor: "border-indigo-500", description: "Specialized therapeutic chair designed for pelvic floor rehabilitation and strengthening." },
+  {
+    id: 8,
+    title: "High-Intensity Laser",
+    icon: Zap,
+    borderColor: "border-red-500",
+    description:
+      "Advanced laser therapy to penetrate deep into tissue, accelerating cellular reproduction and growth for faster healing.",
+  },
+  {
+    id: 9,
+    title: "Shockwave Therapy",
+    icon: Wind,
+    borderColor: "border-green-500",
+    description:
+      "A non-invasive treatment using acoustic waves to treat chronic pain and promote the regeneration of damaged tissues.",
+  },
+  {
+    id: 10,
+    title: "Spinal Decompression",
+    icon: Bone,
+    borderColor: "border-blue-500",
+    description:
+      "Gentle, non-surgical therapy to relieve back and neck pain by reducing pressure on the spinal discs and nerves.",
+  },
+  {
+    id: 11,
+    title: "Aeroleap Pro",
+    icon: Dumbbell,
+    borderColor: "border-purple-500",
+    description:
+      "State-of-the-art equipment for advanced rehabilitation and performance enhancement exercises.",
+  },
+  {
+    id: 12,
+    title: "rPMS",
+    icon: Atom,
+    borderColor: "border-orange-500",
+    description:
+      "Repetitive Peripheral Magnetic Stimulation (rPMS) is an advanced modality for pain management and muscle re-education.",
+  },
+  {
+    id: 13,
+    title: "UI Chair",
+    icon: ShieldCheck,
+    borderColor: "border-indigo-500",
+    description:
+      "Specialized therapeutic chair designed for pelvic floor rehabilitation and strengthening.",
+  },
 ];
 
 // --- MAIN PAGE COMPONENT ---
@@ -169,11 +211,14 @@ const Carousel = ({
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
-      const initialScroll =
-        container.children[items.length].offsetLeft -
-        container.offsetWidth / 2 +
-        container.children[items.length].clientWidth / 2;
-      container.scrollTo({ left: initialScroll, behavior: "auto" });
+      const initialCard = container.children[items.length] as HTMLElement;
+      if (initialCard) {
+        const initialScroll =
+          initialCard.offsetLeft -
+          container.offsetWidth / 2 +
+          initialCard.clientWidth / 2;
+        container.scrollTo({ left: initialScroll, behavior: "auto" });
+      }
       container.addEventListener("scroll", handleScroll, { passive: true });
     }
     return () => container?.removeEventListener("scroll", handleScroll);
@@ -209,8 +254,11 @@ const Carousel = ({
     if (!container) return;
 
     const handleInfiniteScroll = () => {
+      const firstCard = container.children[0] as HTMLElement;
+      if (!firstCard) return;
+
       const scrollLeft = container.scrollLeft;
-      const itemWidth = container.children[0].clientWidth + 32; // card width + gap
+      const itemWidth = firstCard.clientWidth + 32; // card width + gap
 
       if (scrollLeft <= itemWidth * (items.length * 0.5)) {
         container.scrollLeft += items.length * itemWidth;
@@ -337,9 +385,7 @@ const TechniquesCarousel = ({
     <div className="container mx-auto">
       <div className="text-center mb-16 px-6">
         <h2 className="text-3xl md:text-4xl font-bold text-blue-900">
-          We offer a complete suite of physiotherapy services, delivered by
-          specialists and enhanced by state-of-the-art technology to maximize
-          your recovery.
+          Detailed Overview of Therapeutic Techniques
         </h2>
       </div>
       <Carousel items={techniquesData} onCardClick={onCardClick} />
@@ -355,25 +401,13 @@ const SpecializedProgramsCarousel = ({
   <section className="bg-blue-50/70 py-20 md:py-28 overflow-x-hidden">
     <div className="container mx-auto">
       <div className="text-center mb-16 px-6">
-        {" "}
-        <div className="container mx-auto text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-4xl md:text-5xl font-extrabold text-blue-900"
-          >
-            Advanced Therapeutic Techniques 
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className="mt-4 text-lg md:text-xl text-gray-600"
-          >
-            We complement core therapies with state of the art modalities to accelerate healing and improve outcomes.
-          </motion.p>
-        </div>
+        <h2 className="text-3xl md:text-4xl font-bold text-blue-900">
+          Advanced Therapeutic Techniques
+        </h2>
+        <p className="text-gray-600 max-w-2xl mx-auto mt-4">
+          We complement core therapies with state-of-the-art modalities to
+          accelerate healing and improve outcomes.
+        </p>
       </div>
       <Carousel items={programsData} onCardClick={onCardClick} />
     </div>
