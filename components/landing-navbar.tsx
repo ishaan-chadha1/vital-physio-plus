@@ -5,9 +5,7 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
-// Navigation links (with "VitalPhysio+" included)
 const navLinks = [
-  { name: "VitalPhysio+", href: "/" },
   { name: "Home", href: "/" },
   { name: "Our Services", href: "/#services" },
   { name: "Conditions We Treat", href: "/#conditions" },
@@ -24,192 +22,221 @@ export default function LandingNavbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hovered, setHovered] = useState(false);
 
-  // Update scroll state
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Determine navbar background opacity
-  const navBgClass = scrolled
-    ? hovered
-      ? "bg-white backdrop-blur-xl"
-      : "bg-white/10 backdrop-blur-xl"
-    : "bg-white";
-
   return (
     <>
-      <nav
+      {/* TOP SECTION - Logo & CTA Buttons */}
+      <div
         className={`
-          fixed top-0 left-0 w-full z-50 border-b border-gray-200 transition-all duration-300
-          ${navBgClass}
-          ${scrolled ? "shadow-md" : ""}
+          fixed top-0 left-0 w-full z-50 bg-white shadow-sm border-b border-gray-100
+          transition-all duration-500 ease-in-out
+          ${scrolled ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'}
         `}
-        style={{ transition: "background 0.3s, box-shadow 0.2s" }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
       >
-        <div className="max-w-screen-2xl mx-auto px-4 md:px-10 flex flex-col items-center pt-4 pb-2">
-          {/* TOP: Logo and CTA buttons */}
-          <div className="w-full flex flex-row justify-center items-center">
-            <div className="flex-1 hidden lg:block" />
-            {/* Centered LOGO (no extra branding text below) */}
-            <div className="flex items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="flex items-center justify-between py-4">
+            {/* Left Spacer */}
+            <div className="flex-1 hidden lg:block"></div>
+            
+            {/* Centered Logo */}
+            <div className="flex-1 flex justify-center lg:justify-center">
               <Image
                 src="/logo.png"
                 alt="Vital Physio+ Logo"
-                width={300}
-                height={300}
+                width={280}
+                height={80}
                 priority
-                className="object-contain"
+                className="object-contain h-16 w-auto"
               />
             </div>
-            {/* CTA BUTTONS and HAMBURGER */}
-            <div className="flex-1 flex flex-row justify-end items-center">
-              <div className="hidden lg:flex flex-row space-x-3">
+            
+            {/* Right Side - CTA Buttons & Mobile Menu */}
+            <div className="flex-1 flex items-center justify-end space-x-4">
+              {/* Desktop CTA Buttons */}
+              <div className="hidden lg:flex items-center space-x-3">
                 <Link
                   href="/#book"
-                  className="bg-blue-900 text-white font-semibold py-3 px-6 rounded-lg shadow hover:bg-blue-800 transition-colors duration-200 text-base transform hover:-translate-y-1 active:scale-95 active:shadow"
+                  className="bg-blue-900 text-white font-semibold py-2.5 px-5 rounded-lg shadow-md hover:bg-blue-800 hover:shadow-lg transition-all duration-200 text-sm transform hover:-translate-y-0.5"
                 >
                   Book Now
                 </Link>
                 <Link
                   href="/portal"
-                  className="bg-teal-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-teal-700 transition-colors duration-200 text-base transform hover:-translate-y-1 active:scale-95 active:shadow"
+                  className="bg-teal-600 text-white font-semibold py-2.5 px-5 rounded-lg shadow-md hover:bg-teal-700 hover:shadow-lg transition-all duration-200 text-sm transform hover:-translate-y-0.5"
                 >
                   Patient Portal
                 </Link>
               </div>
-              <div className="flex lg:hidden ml-4">
+
+              {/* Mobile Menu Button */}
+              <button
+                className="lg:hidden p-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+                onClick={() => setMenuOpen(true)}
+                aria-label="Open menu"
+              >
+                <Menu size={24} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* BOTTOM SECTION - Navigation Links */}
+      <nav
+        className={`
+          fixed left-0 w-full z-40 border-b border-gray-200
+          transition-all duration-300 ease-in-out
+          ${scrolled 
+            ? `top-0 ${hovered ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/70 backdrop-blur-sm shadow-md'}` 
+            : 'top-20 bg-white shadow-sm'
+          }
+        `}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="flex items-center justify-between py-3">
+            {/* Mobile Menu Button (when scrolled) */}
+            <div className="lg:hidden">
+              {scrolled && (
                 <button
-                  className="p-2 border-2 border-gray-600 rounded-full hover:bg-gray-100 transition"
+                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
                   onClick={() => setMenuOpen(true)}
                   aria-label="Open menu"
                 >
-                  <Menu size={28} />
+                  <Menu size={20} />
                 </button>
+              )}
+            </div>
+
+            {/* Desktop Navigation Links */}
+            <div className="hidden lg:flex items-center justify-center w-full">
+              <div className="flex items-center space-x-1">
+                {/* VitalPhysio+ Brand */}
+                <Link
+                  href="/"
+                  className="relative font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 text-transparent bg-clip-text tracking-wide text-lg px-4 py-2 group"
+                >
+                  VitalPhysio+
+                  <span className="absolute left-2 right-2 bottom-0 h-0.5 bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                </Link>
+                
+                <span className="text-gray-300 text-lg font-light px-2">|</span>
+
+                {navLinks.map((item, idx) => (
+                  <div key={item.name} className="flex items-center">
+                    <Link
+                      href={item.href}
+                      className="relative text-gray-700 hover:text-teal-600 font-medium text-sm px-3 py-2 group transition-colors duration-200"
+                    >
+                      {item.name}
+                      <span className="absolute left-1 right-1 bottom-0 h-0.5 bg-teal-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                    </Link>
+                    {idx < navLinks.length - 1 && (
+                      <span className="text-gray-300 text-sm px-1">|</span>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-          {/* NAVIGATION LINKS */}
-          <div className="w-full mt-6 flex justify-center">
-            <div className="hidden lg:flex items-center justify-center gap-0">
-              {navLinks.map((item, idx) => (
-                <div key={item.name} className="flex items-center">
-                  <Link
-                    href={item.href}
-                    tabIndex={0}
-                    className={`
-                      relative text-base font-medium transition-colors duration-150 px-5 py-2 group
-                      ${item.name === 'VitalPhysio+' 
-                        ? "font-extrabold bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 text-transparent bg-clip-text tracking-wider"
-                        : "text-gray-800"}
-                      hover:text-teal-600 focus:outline-none
-                    `}
-                  >
-                    {item.name}
-                    <span
-                      className={`
-                        absolute left-2 right-2 -bottom-0.5 h-[2px] rounded
-                        bg-gradient-to-r from-blue-700 via-teal-400 to-orange-400
-                        scale-x-0 group-hover:scale-x-100 
-                        transition-transform duration-300 origin-left
-                      `}
-                    />
-                  </Link>
-                  {idx < navLinks.length - 1 && (
-                    <span className="text-gray-300 select-none text-base">|</span>
-                  )}
-                </div>
-              ))}
-            </div>
+
+            {/* Right spacer for mobile */}
+            <div className="lg:hidden w-10"></div>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Side Menu Overlay */}
+      {/* Mobile Menu Overlay */}
       {menuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
           onClick={() => setMenuOpen(false)}
         />
       )}
 
-      {/* Mobile Drawer */}
+      {/* Mobile Menu Drawer */}
       <div
-        className={`fixed top-0 right-0 z-50 bg-white shadow-2xl border-l border-gray-200 h-full w-72 md:w-80 p-6 transition-transform duration-300 flex flex-col
-        ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
+        className={`
+          fixed top-0 right-0 z-50 h-full w-80 bg-white shadow-2xl
+          transform transition-transform duration-300 ease-in-out
+          ${menuOpen ? 'translate-x-0' : 'translate-x-full'}
+        `}
       >
-        <div className="mb-3 flex justify-end">
-          <button
-            onClick={() => setMenuOpen(false)}
-            className="text-gray-600 transition hover:text-red-500"
-            aria-label="Close menu"
-          >
-            <X size={28} />
-          </button>
-        </div>
-        {/* Mobile Logo */}
-        <div className="flex flex-col items-center mb-8">
-          <Image
-            src="/logo.png"
-            alt="Vital Physio+ Logo"
-            width={60}
-            height={60}
-            className="object-contain"
-            priority
-          />
-        </div>
-        {/* Mobile Nav Links */}
-        <nav className="flex flex-col gap-4 text-base font-medium text-gray-800">
-          {navLinks.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
+        <div className="p-6 h-full flex flex-col">
+          {/* Close Button */}
+          <div className="flex justify-end mb-6">
+            <button
               onClick={() => setMenuOpen(false)}
-              tabIndex={0}
-              className={`
-                relative group py-1 transition-colors duration-150
-                ${item.name === "VitalPhysio+"
-                  ? "font-extrabold bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 text-transparent bg-clip-text tracking-wider"
-                  : "text-gray-800"}
-                hover:text-teal-600
-              `}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              aria-label="Close menu"
             >
-              {item.name}
-              <span
-                className={`
-                  absolute left-1.5 right-1.5 -bottom-0.5 h-[2px] rounded
-                  bg-gradient-to-r from-blue-700 via-teal-400 to-orange-400
-                  scale-x-0 group-hover:scale-x-100
-                  transition-transform duration-300
-                  origin-left
-                `}
-              />
+              <X size={24} />
+            </button>
+          </div>
+
+          {/* Mobile Logo */}
+          <div className="flex justify-center mb-8">
+            <Image
+              src="/logo.png"
+              alt="Vital Physio+ Logo"
+              width={200}
+              height={60}
+              className="object-contain h-12 w-auto"
+            />
+          </div>
+
+          {/* Mobile Navigation */}
+          <nav className="flex flex-col space-y-2 mb-8 flex-1">
+            <Link
+              href="/"
+              onClick={() => setMenuOpen(false)}
+              className="font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 text-transparent bg-clip-text text-lg py-2"
+            >
+              VitalPhysio+
             </Link>
-          ))}
-        </nav>
-        <div className="mt-8 flex flex-col gap-3">
-          <Link
-            href="/#book"
-            onClick={() => setMenuOpen(false)}
-            className="bg-blue-900 text-white font-semibold py-2 rounded-lg text-center shadow hover:bg-blue-800 transition-colors duration-200 transform hover:-translate-y-1 active:scale-95 active:shadow"
-          >
-            Book Now
-          </Link>
-          <Link
-            href="/portal"
-            onClick={() => setMenuOpen(false)}
-            className="bg-teal-600 text-white font-semibold py-2 rounded-lg text-center hover:bg-teal-700 transition-colors duration-200 transform hover:-translate-y-1 active:scale-95 active:shadow"
-          >
-            Patient Portal
-          </Link>
+            
+            {navLinks.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+                className="text-gray-700 hover:text-teal-600 font-medium py-2 border-b border-gray-100 transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Mobile CTA Buttons */}
+          <div className="space-y-3 pt-4 border-t border-gray-200">
+            <Link
+              href="/#book"
+              onClick={() => setMenuOpen(false)}
+              className="block w-full bg-blue-900 text-white font-semibold py-3 rounded-lg text-center hover:bg-blue-800 transition-colors"
+            >
+              Book Now
+            </Link>
+            <Link
+              href="/portal"
+              onClick={() => setMenuOpen(false)}
+              className="block w-full bg-teal-600 text-white font-semibold py-3 rounded-lg text-center hover:bg-teal-700 transition-colors"
+            >
+              Patient Portal
+            </Link>
+          </div>
         </div>
       </div>
 
-      {/* Spacer below navbar */}
-      <div className="h-[50px] lg:h-[50px]" />
+      {/* Dynamic Spacer */}
+      <div className={`transition-all duration-300 ${scrolled ? 'h-16' : 'h-32'}`} />
     </>
   );
 }
