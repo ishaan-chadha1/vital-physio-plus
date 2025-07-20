@@ -84,7 +84,7 @@ export default function ContactPage() {
           className="z-10 max-w-2xl mx-auto px-5 text-center"
         >
           <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-2 drop-shadow">
-            Contact VitalPhysio
+            Contact VitalPhysio⁺
           </h1>
           <div className="mb-2 big-chip">We're Here to Help You on Your Journey to Recovery</div>
           <p className="text-white/90 text-lg mt-3">
@@ -223,7 +223,7 @@ export default function ContactPage() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="VitalPhysio Map - Bengaluru"
+                title="VitalPhysio⁺ Map - Bengaluru"
               ></iframe>
             </div>
           </motion.div>

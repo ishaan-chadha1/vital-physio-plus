@@ -26,7 +26,7 @@ export default function PhilosophyApproach() {
           },
           {
             title: "Patient‑Centric Care with Pre‑Visit History Collection",
-            text: `Unique to VitalPhysio+, patients complete a detailed medical history form prior to their first visit—enhancing communication, reducing missed details, and streamlining the initial.`,
+            text: `Unique to VitalPhysio⁺, patients complete a detailed medical history form prior to their first visit—enhancing communication, reducing missed details, and streamlining the initial.`,
           },
           {
             title: "Cutting‑Edge Technologies",

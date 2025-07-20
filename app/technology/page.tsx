@@ -192,7 +192,7 @@ export default function TechnologyPage() {
             transition={{ duration: 0.6, delay: 0.38 }}
             className="text-white/90 mt-4 md:text-lg font-medium md:mt-7"
           >
-            At <span className="font-semibold text-blue-100">VitalPhysio</span>,
+            At <span className="font-semibold text-blue-100">VitalPhysio⁺</span>,
             we invest in state-of-the-art equipment that accelerates healing
             beyond traditional methods.
             <br />
@@ -210,7 +210,7 @@ export default function TechnologyPage() {
             </h2>
             <p className="text-base md:text-lg text-gray-800 mb-2">
               At{" "}
-              <span className="font-semibold text-blue-600">VitalPhysio</span>,
+              <span className="font-semibold text-blue-600">VitalPhysio⁺</span>,
               we are committed to providing you with the most effective and
               efficient path to recovery. Our clinic is equipped with a curated
               selection of high-end, state-of-the-art physiotherapy devices that
@@ -359,7 +359,7 @@ export default function TechnologyPage() {
             href="#book"
             className="inline-flex items-center bg-gradient-to-r from-blue-600 to-sky-400 hover:from-blue-700 hover:to-blue-500 text-white font-bold py-3 px-10 rounded-xl shadow-lg text-lg transition"
           >
-            Schedule your personalized consultation at VitalPhysio
+            Schedule your personalized consultation at VitalPhysio⁺
             <ChevronRight className="ml-2 w-5 h-5" />
           </a>
         </div>

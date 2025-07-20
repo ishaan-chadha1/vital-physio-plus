@@ -147,7 +147,7 @@ const highlights = [
   {
     title: "5. Structured Treatment Pathways (IDEAL Physiotherapy Framework)",
     points: [
-      "At VitalPhysio+, we follow the IDEAL-Physiotherapy Framework—one of the most progressive global standards for physiotherapy delivery. It emphasizes:",
+      "At VitalPhysio⁺, we follow the IDEAL-Physiotherapy Framework—one of the most progressive global standards for physiotherapy delivery. It emphasizes:",
       "• Informed decision making",
       "• Defined objectives & documentation",
       "• Ethical application of therapy",

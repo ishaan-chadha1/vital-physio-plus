@@ -341,7 +341,7 @@ export default function ConditionsPdfPage() {
               <tr className="pdf-table-header">
                 <th>Condition Category</th>
                 <th>Common Conditions Treated</th>
-                <th>How VitalPhysio+ Helps</th>
+                <th>How VitalPhysio⁺ Helps</th>
               </tr>
             </thead>
             <tbody>
