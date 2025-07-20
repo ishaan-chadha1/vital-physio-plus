@@ -32,33 +32,26 @@ export default function LandingNavbar() {
   }, []);
 
   return (
-    <>
-      {/* TOP SECTION - Logo & CTA Buttons */}
+    <div>
       <div
-        className={`fixed top-0 left-0 w-full z-50 bg-white shadow-sm border-b border-gray-100 transition-all duration-500 ease-in-out ${
-          scrolled ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'
-        }`}
+        className={`fixed top-0 left-0 w-full z-50 bg-white shadow-sm border-b border-gray-100 transition-all duration-500 ease-in-out ${scrolled ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'}`}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between py-4">
-            {/* Left Spacer */}
             <div className="flex-1 hidden lg:block"></div>
             
-            {/* Centered Logo */}
             <div className="flex-1 flex justify-center lg:justify-center">
               <Image
                 src="/logo.png"
                 alt="Vital Physio+ Logo"
-                width={280}
+                width={400}
                 height={80}
                 priority
-                className="object-contain h-16 w-auto"
+                className="object-contain h-19 w-auto"
               />
             </div>
             
-            {/* Right Side - CTA Buttons & Mobile Menu */}
             <div className="flex-1 flex items-center justify-end space-x-4">
-              {/* Desktop CTA Buttons */}
               <div className="hidden lg:flex items-center space-x-3">
                 <Link
                   href="/#book"
@@ -74,7 +67,6 @@ export default function LandingNavbar() {
                 </Link>
               </div>
 
-              {/* Mobile Menu Button */}
               <button
                 className="lg:hidden p-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
                 onClick={() => setMenuOpen(true)}
@@ -87,19 +79,13 @@ export default function LandingNavbar() {
         </div>
       </div>
 
-      {/* BOTTOM SECTION - Navigation Links */}
       <nav
-        className={`fixed left-0 w-full z-40 border-b border-gray-200 transition-all duration-300 ease-in-out ${
-          scrolled 
-            ? `top-0 ${hovered ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/70 backdrop-blur-sm shadow-md'}` 
-            : 'top-20 bg-white shadow-sm'
-        }`}
+        className={`fixed left-0 w-full z-40 border-b border-gray-200 transition-all duration-300 ease-in-out ${scrolled ? `top-0 ${hovered ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/70 backdrop-blur-sm shadow-md'}` : 'top-20 bg-white shadow-sm'}`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        <div className="max-w-7xl mx-auto px-2 md:px-4">
+        <div className="max-w-full mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between py-3">
-            {/* Mobile Menu Button (when scrolled) */}
             <div className="lg:hidden">
               {scrolled && (
                 <button
@@ -112,44 +98,34 @@ export default function LandingNavbar() {
               )}
             </div>
 
-            {/* Desktop Navigation Links */}
             <div className="hidden lg:flex items-center justify-center w-full">
-              <div className="flex items-center flex-nowrap overflow-x-auto scrollbar-hide min-w-0">
-                {/* VitalPhysio+ Brand */}
+              <div className="flex items-center justify-evenly w-full max-w-6xl px-4">
                 <Link
                   href="/"
-                  className="relative font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 text-transparent bg-clip-text tracking-wide text-base px-2 py-2 group whitespace-nowrap flex-shrink-0"
+                  className="relative font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 text-transparent bg-clip-text tracking-wide text-base px-4 py-2 group whitespace-nowrap flex-1 text-center"
                 >
                   VitalPhysio+
-                  <span className="absolute left-1 right-1 bottom-0 h-0.5 bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                  <span className="absolute left-4 right-4 bottom-0 h-0.5 bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
                 </Link>
-                
-                <span className="text-gray-300 text-base font-light px-1 flex-shrink-0">|</span>
 
-                {navLinks.map((item, idx) => (
-                  <div key={item.name} className="flex items-center flex-shrink-0">
-                    <Link
-                      href={item.href}
-                      className="relative text-gray-700 hover:text-teal-600 font-medium text-xs px-1.5 py-2 group transition-colors duration-200 whitespace-nowrap"
-                    >
-                      {item.name}
-                      <span className="absolute left-0.5 right-0.5 bottom-0 h-0.5 bg-teal-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-                    </Link>
-                    {idx < navLinks.length - 1 && (
-                      <span className="text-gray-300 text-xs px-0.5 flex-shrink-0">|</span>
-                    )}
-                  </div>
+                {navLinks.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="relative text-gray-700 hover:text-teal-600 font-medium text-sm px-4 py-2 group transition-colors duration-200 whitespace-nowrap flex-1 text-center"
+                  >
+                    {item.name}
+                    <span className="absolute left-4 right-4 bottom-0 h-0.5 bg-teal-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                  </Link>
                 ))}
               </div>
             </div>
 
-            {/* Right spacer for mobile */}
             <div className="lg:hidden w-10"></div>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
       {menuOpen && (
         <div
           className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
@@ -157,14 +133,10 @@ export default function LandingNavbar() {
         />
       )}
 
-      {/* Mobile Menu Drawer */}
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
-          menuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed top-0 right-0 z-50 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="p-6 h-full flex flex-col">
-          {/* Close Button */}
           <div className="flex justify-end mb-6">
             <button
               onClick={() => setMenuOpen(false)}
@@ -175,7 +147,6 @@ export default function LandingNavbar() {
             </button>
           </div>
 
-          {/* Mobile Logo */}
           <div className="flex justify-center mb-8">
             <Image
               src="/logo.png"
@@ -186,7 +157,6 @@ export default function LandingNavbar() {
             />
           </div>
 
-          {/* Mobile Navigation */}
           <nav className="flex flex-col space-y-2 mb-8 flex-1">
             <Link
               href="/"
@@ -208,7 +178,6 @@ export default function LandingNavbar() {
             ))}
           </nav>
 
-          {/* Mobile CTA Buttons */}
           <div className="space-y-3 pt-4 border-t border-gray-200">
             <Link
               href="/#book"
@@ -228,8 +197,7 @@ export default function LandingNavbar() {
         </div>
       </div>
 
-      {/* Dynamic Spacer */}
       <div className={`transition-all duration-300 ${scrolled ? 'h-16' : 'h-32'}`} />
-    </>
+    </div>
   );
 }

@@ -102,6 +102,10 @@ export default function TechnologyPage() {
   return (
     <>
       <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap');
+        .font-lato {
+          font-family: 'Lato', sans-serif;
+        }
         .teal-table-card {
           background: linear-gradient(120deg, #10b6b6 0%, #14d0c9 100%);
           box-shadow: 0 12px 32px 0 rgba(18, 180, 180, 0.15);
@@ -131,26 +135,20 @@ export default function TechnologyPage() {
           color: #fff;
           font-weight: 500;
           padding: 1.25rem;
-          transition:
-            color 0.3s,
-            background 0.3s;
+          transition: color 0.3s, background 0.3s;
         }
         .teal-table tr {
           border-bottom: 1px solid #ffffff44;
-          transition:
-            background 0.3s,
-            color 0.3s;
+          transition: background 0.3s, color 0.3s;
         }
         .teal-table tbody tr:hover td {
           background: #fff !important;
-          color: #10b6b6 !important;
-          transition:
-            background 0.3s,
-            color 0.3s;
+          color: #000 !important;
+          transition: background 0.3s, color 0.3s;
         }
         .teal-table tbody tr:hover {
           background: #fff !important;
-          color: #10b6b6 !important;
+          color: #000 !important;
         }
         .no-scrollbar::-webkit-scrollbar {
           display: none;
@@ -167,8 +165,8 @@ export default function TechnologyPage() {
         }
       `}</style>
       <LandingNavbar />
-      {/* HERO BANNER (as in PDF) */}
-      <section className="relative w-full gradient-pdf min-h-[300px] py-16 md:py-24 flex items-center justify-center overflow-hidden">
+      {/* HERO BANNER (THINNER BANNER) */}
+      <section className="relative w-full gradient-pdf min-h-[250px] py-12 md:py-16 flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 opacity-20 pointer-events-none"
           style={{
@@ -182,7 +180,7 @@ export default function TechnologyPage() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-10 text-white font-extrabold text-3xl md:text-5xl drop-shadow-lg tracking-tight"
+            className="mt-10 text-white font-extrabold text-3xl md:text-5xl drop-shadow-lg tracking-tight font-lato"
           >
             Cutting-Edge Technology
           </motion.h1>
@@ -192,8 +190,8 @@ export default function TechnologyPage() {
             transition={{ duration: 0.6, delay: 0.38 }}
             className="text-white/90 mt-4 md:text-lg font-medium md:mt-7"
           >
-            At <span className="font-semibold text-blue-100">VitalPhysio⁺</span>,
-            we invest in state-of-the-art equipment that accelerates healing
+            At <span className="font-semibold text-blue-100">VitalPhysio⁺</span>
+            , we invest in state-of-the-art equipment that accelerates healing
             beyond traditional methods.
             <br />
             Each device is chosen for its proven clinical benefit.
@@ -232,7 +230,7 @@ export default function TechnologyPage() {
 
       {/* MODALITIES SECTION - Alternating layout */}
       <section className="bg-white py-8 md:py-14">
-        <div className="max-w-5xl mx-auto flex flex-col gap-14 md:gap-20">
+        <div className="max-w-5xl mx-auto flex flex-col gap-14 md:gap-20 px-4">
           {modalitiesData.map((modality, idx) => (
             <div
               key={modality.id}
@@ -240,7 +238,7 @@ export default function TechnologyPage() {
                 idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               } md:gap-10 gap-6 group`}
             >
-              {/* Card */}
+              {/* Image Card */}
               <motion.div
                 whileHover={{
                   y: -4,
@@ -257,17 +255,18 @@ export default function TechnologyPage() {
                   className={`flex flex-col justify-center min-h-[260px] ${modality.bg}`}
                 >
                   <div className="flex flex-col items-center justify-center py-9">
-                    <modality.icon className="w-14 h-14 mb-3 text-white drop-shadow-md" />
-                    <h3 className="text-xl font-bold text-white text-center mb-1">
-                      {modality.title}
-                    </h3>
+                    <modality.icon className="w-14 h-14 text-white drop-shadow-md" />
                   </div>
                 </div>
               </motion.div>
+
               {/* Content */}
               <div className="flex flex-col justify-center w-full md:w-1/2">
-                <div className="h-full flex flex-col justify-between gap-4 px-2 py-1">
-                  <p className="text-gray-800 text-base font-medium mb-1">
+                <div className="h-full flex flex-col justify-center gap-4 px-2 py-1">
+                  <h3 className="text-2xl font-bold text-blue-900">
+                    {modality.title}
+                  </h3>
+                  <p className="text-gray-800 text-base font-medium">
                     {modality.description}
                   </p>
                   <div className="space-y-1 mt-2">
@@ -299,9 +298,7 @@ export default function TechnologyPage() {
         </div>
       </section>
 
-      {/* CTA SECTION as PDF */}
-
-      {/* TABLE CARD as PDF */}
+      {/* TABLE CARD */}
       <section className="py-10 px-2 flex justify-center items-center bg-transparent">
         <div className="teal-table-card max-w-4xl w-full">
           <div className="teal-table-head">
@@ -309,48 +306,51 @@ export default function TechnologyPage() {
               Technology: Modalities at a Glance
             </h3>
           </div>
-          <table className="teal-table w-full min-w-[700px] text-left">
-            <thead>
-              <tr>
-                <th>Modality</th>
-                <th>Common Conditions</th>
-                <th>Key Benefits</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>High-Intensity Laser</td>
-                <td>Back/Neck pain, Arthritis, Tendinopathy</td>
-                <td>Accelerated healing, rapid pain relief</td>
-              </tr>
-              <tr>
-                <td>Shockwave Therapy</td>
-                <td>Chronic tendinopathies (heel, shoulder, elbow)</td>
-                <td>Breaks calcifications, boosts circulation</td>
-              </tr>
-              <tr>
-                <td>Spinal Decompression</td>
-                <td>Herniated discs, Sciatica</td>
-                <td>Reduces nerve compression, eases pain</td>
-              </tr>
-              <tr>
-                <td>UI Chair (HIFEM)</td>
-                <td>Urinary Incontinence, Pelvic Pain</td>
-                <td>Strengthens pelvic floor, non-invasive</td>
-              </tr>
-              <tr>
-                <td>AI Smart Gym</td>
-                <td>Post-op rehab, Strength deficits</td>
-                <td>Data-driven progress, precise resistance</td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="overflow-x-auto">
+            <table className="teal-table w-full min-w-[700px] text-left">
+              <thead>
+                <tr>
+                  <th>Modality</th>
+                  <th>Common Conditions</th>
+                  <th>Key Benefits</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>High-Intensity Laser</td>
+                  <td>Back/Neck pain, Arthritis, Tendinopathy</td>
+                  <td>Accelerated healing, rapid pain relief</td>
+                </tr>
+                <tr>
+                  <td>Shockwave Therapy</td>
+                  <td>Chronic tendinopathies (heel, shoulder, elbow)</td>
+                  <td>Breaks calcifications, boosts circulation</td>
+                </tr>
+                <tr>
+                  <td>Spinal Decompression</td>
+                  <td>Herniated discs, Sciatica</td>
+                  <td>Reduces nerve compression, eases pain</td>
+                </tr>
+                <tr>
+                  <td>UI Chair (HIFEM)</td>
+                  <td>Urinary Incontinence, Pelvic Pain</td>
+                  <td>Strengthens pelvic floor, non-invasive</td>
+                </tr>
+                <tr>
+                  <td>AI Smart Gym</td>
+                  <td>Post-op rehab, Strength deficits</td>
+                  <td>Data-driven progress, precise resistance</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
+      {/* CTA SECTION */}
       <section className="w-full bg-blue-50 flex flex-col items-center justify-center py-12 md:py-16">
-        <div className="max-w-xl w-full flex flex-col items-center px-4">
-          <div className="text-center mb-6">
+        <div className="max-w-xl w-full flex flex-col items-center px-4 text-center">
+          <div className="mb-6">
             <h4 className="text-lg md:text-xl font-semibold text-blue-900 mb-3">
               Ready to benefit from our advanced technology and expert care?
             </h4>
@@ -365,7 +365,7 @@ export default function TechnologyPage() {
         </div>
       </section>
 
-      {/* FOOTER NOTE */}
+      {/* FOOTER */}
       <Footer />
 
       {/* MODAL for cards */}
