@@ -14,9 +14,36 @@ import {
 } from "lucide-react";
 import Footer from "@/components/footer";
 import LandingNavbar from "@/components/landing-navbar";
+import TechnologyTable from "@/components/technology-table";
 
 // --- DATA ---
-
+const tableData = [
+  {
+    modality: "High-Intensity Laser",
+    conditions: "Back/Neck pain, Arthritis, Tendinopathy",
+    benefit: "Accelerated healing, rapid pain relief",
+  },
+  {
+    modality: "Shockwave Therapy",
+    conditions: "Chronic tendinopathies (heel, shoulder, elbow)",
+    benefit: "Breaks calcifications, boosts circulation",
+  },
+  {
+    modality: "Spinal Decompression",
+    conditions: "Herniated discs, Sciatica",
+    benefit: "Reduces nerve compression, eases pain",
+  },
+  {
+    modality: "UI Chair (HIFEM)",
+    conditions: "Urinary Incontinence, Pelvic Pain",
+    benefit: "Strengthens pelvic floor, non-invasive",
+  },
+  {
+    modality: "AI Smart Gym",
+    conditions: "Post-op rehab, Strength deficits",
+    benefit: "Data-driven progress, precise resistance",
+  },
+];
 const modalitiesData = [
   {
     id: 1,
@@ -102,71 +129,70 @@ export default function TechnologyPage() {
   return (
     <>
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap');
+        @import url("https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap");
         .font-lato {
-          font-family: 'Lato', sans-serif;
+          font-family: "Lato", sans-serif;
         }
-        .teal-table-card {
-          background: linear-gradient(120deg, #10b6b6 0%, #14d0c9 100%);
-          box-shadow: 0 12px 32px 0 rgba(18, 180, 180, 0.15);
-          border-radius: 1.5rem;
-          overflow: hidden;
+        body {
+          background-color: #f0f9ff; /* This is Tailwind's "sky-50" color */
         }
-        .teal-table-head {
-          padding: 1.5rem 2rem;
-          border-bottom: 1px solid #22d3ee;
-          background: none;
-          border-radius: 1.5rem 1.5rem 0 0;
-        }
-        .teal-table-title {
-          color: #fff;
-          font-size: 1.5rem;
-          font-weight: 700;
-          letter-spacing: -0.02em;
-        }
-        .teal-table th {
-          background: rgba(255, 255, 255, 0.08);
-          color: #fff;
-          font-weight: 600;
-          font-size: 1.1rem;
-          padding: 1.25rem;
-        }
-        .teal-table td {
-          color: #fff;
-          font-weight: 500;
-          padding: 1.25rem;
-          transition: color 0.3s, background 0.3s;
-        }
-        .teal-table tr {
-          border-bottom: 1px solid #ffffff44;
-          transition: background 0.3s, color 0.3s;
-        }
-        .teal-table tbody tr:hover td {
-          background: #fff !important;
-          color: #000 !important;
-          transition: background 0.3s, color 0.3s;
-        }
-        .teal-table tbody tr:hover {
-          background: #fff !important;
-          color: #000 !important;
-        }
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
+        /* --- THIS CLASS WAS MISSING --- */
         .gradient-pdf {
           background: linear-gradient(94deg, #163774 0%, #47a5d6 100%);
         }
-        .pdf-table-head {
-          background: linear-gradient(90deg, #edf7fa 0%, #c6e6fa 100%);
+        /* ----------------------------- */
+
+        .teal-table-card {
+          background-color: #0f766e; /* Solid dark teal background */
+          box-shadow:
+            0 10px 25px -5px rgba(0, 0, 0, 0.1),
+            0 10px 10px -5px rgba(0, 0, 0, 0.04);
+          border-radius: 0.5rem; /* 8px rounded corners */
+          overflow: hidden;
+        }
+        .teal-table-head {
+          padding: 1.25rem 1.5rem;
+          background: none;
+        }
+        .teal-table-title {
+          color: #ffffff;
+          font-size: 1.5rem; /* 24px */
+          font-weight: 700;
+        }
+        .teal-table th {
+          background: rgba(255, 255, 255, 0.1); /* Lighter header background */
+          color: #ffffff;
+          font-weight: 600;
+          font-size: 0.875rem; /* 14px */
+          padding: 1rem 1.5rem;
+          letter-spacing: 0.025em;
+        }
+        .teal-table td {
+          color: #ffffff;
+          font-weight: 400;
+          padding: 1rem 1.5rem;
+          transition:
+            color 0.2s,
+            background 0.2s;
+        }
+        .teal-table tr {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+          transition: background 0.2s;
+        }
+        .teal-table tbody tr:last-child {
+          border-bottom: none; /* No border on the last row */
+        }
+        .teal-table tbody tr:hover td {
+          background: #ffffff !important;
+          color: #134e4a !important; /* Darkest teal for text on hover */
+        }
+        .teal-table tbody tr:hover {
+          background: #ffffff !important;
         }
       `}</style>
       <LandingNavbar />
       {/* HERO BANNER (THINNER BANNER) */}
-      <section className="relative w-full gradient-pdf min-h-[250px] py-12 md:py-16 flex items-center justify-center overflow-hidden">
+      <section className="gradient-pdf relative w-full max-h-[150px] py-12 md:py-16 flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 opacity-20 pointer-events-none"
           style={{
@@ -299,54 +325,7 @@ export default function TechnologyPage() {
       </section>
 
       {/* TABLE CARD */}
-      <section className="py-10 px-2 flex justify-center items-center bg-transparent">
-        <div className="teal-table-card max-w-4xl w-full">
-          <div className="teal-table-head">
-            <h3 className="teal-table-title">
-              Technology: Modalities at a Glance
-            </h3>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="teal-table w-full min-w-[700px] text-left">
-              <thead>
-                <tr>
-                  <th>Modality</th>
-                  <th>Common Conditions</th>
-                  <th>Key Benefits</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>High-Intensity Laser</td>
-                  <td>Back/Neck pain, Arthritis, Tendinopathy</td>
-                  <td>Accelerated healing, rapid pain relief</td>
-                </tr>
-                <tr>
-                  <td>Shockwave Therapy</td>
-                  <td>Chronic tendinopathies (heel, shoulder, elbow)</td>
-                  <td>Breaks calcifications, boosts circulation</td>
-                </tr>
-                <tr>
-                  <td>Spinal Decompression</td>
-                  <td>Herniated discs, Sciatica</td>
-                  <td>Reduces nerve compression, eases pain</td>
-                </tr>
-                <tr>
-                  <td>UI Chair (HIFEM)</td>
-                  <td>Urinary Incontinence, Pelvic Pain</td>
-                  <td>Strengthens pelvic floor, non-invasive</td>
-                </tr>
-                <tr>
-                  <td>AI Smart Gym</td>
-                  <td>Post-op rehab, Strength deficits</td>
-                  <td>Data-driven progress, precise resistance</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
+      <TechnologyTable />
       {/* CTA SECTION */}
       <section className="w-full bg-blue-50 flex flex-col items-center justify-center py-12 md:py-16">
         <div className="max-w-xl w-full flex flex-col items-center px-4 text-center">
