@@ -114,7 +114,7 @@ export default function Home() {
                 </div>
                 <div>
                     <label htmlFor="question" className="block text-sm font-medium text-gray-700 mb-1">Your Question</label>
-                    <textarea id="question" rows="4" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                    <textarea id="question" rows={4} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
                 </div>
                 <div className="text-center">
                     <button type="submit" className="bg-teal-600 text-white font-semibold px-8 py-3 rounded-full hover:bg-teal-700 transition-colors duration-300">Submit to Our Experts</button>
