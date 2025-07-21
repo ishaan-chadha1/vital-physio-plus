@@ -1,113 +1,131 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import LandingNavbar from "@/components/landing-navbar";
+import Footer from '@/components/footer';
+import LandingNavbar from '@/components/landing-navbar';
+import { useState } from 'react';
 
-export default function FAQPage() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+// You can create a separate file for icons or import them from a library like 'react-icons'
+const PlusIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-gray-500">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+  </svg>
+);
 
-  const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+const MinusIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-gray-500">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
+    </svg>
+  );
+
+const FaqItem = ({ question, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <>
-      <LandingNavbar />
-      <div className="pt-40 pb-20 px-6 max-w-4xl mx-auto text-blue-800">
-        <h1 className="text-4xl font-bold text-center mb-12 border-b-2 border-blue-200 pb-4">
-          Frequently Asked Questions (FAQs)
-        </h1>
-
-        <div className="space-y-6">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="border border-blue-200 rounded-xl shadow-sm hover:shadow-md transition duration-300"
-            >
-              <button
-                onClick={() => toggleFAQ(index)}
-                className="w-full flex justify-between items-center p-6 text-left text-lg font-semibold text-blue-900 hover:bg-blue-50 transition"
-              >
-                <span>{index + 1}. {faq.question}</span>
-                <span className="text-2xl">{openIndex === index ? "−" : "+"}</span>
-              </button>
-              {openIndex === index && (
-                <div className="px-6 pb-6 text-base text-blue-800 animate-fade-in-up">
-                  <p className="leading-relaxed whitespace-pre-wrap">{faq.answer}</p>
-                </div>
-              )}
-            </div>
-          ))}
+    <div className="border-b border-gray-200 py-4">
+      <button
+        className="w-full flex justify-between items-center text-left"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+      >
+        <h3 className="text-lg font-semibold text-gray-800">{question}</h3>
+        <span>{isOpen ? <MinusIcon /> : <PlusIcon />}</span>
+      </button>
+      <div
+        className={`transition-all duration-300 ease-in-out overflow-hidden ${
+          isOpen ? 'max-h-96 mt-2' : 'max-h-0'
+        }`}
+      >
+        <div className="pt-2 text-gray-600">
+          {children}
         </div>
-
-        <p className="text-center text-lg mt-16 text-blue-900">
-          If you have further questions or need additional information, please don't
-          hesitate to contact us. We're here to support your journey to better health and mobility.
-        </p>
       </div>
-    </>
+    </div>
+  );
+};
+
+export default function Home() {
+  return (
+    <div className="bg-white text-gray-800 font-sans">
+      {/* Header */}
+      <LandingNavbar />
+      <main className="container mx-auto px-6 py-12 md:py-20">
+        {/* Hero Section */}
+        <section className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h1>
+          <p className="text-lg text-gray-600">Have a question? We've compiled answers to the most common inquiries we receive from our patients in Bengaluru.</p>
+        </section>
+
+        {/* FAQs Section */}
+        <section className="max-w-3xl mx-auto">
+          <div className="space-y-4">
+            <FaqItem question="Why choose VitalPhysio?">
+              [cite_start]<p>We are Bengaluru's most trusted rehab center because we deliver personalized, evidence-based therapy. [cite: 11] [cite_start]Our experts follow international standards and use the latest technology to ensure safe, effective outcomes for your recovery. [cite: 12]</p>
+            </FaqItem>
+
+            <FaqItem question="What does the '+' in VitalPhysio mean?">
+              [cite_start]<p>The '+' signifies our commitment to go above and beyond standard care. [cite: 15] [cite_start]It means every treatment plan includes added value like advanced equipment, continuous progress monitoring, and AI-powered concierge support, all at no hidden cost. [cite: 16, 17]</p>
+            </FaqItem>
+
+            <FaqItem question="How does the AI Concierge (C³) work?">
+              [cite_start]<p>C³ is your integrated AI care coordinator, available 24/7 in our Patient Portal. [cite: 20] [cite_start]It helps you schedule appointments, sends reminders for your home exercises, and answers questions based on your personal rehabilitation plan. [cite: 21]</p>
+            </FaqItem>
+
+            <FaqItem question="How do I book an appointment?">
+              [cite_start]<p>You can easily book by clicking the "Book Your Consultation" button on our site, which takes you to our contact page, or by calling our clinic directly. [cite: 24] [cite_start]Soon, you'll also be able to ask AI assistants like ChatGPT to schedule for you. [cite: 25]</p>
+            </FaqItem>
+
+            <FaqItem question="Do you accept health insurance?">
+              [cite_start]<p>We are currently not empanelled by any insurance company. [cite: 28] [cite_start]However, we would be able to help you with all the required documentation that you may require for seeking a reimbursement of your treatment charges after completion of your therapy at VitalPhysio. [cite: 28]</p>
+            </FaqItem>
+
+            <FaqItem question="What should I bring to my first session?">
+              [cite_start]<p>Please complete our online medical history form via the Patient Portal beforehand. [cite: 30] [cite_start]On the day of your visit, bring any relevant reports (like X-rays or doctor's notes) and wear comfortable, loose-fitting clothing. [cite: 31]</p>
+            </FaqItem>
+
+            <FaqItem question="Do you offer home or online therapy?">
+              [cite_start]<p>Yes, our Home & Tele-Rehabilitation program provides personalized care in the comfort of your home. [cite: 33] [cite_start]We use virtual sessions and digital exercise plans to ensure you receive expert guidance without needing to travel. [cite: 34]</p>
+            </FaqItem>
+
+             <FaqItem question="Can physiotherapy help me avoid surgery?">
+              <p>In many cases, yes. [cite_start]For musculoskeletal conditions like back pain or joint injuries, targeted physiotherapy can significantly improve function and reduce pain, often delaying or completely eliminating the need for surgery. [cite: 36] [cite_start]You can <a href="#" className="text-teal-600 underline">see the conditions we treat</a>. [cite: 37]</p>
+            </FaqItem>
+          </div>
+        </section>
+
+        {/* Contact Form Section */}
+        <section className="max-w-3xl mx-auto mt-16 md:mt-24 bg-gray-50 p-8 rounded-lg">
+             <h2 className="text-3xl font-bold text-center text-gray-900 mb-2">Still Have Questions?</h2>
+             <p className="text-center text-gray-600 mb-8">If our C³ Concierge Care Coordinator or the FAQs above couldn't provide the answer you need, please submit your question below. Our expert team will get back to you shortly.</p>
+
+             <form className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                        <input type="text" id="name" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500" />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <input type="email" id="email" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500" />
+                    </div>
+                </div>
+                 <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <input type="tel" id="phone" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500" />
+                </div>
+                <div>
+                    <label htmlFor="question" className="block text-sm font-medium text-gray-700 mb-1">Your Question</label>
+                    <textarea id="question" rows="4" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"></textarea>
+                </div>
+                <div className="text-center">
+                    <button type="submit" className="bg-teal-600 text-white font-semibold px-8 py-3 rounded-full hover:bg-teal-700 transition-colors duration-300">Submit to Our Experts</button>
+                </div>
+             </form>
+        </section>
+
+      </main>
+
+      {/* Footer */}
+      <Footer />
+    </div>
   );
 }
-
-const faqs = [
-  {
-    question: "What is physiotherapy, and how can it help me?",
-    answer:
-      "Physiotherapy is a healthcare profession focused on restoring and maintaining functional movement, reducing pain, and preventing injury. At VitalPhysio⁺, we employ evidence-based techniques, including manual therapy, therapeutic exercises, and advanced modalities, to address a variety of conditions such as musculoskeletal injuries, sports injuries, neurological disorders, and post-surgical rehabilitation.",
-  },
-  {
-    question: "Do I need a doctor's referral to start physiotherapy?",
-    answer:
-      "No, a doctor's referral is not required to begin physiotherapy at VitalPhysio⁺. However, some insurance providers may require a referral for reimbursement purposes. We recommend checking with your insurance company to confirm their specific requirements.",
-  },
-  {
-    question: "What should I expect during my first visit?",
-    answer:
-      "Your initial appointment will involve a comprehensive assessment, including a discussion of your medical history, a physical examination, and the development of a personalized treatment plan. This session typically lasts 45 to 60 minutes.",
-  },
-  {
-    question: "How long does each physiotherapy session last?",
-    answer:
-      "Follow-up sessions generally last between 30 to 60 minutes, depending on the complexity of your condition and the treatment plan established by your physiotherapist.",
-  },
-  {
-    question: "How many sessions will I need?",
-    answer:
-      "The number of sessions required varies based on individual needs, the severity of the condition, and your response to treatment. Your physiotherapist will discuss an estimated treatment timeline during your initial assessment.",
-  },
-  {
-    question: "What should I wear to my physiotherapy sessions?",
-    answer:
-      "Wear comfortable, loose-fitting clothing that allows easy access to the area being treated. For example, shorts for lower limb issues or a tank top for shoulder treatments.",
-  },
-  {
-    question: "Is physiotherapy painful?",
-    answer:
-      "Some treatments may cause mild discomfort, especially when addressing areas of pain or stiffness. However, our physiotherapists strive to ensure your comfort and will adjust techniques as needed to minimize discomfort.",
-  },
-  {
-    question: "Can physiotherapy help with chronic conditions like arthritis?",
-    answer:
-      "Yes, physiotherapy can be highly beneficial for managing chronic conditions such as arthritis. Through targeted exercises, manual therapy, and education, we aim to reduce pain, improve joint mobility, and enhance overall function.",
-  },
-  {
-    question: "Do you offer specialized treatments or equipment?",
-    answer:
-      "Absolutely. VitalPhysio⁺ is equipped with advanced technologies, including the BTL Spinal Decompression Unit, Chattanooga Laser unit, Shockwave unit and rPMS (Salus Talent Pro), to provide specialized care tailored to your specific needs.",
-  },
-  {
-    question: "Is my physiotherapy treatment covered by insurance?",
-    answer:
-      "Many insurance plans cover physiotherapy services. We recommend contacting your insurance provider to understand your coverage details. We will assist with any necessary documentation for claims.",
-  },
-  {
-    question: "Do you offer home visits or virtual consultations?",
-    answer:
-      "No, however, we provide a robust pickup and drop facility to accommodate patients with mobility challenges. Home visits will be provided for the first fews days for patients who have undergone a joint replacement or spine surgery, within a 5 KM radius from VitalPhysio⁺.",
-  },
-  {
-    question: "How do I schedule an appointment?",
-    answer:
-      "You can book an appointment by calling our clinic’s dedicated Application Scheduling number + 91 80456 82666, visiting our website and using our online booking system. Our team is here to assist you in finding a convenient time for your visit.",
-  },
-];
