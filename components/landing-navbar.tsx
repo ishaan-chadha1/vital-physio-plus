@@ -7,14 +7,14 @@ import { useState, useEffect, useCallback, useRef } from "react";
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "Our Services", href: "/#services" },
-  { name: "Conditions We Treat", href: "/#conditions" },
-  { name: "Cutting-Edge Technology", href: "/#technology" },
-  { name: "About Us", href: "/#about" },
-  { name: "Our Team", href: "/#team" },
-  { name: "Knowledge Hub", href: "/#knowledge" },
-  { name: "FAQs", href: "/#faqs" },
-  { name: "Contact Us", href: "/#contact" },
+  { name: "Our Services", href: "/services" },
+  { name: "Conditions We Treat", href: "/conditions" },
+  { name: "Cutting-Edge Technology", href: "/technology" },
+  { name: "About Us", href: "/about" },
+  { name: "Our Team", href: "/team" },
+  { name: "Knowledge Hub", href: "/knowledge" },
+  { name: "FAQs", href: "/faq" },
+  { name: "Contact Us", href: "/contact" },
 ];
 
 export default function LandingNavbar() {
