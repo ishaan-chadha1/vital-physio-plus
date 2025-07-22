@@ -317,7 +317,7 @@ export default function ConditionsPdfPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-white/90 text-lg md:text-xl font-medium"
+            className="text-white/90 text-lg md:text-3xl font-medium"
           >
             Restoring Health & Function for a Better Life in Bengaluru
           </motion.p>
