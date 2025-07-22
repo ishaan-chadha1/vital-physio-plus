@@ -61,13 +61,24 @@ const FaqItem = ({ question, children }) => {
 
 export default function App() {
   return (
+    <>
+    <style jsx global>{`
+  :root {
+    --vp-blue: #004f8c;
+    --vp-teal: #008094;
+  }
+  .hero-gradient {
+    background-color: var(--vp-blue);
+    background-image: linear-gradient(110deg, var(--vp-blue) 0%, var(--vp-teal) 100%);
+  }
+`}</style>
     <div className="bg-white text-gray-800 font-sans">
       {/* Header */}
       <LandingNavbar />
 
       <main>
         {/* Full-width Hero Section */}
-        <section className="text-center bg-blue-800 py-16 text-white">
+        <section className="text-center hero-gradient py-16 text-white">
           <h1 className="text-4xl md:text-5xl font-bold mb-2 text-white">
             Frequently Asked Questions
           </h1>
@@ -243,5 +254,6 @@ export default function App() {
       {/* Footer */}
       <Footer />
     </div>
+    </>
   );
 }

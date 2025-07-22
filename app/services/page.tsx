@@ -143,6 +143,18 @@ export default function ServicesPage() {
   return (
     <>
       <style jsx global>{`
+        @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap");
+
+        /* ---------- VitalPhysio brand palette ---------- */
+        :root {
+          --vp-blue: #004f8c; /* R-0 G-79  B-140 */
+          --vp-teal: #008094; /* R-0 G-128 B-148 */
+          --vp-orange: #ec691f; /* R-236 G-105 B-31  */
+        }
+
+        .font-lato {
+          font-family: "Lato", sans-serif;
+        }
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }
@@ -415,15 +427,14 @@ const SpecializedProgramsCarousel = ({
 );
 
 // --- STATIC COMPONENTS (Hero, CTA, Footer) ---
-
 const ServicesHero = () => (
-  <section className="bg-blue-50/70 pt-28 pb-16 md:pt-36 md:pb-20 px-6">
+  <section className="bg-[var(--vp-blue)] pt-24 pb-12 md:pt-28 md:pb-16 px-6">
     <div className="container mx-auto text-center">
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="text-4xl md:text-5xl font-extrabold text-blue-900"
+        className="text-4xl md:text-5xl font-extrabold text-white"
       >
         Our Comprehensive Physiotherapy Services
       </motion.h1>
@@ -431,7 +442,7 @@ const ServicesHero = () => (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-        className="mt-4 text-lg md:text-xl text-gray-600"
+        className="mt-4 text-lg md:text-xl text-blue-200"
       >
         Empowering Your Recovery, Enhancing Your Life
       </motion.p>
