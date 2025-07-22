@@ -24,17 +24,17 @@ export default function PatientPortalLogin() {
       const scrollTop = window.pageYOffset;
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
-      
+
       // Show footer when user is near the bottom (within 100px)
       const isNearBottom = scrollTop + windowHeight >= documentHeight - 100;
       setShowFooter(isNearBottom);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     // Check initial position
     handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   React.useEffect(() => {
@@ -82,10 +82,21 @@ export default function PatientPortalLogin() {
   return (
     <div className="min-h-screen flex flex-col bg-white relative">
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap');
-        
+        @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap");
+
+        /* Brand colors as CSS variables */
+        :root {
+          --vp-blue: #004f8c; /* R0 G79 B140 */
+          --vp-teal: #008094; /* R0 G128 B148 */
+          --vp-orange: #ec691f; /* R236 G105 B31 */
+        }
+
         .portal-bg {
-          background: linear-gradient(98deg, #31cbe3 0%, #1572b5 110%);
+          background: linear-gradient(
+            98deg,
+            var(--vp-teal) 0%,
+            var(--vp-blue) 110%
+          );
         }
         .login-card {
           background: #fff;
@@ -102,27 +113,33 @@ export default function PatientPortalLogin() {
           padding: 0.98rem 1.1rem;
           width: 100%;
           margin-bottom: 0.14rem;
-          transition: border 0.17s, box-shadow 0.17s;
+          transition:
+            border 0.17s,
+            box-shadow 0.17s;
         }
         .input-block:focus {
-          border-color: #14dbe1;
+          border-color: var(--vp-teal);
           box-shadow: 0 0 0 3px #b7fafd60;
         }
         .label-row {
           font-weight: 600;
-          color: #1572b5;
+          color: var(--vp-blue);
           margin-bottom: 0.21rem;
           font-size: 1.08rem;
         }
         .main-btn {
-          background: linear-gradient(90deg, #12d2c5 0%, #3b82f6 100%);
+          background: linear-gradient(
+            90deg,
+            var(--vp-teal) 0%,
+            var(--vp-blue) 100%
+          );
           color: #fff;
           font-weight: 700;
           border-radius: 0.7rem;
           padding: 1.01rem 0;
           font-size: 1.18rem;
           width: 100%;
-          box-shadow: 0 4px 24px 0 rgba(18, 210, 197, 0.3);
+          box-shadow: 0 4px 24px 0 rgba(0, 128, 148, 0.3);
           letter-spacing: 0.01em;
           margin-top: 0.41rem;
           transition: all 0.16s;
@@ -132,30 +149,40 @@ export default function PatientPortalLogin() {
         }
         .main-btn:hover,
         .main-btn:focus {
-          background: linear-gradient(90deg, #0bbec8 0%, #2563eb 100%);
-          box-shadow: 0 8px 32px 0 rgba(18, 210, 197, 0.4);
+          background: linear-gradient(
+            90deg,
+            var(--vp-blue) 0%,
+            var(--vp-teal) 100%
+          );
+          box-shadow: 0 8px 32px 0 rgba(0, 128, 148, 0.4);
         }
         .secondary-btn {
-          color: #3b82f6;
+          color: var(--vp-blue);
           background: transparent;
           border: none;
           text-decoration: underline;
           font-weight: 600;
         }
         .secondary-btn:hover {
-          color: #12d2c5;
+          color: var(--vp-teal);
         }
         .otp-timer {
           font-weight: 700;
-          color: #12d2c5;
+          color: var(--vp-teal);
         }
         .lato-font {
-          font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
+          font-family:
+            "Lato",
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            "Roboto",
+            sans-serif !important;
         }
         .portal-card-logo {
           font-size: 1.09rem;
           font-weight: 700;
-          color: #188ea6;
+          color: var(--vp-teal);
           letter-spacing: 0.07em;
           text-align: center;
           margin-bottom: 1.6rem;
@@ -164,7 +191,7 @@ export default function PatientPortalLogin() {
           font-size: 1.17rem;
           letter-spacing: 0.04em;
           font-weight: 800;
-          color: #089ba8 !important;
+          color: var(--vp-teal) !important;
         }
         .form-helper {
           color: #6ebbe5;
@@ -191,10 +218,13 @@ export default function PatientPortalLogin() {
         #vp-footer.show {
           transform: translateY(0);
         }
-        body, html, #__next {
+        body,
+        html,
+        #__next {
           background: #fff;
         }
       `}</style>
+
       <LandingNavbar />
 
       {/* Header Banner */}
@@ -220,7 +250,8 @@ export default function PatientPortalLogin() {
               <>Please enter your details to receive a login OTP.</>
             ) : (
               <>
-                An OTP has been sent to your registered mobile number ending in <span className="font-bold">{mobileMask}</span>.
+                An OTP has been sent to your registered mobile number ending in{" "}
+                <span className="font-bold">{mobileMask}</span>.
               </>
             )}
           </motion.p>
@@ -262,7 +293,9 @@ export default function PatientPortalLogin() {
                       minLength={2}
                       autoComplete="name"
                       required
-                      onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                      onChange={(e) =>
+                        setForm((f) => ({ ...f, name: e.target.value }))
+                      }
                     />
                   </div>
                   <div className="flex flex-col gap-1">
@@ -284,14 +317,21 @@ export default function PatientPortalLogin() {
                       value={form.phone}
                       autoComplete="tel"
                       required
-                      onChange={e =>
-                        setForm(f => ({ ...f, phone: e.target.value.replace(/[^\d]/g, "") }))
+                      onChange={(e) =>
+                        setForm((f) => ({
+                          ...f,
+                          phone: e.target.value.replace(/[^\d]/g, ""),
+                        }))
                       }
                       autoFocus
                     />
                   </div>
                   <div className="min-h-6">
-                    {error && <div className="pt-1 text-red-600 font-semibold text-sm">{error}</div>}
+                    {error && (
+                      <div className="pt-1 text-red-600 font-semibold text-sm">
+                        {error}
+                      </div>
+                    )}
                   </div>
                   <button className="main-btn" type="submit">
                     SEND OTP
@@ -312,7 +352,9 @@ export default function PatientPortalLogin() {
                   <div className="flex flex-col gap-2 mb-1">
                     <label className="label-row" htmlFor="otp">
                       Enter OTP
-                      <span className="ml-1 text-gray-500 font-normal">(4 digit, sent to mobile)</span>
+                      <span className="ml-1 text-gray-500 font-normal">
+                        (4 digit, sent to mobile)
+                      </span>
                     </label>
                     <input
                       id="otp"
@@ -326,7 +368,9 @@ export default function PatientPortalLogin() {
                       pattern="\d*"
                       inputMode="numeric"
                       value={otp}
-                      onChange={e => setOtp(e.target.value.replace(/[^\d]/g, "").slice(0, 4))}
+                      onChange={(e) =>
+                        setOtp(e.target.value.replace(/[^\d]/g, "").slice(0, 4))
+                      }
                       placeholder="••••"
                     />
                   </div>
@@ -347,7 +391,11 @@ export default function PatientPortalLogin() {
                     </button>
                   </div>
                   <div className="min-h-6">
-                    {error && <div className="pt-1 text-red-600 font-semibold text-sm">{error}</div>}
+                    {error && (
+                      <div className="pt-1 text-red-600 font-semibold text-sm">
+                        {error}
+                      </div>
+                    )}
                   </div>
                   <button className="main-btn" type="submit">
                     Verify &amp; Log In
@@ -357,22 +405,23 @@ export default function PatientPortalLogin() {
             </AnimatePresence>
           </div>
         </motion.div>
-        
+
         {/* Privacy notice only shows when on verify step */}
         {step === "verify" && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             className="text-gray-500 text-xs mt-8 px-2 text-center max-w-xs"
           >
-            For your security, your information is encrypted and never shared in accordance with our Privacy Policy.
+            For your security, your information is encrypted and never shared in
+            accordance with our Privacy Policy.
           </motion.div>
         )}
       </section>
 
       {/* Footer that only shows when scrolled to bottom */}
-      <div id="vp-footer" className={showFooter ? 'show' : ''}>
+      <div id="vp-footer" className={showFooter ? "show" : ""}>
         <Footer />
       </div>
     </div>
