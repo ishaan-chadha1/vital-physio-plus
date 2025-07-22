@@ -15,7 +15,8 @@ import {
   MapPin,
   Clock,
   MessageCircle, 
-  Menu
+  Menu, 
+  X
 } from 'lucide-react';
 import HowWeAreDifferent from '@/components/how-we-are-different';
 import Hero from '@/components/hero';
