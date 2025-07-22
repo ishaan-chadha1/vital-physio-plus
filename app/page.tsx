@@ -2,7 +2,21 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, HeartPulse, Dumbbell, BrainCircuit, PersonStanding, HeartHandshake, Orbit, ArrowRight } from 'lucide-react';
+import { 
+  HeartPulse, 
+  Dumbbell, 
+  BrainCircuit, 
+  PersonStanding, 
+  HeartHandshake, 
+  Orbit, 
+  ArrowRight,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  MessageCircle
+} from 'lucide-react';
+import HowWeAreDifferent from '@/components/how-we-are-different';
 import Hero from '@/components/hero';
 import Footer from '@/components/footer';
 import LandingNavbar from '@/components/landing-navbar';
@@ -41,10 +55,12 @@ export default function App() {
       <LandingNavbar />
       <main>
         <Hero />
+        <HowWeAreDifferent />
         <JourneySection />
         <ServicesGrid />
         <LearnMore />
         <CTA />
+        <ContactSection />
       </main>
       <Footer />
     </div>
@@ -122,7 +138,101 @@ const Header = () => {
 
 // Hero Section Component - Updated to match the provided image
 
+const ContactSection = () => {
+  return (
+    <section className="bg-white py-16 md:py-20 px-6">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4 font-lato">Visit Our Clinic</h2>
+          <p className="text-xl text-gray-600">Bengaluru's Premier Physiotherapy Center</p>
+          <p className="text-gray-600 mt-2">Combining evidence-based treatments with highly personalized care to restore your full function.</p>
+        </motion.div>
 
+        <div className="grid md:grid-cols-2 gap-12">
+          {/* Contact Information */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            <div className="bg-blue-50 p-6 rounded-2xl">
+              <h3 className="text-xl font-bold text-blue-900 mb-6">Contact Details</h3>
+              
+              <div className="space-y-4">
+                <div className="flex items-start space-x-4">
+                  <MapPin className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">Our Address:</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      VitalPhysio⁺, 2nd Floor, P V Complex, Opp. Iblur Lake Park, Bellandur, Bengaluru, Karnataka, India - 560103
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-4">
+                  <Phone className="w-6 h-6 text-blue-600 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">Schedule an Appointment:</h4>
+                    <p className="text-blue-600 font-semibold">+91 80473 59900</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-4">
+                  <Phone className="w-6 h-6 text-blue-600 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">General Queries:</h4>
+                    <p className="text-blue-600 font-semibold">+91 80473 59090</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-4">
+                  <Mail className="w-6 h-6 text-blue-600 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">E-Mail:</h4>
+                    <p className="text-blue-600 font-semibold">Contact@VitalPhysio.Plus</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-4">
+                  <Clock className="w-6 h-6 text-blue-600 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">Opening Hours:</h4>
+                    <p className="text-gray-600">Every Day: 07:00 AM - 09:00 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Google Maps */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="bg-gray-100 rounded-2xl overflow-hidden"
+          >
+            <div className="w-full h-full min-h-[400px] flex items-center justify-center">
+              <div className="text-center p-8">
+                <MapPin className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-500 text-lg font-medium">Google Maps</p>
+                <p className="text-gray-400 text-sm mt-2">Interactive map will be embedded here</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
 // Journey Section Component
 const JourneySection = () => (
   <section className="bg-blue-50/50 py-20 md:py-28 px-6">
