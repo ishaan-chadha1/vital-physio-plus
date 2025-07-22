@@ -294,7 +294,8 @@ export default function ConditionsPdfPage() {
       <LandingNavbar />
 
       {/* HERO BANNER */}
-      <section className="gradient-conditions relative w-full py-20 md:py-28 flex items-center justify-center overflow-hidden">
+      {/* THIN BLUE HERO BANNER */}
+      <section className="gradient-conditions relative w-full py-8 md:py-12 flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 opacity-20 pointer-events-none"
           style={{
@@ -308,7 +309,7 @@ export default function ConditionsPdfPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-white font-extrabold text-5xl md:text-6xl drop-shadow-2xl tracking-tight font-lato mb-6"
+            className="text-white font-extrabold text-4xl md:text-5xl drop-shadow-2xl tracking-tight font-lato mb-4"
           >
             Conditions We Expertly Treat
           </motion.h1>
@@ -316,17 +317,9 @@ export default function ConditionsPdfPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-white/90 text-xl md:text-2xl font-medium mb-3"
+            className="text-white/90 text-lg md:text-xl font-medium"
           >
             Restoring Health & Function for a Better Life in Bengaluru
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-white font-semibold text-lg md:text-xl"
-          >
-            Comprehensive Care for a Wide Range of Conditions
           </motion.p>
         </div>
       </section>
@@ -340,7 +333,7 @@ export default function ConditionsPdfPage() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <p className="text-xl md:text-2xl text-gray-700 leading-relaxed mb-8 font-light">
+            <p className="font-bold text-xl md:text-xl text-gray-700 leading-relaxed mb-8 ">
               At{" "}
               <span className="font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded-lg">
                 VitalPhysio⁺
@@ -351,16 +344,9 @@ export default function ConditionsPdfPage() {
               personalized treatment plans to ensure effective recovery and
               lasting relief.
             </p>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto">
-              We address a broad spectrum of issues affecting bones, muscles,
-              joints, ligaments, and tendons, helping you regain mobility,
-              reduce pain, and return to your daily activities with confidence.
-            </p>
           </motion.div>
         </div>
       </section>
-
-      {/* MAIN CONDITION CATEGORIES */}
       {/* MAIN CONDITION CATEGORIES */}
       <section className="bg-white py-16 md:py-24 px-6">
         <div className="max-w-7xl mx-auto">
