@@ -138,9 +138,18 @@ export default function TechnologyPage() {
         }
         /* --- THIS CLASS WAS MISSING --- */
         .gradient-pdf {
-          background: linear-gradient(94deg, #163774 0%, #47a5d6 100%);
+          background: linear-gradient(
+            94deg,
+            var(--vp-blue) 0%,
+            var(--vp-teal) 100%
+          );
         }
         /* ----------------------------- */
+        :root {
+          --vp-blue: #004f8c; /* R-0 G-79  B-140 */
+          --vp-teal: #008094; /* R-0 G-128 B-148 */
+          --vp-orange: #ec691f; /* R-236 G-105 B-31  */
+        }
 
         .teal-table-card {
           background-color: #0f766e; /* Solid dark teal background */
