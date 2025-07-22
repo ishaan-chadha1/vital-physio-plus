@@ -264,15 +264,52 @@ export default function ConditionsPdfPage() {
     <>
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap");
+
+        /* ---------- VitalPhysio brand palette ---------- */
+        :root {
+          --vp-blue: #004f8c; /* R-0 G-79  B-140 */
+          --vp-teal: #008094; /* R-0 G-128 B-148 */
+          --vp-orange: #ec691f; /* R-236 G-105 B-31  */
+        }
+
         .font-lato {
           font-family: "Lato", sans-serif;
         }
+
         body {
           background-color: #ffffff;
         }
+
+        /* updated to use brand blue → teal */
         .gradient-conditions {
-          background: linear-gradient(94deg, #163774 0%, #47a5d6 100%);
+          background: linear-gradient(
+            94deg,
+            var(--vp-blue) 0%,
+            var(--vp-teal) 100%
+          );
         }
+
+        /* optional utility helpers */
+        .text-vp-blue {
+          color: var(--vp-blue);
+        }
+        .text-vp-teal {
+          color: var(--vp-teal);
+        }
+        .text-vp-orange {
+          color: var(--vp-orange);
+        }
+
+        .bg-vp-blue {
+          background: var(--vp-blue);
+        }
+        .bg-vp-teal {
+          background: var(--vp-teal);
+        }
+        .bg-vp-orange {
+          background: var(--vp-orange);
+        }
+
         .condition-card {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -280,6 +317,7 @@ export default function ConditionsPdfPage() {
           transform: translateY(-8px);
           box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
+
         .section-card {
           background: linear-gradient(
             135deg,
