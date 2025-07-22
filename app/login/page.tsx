@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LandingNavbar from "@/components/landing-navbar";
 import Footer from "@/components/footer";
@@ -11,11 +11,31 @@ export default function PatientPortalLogin() {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [timer, setTimer] = useState(60);
+  const [showFooter, setShowFooter] = useState(false);
   const otpInput = useRef(null);
 
   const mobileMask = form.phone
     ? `${form.phone.substring(0, 2)}******${form.phone.slice(-2)}`
     : "...3210";
+
+  // Handle scroll to show/hide footer
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      // Show footer when user is near the bottom (within 100px)
+      const isNearBottom = scrollTop + windowHeight >= documentHeight - 100;
+      setShowFooter(isNearBottom);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    // Check initial position
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   React.useEffect(() => {
     let interval = null;
@@ -62,6 +82,8 @@ export default function PatientPortalLogin() {
   return (
     <div className="min-h-screen flex flex-col bg-white relative">
       <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap');
+        
         .portal-bg {
           background: linear-gradient(98deg, #31cbe3 0%, #1572b5 110%);
         }
@@ -93,14 +115,14 @@ export default function PatientPortalLogin() {
           font-size: 1.08rem;
         }
         .main-btn {
-          background: linear-gradient(90deg, #14ddd0 0%, #288bff 100%);
+          background: linear-gradient(90deg, #12d2c5 0%, #3b82f6 100%);
           color: #fff;
           font-weight: 700;
           border-radius: 0.7rem;
           padding: 1.01rem 0;
           font-size: 1.18rem;
           width: 100%;
-          box-shadow: 0 4px 24px 0 rgba(30, 176, 220, 0.12);
+          box-shadow: 0 4px 24px 0 rgba(18, 210, 197, 0.3);
           letter-spacing: 0.01em;
           margin-top: 0.41rem;
           transition: all 0.16s;
@@ -110,12 +132,25 @@ export default function PatientPortalLogin() {
         }
         .main-btn:hover,
         .main-btn:focus {
-          filter: brightness(1.07);
-          box-shadow: 0 10px 26px 0 rgba(25, 200, 220, 0.16);
+          background: linear-gradient(90deg, #0bbec8 0%, #2563eb 100%);
+          box-shadow: 0 8px 32px 0 rgba(18, 210, 197, 0.4);
+        }
+        .secondary-btn {
+          color: #3b82f6;
+          background: transparent;
+          border: none;
+          text-decoration: underline;
+          font-weight: 600;
+        }
+        .secondary-btn:hover {
+          color: #12d2c5;
         }
         .otp-timer {
           font-weight: 700;
-          color: #0ac7b8;
+          color: #12d2c5;
+        }
+        .lato-font {
+          font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
         }
         .portal-card-logo {
           font-size: 1.09rem;
@@ -137,36 +172,36 @@ export default function PatientPortalLogin() {
           margin-top: 0.11rem;
           margin-bottom: 0.22rem;
         }
-        .privacy-foot {
-          color: #99b6c9;
-        }
         @media (max-width: 560px) {
           .login-card {
             padding-left: 0.7rem !important;
             padding-right: 0.7rem !important;
           }
         }
-        /* Fix: Footer always at bottom, no extra white strip */
+        /* Footer shows only when scrolled to bottom */
         #vp-footer {
           position: fixed;
           left: 0;
           right: 0;
           bottom: 0;
           z-index: 50;
+          transform: translateY(100%);
+          transition: transform 0.3s ease-in-out;
+        }
+        #vp-footer.show {
+          transform: translateY(0);
         }
         body, html, #__next {
-          height: 100%;
-          min-height: 100%;
           background: #fff;
         }
       `}</style>
       <LandingNavbar />
 
       {/* Header Banner */}
-      <section className="mt-20 portal-bg w-full py-10 flex items-center justify-center">
+      <section className="portal-bg w-full py-6 md:py-8 flex items-center justify-center">
         <div className="max-w-2xl w-full mx-auto text-center">
           <motion.h1
-            className="text-3xl md:text-4xl font-extrabold text-white mb-2 tracking-tight drop-shadow"
+            className="text-3xl md:text-4xl font-extrabold text-white mb-2 tracking-tight drop-shadow lato-font"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.07 }}
@@ -192,8 +227,8 @@ export default function PatientPortalLogin() {
         </div>
       </section>
 
-      {/* Main Card Section (min-h-[430px] ensures content above footer on all screens) */}
-      <section className="flex-1 flex flex-col items-center py-10 bg-white" style={{ minHeight: "340px" }}>
+      {/* Main Card Section - Added padding bottom to ensure form is fully visible */}
+      <section className="flex-1 flex flex-col items-center py-10 pb-32 bg-white min-h-[60vh]">
         <motion.div
           initial={{ opacity: 0, scale: 0.99, y: 24 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -305,7 +340,7 @@ export default function PatientPortalLogin() {
                         setOtp("");
                         setTimer(60);
                       }}
-                      className="text-blue-600 underline hover:text-sky-800 font-medium ml-2 text-sm"
+                      className="secondary-btn font-medium ml-2 text-sm"
                       tabIndex={0}
                     >
                       Resend OTP
@@ -322,13 +357,22 @@ export default function PatientPortalLogin() {
             </AnimatePresence>
           </div>
         </motion.div>
-        <div className="privacy-foot text-xs mt-8 px-2 text-center max-w-xs">
-          For your security, your information is encrypted and never shared in accordance with our Privacy Policy.
-        </div>
+        
+        {/* Privacy notice only shows when on verify step */}
+        {step === "verify" && (
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="text-gray-500 text-xs mt-8 px-2 text-center max-w-xs"
+          >
+            For your security, your information is encrypted and never shared in accordance with our Privacy Policy.
+          </motion.div>
+        )}
       </section>
 
-      {/* Footer fixed at the bottom, always full width */}
-      <div id="vp-footer">
+      {/* Footer that only shows when scrolled to bottom */}
+      <div id="vp-footer" className={showFooter ? 'show' : ''}>
         <Footer />
       </div>
     </div>
