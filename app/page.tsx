@@ -53,6 +53,31 @@ export default function App() {
   }, []);
 
   return (
+    <>
+    <style jsx global>{`
+        @import url("https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap");
+        .font-lato {
+          font-family: "Lato", sans-serif;
+        }
+        body {
+          background-color: #f0f9ff; /* This is Tailwind's "sky-50" color */
+        }
+        /* --- THIS CLASS WAS MISSING --- */
+        .gradient-pdf {
+          background: linear-gradient(
+            94deg,
+            var(--vp-blue) 0%,
+            var(--vp-teal) 100%
+          );
+        }
+        /* ----------------------------- */
+        :root {
+          --vp-blue: #004f8c; /* R-0 G-79  B-140 */
+          --vp-teal: #008094; /* R-0 G-128 B-148 */
+          --vp-orange: #ec691f; /* R-236 G-105 B-31  */
+        }
+
+      `}</style>
     <div className="bg-white font-sans">
       <LandingNavbar />
       <main>
@@ -66,6 +91,7 @@ export default function App() {
       </main>
       <Footer />
     </div>
+    </>
   );
 }
 
