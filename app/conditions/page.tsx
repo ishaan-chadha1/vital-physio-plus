@@ -335,7 +335,7 @@ export default function ConditionsPdfPage() {
           >
             <p className="font-bold text-xl md:text-xl text-gray-700 leading-relaxed mb-8 ">
               At{" "}
-              <span className="font-bold text-blue-600 bg-blue-100 px-2 py-1 rounded-lg">
+              <span className="font-bold px-2 py-1 rounded-lg">
                 VitalPhysio⁺
               </span>
               , our highly skilled team is proficient in treating an extensive
