@@ -25,8 +25,15 @@ export default function ContactPage() {
     
       <style jsx global>{`
       @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap');
+      :root {
+          --vp-blue: #004f8c; /* R-0 G-79  B-140 */
+          --vp-teal: #008094; /* R-0 G-128 B-148 */
+          --vp-orange: #ec691f; /* R-236 G-105 B-31  */
+        }
         .contact-banner {
-          background: linear-gradient(90deg,#32b7de 0%, #16577b 100%);
+          background: linear-gradient(94deg,
+            var(--vp-blue) 0%,
+            var(--vp-teal) 100%);
         }
         .contact-card {
           background: rgba(255,255,255,0.98);
