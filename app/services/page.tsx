@@ -18,120 +18,249 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
+  Users,
+  Activity,
+  Heart,
+  Baby,
+  Stethoscope,
+  Home,
+  Video,
+  UserCheck,
+  Play,
+  Pause,
 } from "lucide-react";
-import LandingNavbar from "@/components/landing-navbar"; // Assuming navbar is in this path
-import Footer from "@/components/footer"; // Assuming footer is in this path
+import LandingNavbar from "@/components/landing-navbar";
+import Footer from "@/components/footer";
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import CTA from "@/components/CTA";
 
 // --- DATA ---
 
-const techniquesData = [
+const coreServicesData = [
   {
     id: 1,
-    title: "Exercise Therapy",
-    icon: Dumbbell,
-    borderColor: "border-blue-400",
+    title: "Musculoskeletal Rehabilitation",
+    icon: Bone,
+    borderColor: "border-blue-500",
+    iconColor: "text-blue-600",
+    accentColor: "bg-blue-600",
     description:
-      "Tailored exercise programs to restore function, improve strength, and increase mobility. Essential for recovery and long-term health.",
+      "Tailored rehab for joint injuries, chronic pain, and muscle strains. We aim to reduce pain and restore function using techniques like manual therapy and targeted exercise.",
+    conditions: [
+      "Joint injuries",
+      "Chronic pain",
+      "Muscle strains",
+      "Arthritis",
+      "Back pain",
+    ],
+    image: "🦴",
   },
   {
     id: 2,
-    title: "Manual Therapy",
-    icon: HeartPulse,
-    borderColor: "border-gray-400",
+    title: "Sports Physiotherapy",
+    icon: Dumbbell,
+    borderColor: "border-green-500",
+    iconColor: "text-green-600",
+    accentColor: "bg-green-600",
     description:
-      "Hands-on techniques including joint mobilization and soft tissue massage to reduce pain, decrease restriction, and improve range of motion.",
+      "Injury prevention, strength training, and fast-track rehab for athletes. We help you return to your sport stronger and more resilient than before.",
+    conditions: [
+      "Sports injuries",
+      "Performance enhancement",
+      "Injury prevention",
+      "Return to sport",
+      "Athletic conditioning",
+    ],
+    image: "🏃‍♂️",
   },
   {
     id: 3,
-    title: "Electrotherapy",
-    icon: Zap,
-    borderColor: "border-gray-400",
+    title: "Post-Operative Rehab",
+    icon: HeartPulse,
+    borderColor: "border-red-500",
+    iconColor: "text-red-600",
+    accentColor: "bg-red-600",
     description:
-      "Using electrical energy to stimulate nerves and muscles, helping to relieve pain, reduce swelling, and promote healing.",
+      "Optimal recovery programs after surgeries like joint replacements or ACL repair, guided by your surgeon's protocols and our expertise.",
+    conditions: [
+      "Joint replacement recovery",
+      "ACL repair",
+      "Post-surgical rehabilitation",
+      "Wound healing",
+      "Mobility restoration",
+    ],
+    image: "🏥",
   },
   {
     id: 4,
-    title: "Heat & Cold Therapy",
-    icon: Sun,
-    borderColor: "border-teal-400",
+    title: "Neurological Rehabilitation",
+    icon: BrainCircuit,
+    borderColor: "border-purple-500",
+    iconColor: "text-purple-600",
+    accentColor: "bg-purple-600",
     description:
-      "Application of heat or cold packs to manage pain, control inflammation, reduce muscle spasms, and improve circulation.",
+      "Dedicated care for stroke, Parkinson's, MS, and brain injuries to improve motor control, balance, and independence.",
+    conditions: [
+      "Stroke recovery",
+      "Parkinson's disease",
+      "Multiple sclerosis",
+      "Brain injuries",
+      "Spinal cord injuries",
+    ],
+    image: "🧠",
   },
   {
     id: 5,
-    title: "Ultrasound Therapy",
-    icon: Waves,
-    borderColor: "border-blue-400",
+    title: "Cardio-Respiratory Physio",
+    icon: Heart,
+    borderColor: "border-pink-500",
+    iconColor: "text-pink-600",
+    accentColor: "bg-pink-600",
     description:
-      "Utilizing sound waves to treat musculoskeletal injuries, reduce inflammation, and accelerate tissue healing deep within the body.",
+      "Rehabilitation for conditions like COPD and post-heart-attack recovery to boost endurance and improve breathing efficiency.",
+    conditions: [
+      "COPD",
+      "Post-heart attack",
+      "Breathing difficulties",
+      "Chest conditions",
+      "Cardiac rehabilitation",
+    ],
+    image: "❤️",
   },
   {
     id: 6,
-    title: "Shockwave Therapy",
-    icon: Wind,
-    borderColor: "border-teal-400",
+    title: "Women's Health Physio",
+    icon: Baby,
+    borderColor: "border-rose-500",
+    iconColor: "text-rose-600",
+    accentColor: "bg-rose-600",
     description:
-      "A non-invasive treatment that uses acoustic waves to treat chronic pain and promote the regeneration of damaged tissues.",
+      "Specialized care including pelvic floor rehab (incontinence, prolapse) with our UI Chair, pre/post-natal recovery, and osteoporosis management.",
+    conditions: [
+      "Pelvic floor dysfunction",
+      "Pregnancy-related pain",
+      "Post-natal recovery",
+      "Incontinence",
+      "Osteoporosis",
+    ],
+    image: "🤱",
   },
   {
     id: 7,
-    title: "rPMS",
-    icon: Atom,
-    borderColor: "border-orange-400",
+    title: "Geriatric Therapy",
+    icon: Users,
+    borderColor: "border-orange-500",
+    iconColor: "text-orange-600",
+    accentColor: "bg-orange-600",
     description:
-      "Repetitive Peripheral Magnetic Stimulation (rPMS) is an advanced modality for pain management and muscle re-education.",
+      "A focus on improving balance, mobility, and strength to prevent falls and maintain an active lifestyle in older adults.",
+    conditions: [
+      "Fall prevention",
+      "Balance training",
+      "Mobility issues",
+      "Age-related conditions",
+      "Strength maintenance",
+    ],
+    image: "👴",
   },
-];
-
-const programsData = [
   {
     id: 8,
-    title: "High-Intensity Laser",
-    icon: Zap,
-    borderColor: "border-red-500",
+    title: "Intimate Health Rehab",
+    icon: ShieldCheck,
+    borderColor: "border-indigo-500",
+    iconColor: "text-indigo-600",
+    accentColor: "bg-indigo-600",
     description:
-      "Advanced laser therapy to penetrate deep into tissue, accelerating cellular reproduction and growth for faster healing.",
+      "Discreet and effective therapy for urinary/faecal incontinence and sexual health, using advanced tools like the UI-Chair.",
+    conditions: [
+      "Urinary incontinence",
+      "Faecal incontinence",
+      "Sexual health",
+      "Pelvic pain",
+      "Intimate wellness",
+    ],
+    image: "🔒",
   },
   {
     id: 9,
-    title: "Shockwave Therapy",
-    icon: Wind,
-    borderColor: "border-green-500",
+    title: "Home & Tele-Rehabilitation",
+    icon: Home,
+    borderColor: "border-teal-500",
+    iconColor: "text-teal-600",
+    accentColor: "bg-teal-600",
     description:
-      "A non-invasive treatment using acoustic waves to treat chronic pain and promote the regeneration of damaged tissues.",
+      "Access our expert care from the comfort of your home through secure video sessions and our Patient Portal for ongoing support.",
+    conditions: [
+      "Remote consultation",
+      "Home exercises",
+      "Follow-up care",
+      "Accessibility needs",
+      "Ongoing support",
+    ],
+    image: "🏠",
   },
+];
+
+const advancedTechniquesData = [
   {
     id: 10,
-    title: "Spinal Decompression",
-    icon: Bone,
-    borderColor: "border-blue-500",
+    title: "Shockwave Therapy",
+    icon: Wind,
+    borderColor: "border-blue-400",
+    iconColor: "text-blue-600",
     description:
-      "Gentle, non-surgical therapy to relieve back and neck pain by reducing pressure on the spinal discs and nerves.",
+      "A non-invasive treatment that uses acoustic waves to treat chronic pain and promote the regeneration of damaged tissues.",
+    techPage: "/technology#shockwave",
   },
   {
     id: 11,
-    title: "Aeroleap Pro",
-    icon: Dumbbell,
-    borderColor: "border-purple-500",
+    title: "Spinal Decompression",
+    icon: Bone,
+    borderColor: "border-green-400",
+    iconColor: "text-green-600",
     description:
-      "State-of-the-art equipment for advanced rehabilitation and performance enhancement exercises.",
+      "Gentle, non-surgical therapy to relieve back and neck pain by reducing pressure on the spinal discs and nerves.",
+    techPage: "/technology#spinal-decompression",
   },
   {
     id: 12,
-    title: "rPMS",
-    icon: Atom,
-    borderColor: "border-orange-500",
+    title: "Aeroleap Pro",
+    icon: Activity,
+    borderColor: "border-purple-400",
+    iconColor: "text-purple-600",
     description:
-      "Repetitive Peripheral Magnetic Stimulation (rPMS) is an advanced modality for pain management and muscle re-education.",
+      "State-of-the-art equipment for advanced rehabilitation and performance enhancement exercises.",
+    techPage: "/technology#aeroleap-pro",
   },
   {
     id: 13,
+    title: "rPMS",
+    icon: Atom,
+    borderColor: "border-orange-400",
+    iconColor: "text-orange-600",
+    description:
+      "Repetitive Peripheral Magnetic Stimulation (rPMS) is an advanced modality for pain management and muscle re-education.",
+    techPage: "/technology#rpms",
+  },
+  {
+    id: 14,
     title: "UI Chair",
-    icon: ShieldCheck,
-    borderColor: "border-indigo-500",
+    icon: UserCheck,
+    borderColor: "border-pink-400",
+    iconColor: "text-pink-600",
     description:
       "Specialized therapeutic chair designed for pelvic floor rehabilitation and strengthening.",
+    techPage: "/technology#ui-chair",
+  },
+  {
+    id: 15,
+    title: "High-Intensity Laser",
+    icon: Zap,
+    borderColor: "border-red-400",
+    iconColor: "text-red-600",
+    description:
+      "Advanced laser therapy to penetrate deep into tissue, accelerating cellular reproduction and growth for faster healing.",
+    techPage: "/technology#high-intensity-laser",
   },
 ];
 
@@ -145,11 +274,10 @@ export default function ServicesPage() {
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap");
 
-        /* ---------- VitalPhysio brand palette ---------- */
         :root {
-          --vp-blue: #004f8c; /* R-0 G-79  B-140 */
-          --vp-teal: #008094; /* R-0 G-128 B-148 */
-          --vp-orange: #ec691f; /* R-236 G-105 B-31  */
+          --vp-blue: #004f8c;
+          --vp-teal: #008094;
+          --vp-orange: #ec691f;
         }
 
         .font-lato {
@@ -162,14 +290,25 @@ export default function ServicesPage() {
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
+
+        /* Carousel specific styles */
+        .carousel-container {
+          padding: 40px 0;
+        }
+        .carousel-card-shadow {
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+        .carousel-card-shadow:hover {
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
       `}</style>
-      <div className="bg-white">
+      <div className="bg-white font-lato">
         <LandingNavbar />
         <main>
           <ServicesHero />
-          <TechniquesCarousel onCardClick={setModalData} />
-          <SpecializedProgramsCarousel onCardClick={setModalData} />
-          <TeamCTA />
+          <AutoCarouselSection onCardClick={setModalData} />
+          <AdvancedTechniquesSection />
+          <CTA />
         </main>
         <Footer />
         <AnimatePresence>
@@ -182,160 +321,322 @@ export default function ServicesPage() {
   );
 }
 
-// --- REUSABLE CAROUSEL & MODAL ---
+// --- AUTO CAROUSEL COMPONENT ---
 
-const Carousel = ({
+const AutoCarousel = ({
   items,
   onCardClick,
 }: {
   items: any[];
   onCardClick: (item: any) => void;
 }) => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [centeredIndex, setCenteredIndex] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Create a looped array for infinite scroll effect
-  const loopedItems = [...items, ...items, ...items];
-
-  const handleScroll = useCallback(() => {
-    if (!scrollContainerRef.current) return;
-    const container = scrollContainerRef.current;
-    const scrollLeft = container.scrollLeft;
-    const containerCenter = scrollLeft + container.offsetWidth / 2;
-
-    let closestIndex = 0;
-    let smallestDistance = Infinity;
-
-    Array.from(container.children).forEach((node, index) => {
-      const child = node as HTMLElement;
-      if (child.dataset.carouselItem) {
-        const childCenter = child.offsetLeft + child.offsetWidth / 2;
-        const distance = Math.abs(containerCenter - childCenter);
-        if (distance < smallestDistance) {
-          smallestDistance = distance;
-          closestIndex = index;
-        }
-      }
-    });
-    setCenteredIndex(closestIndex % items.length);
-  }, [items.length]);
-
+  // Auto-play functionality
   useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      const initialCard = container.children[items.length] as HTMLElement;
-      if (initialCard) {
-        const initialScroll =
-          initialCard.offsetLeft -
-          container.offsetWidth / 2 +
-          initialCard.clientWidth / 2;
-        container.scrollTo({ left: initialScroll, behavior: "auto" });
-      }
-      container.addEventListener("scroll", handleScroll, { passive: true });
+    if (isAutoPlaying && !isPaused) {
+      intervalRef.current = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % items.length);
+      }, 4000); // 4 seconds per slide
     }
-    return () => container?.removeEventListener("scroll", handleScroll);
-  }, [items.length, handleScroll]);
-
-  const scrollByCard = (direction: "prev" | "next") => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const currentCard = container.children[
-      centeredIndex + items.length
-    ] as HTMLElement;
-    let targetCard;
-
-    if (direction === "next") {
-      targetCard = currentCard.nextElementSibling as HTMLElement;
-    } else {
-      targetCard = currentCard.previousElementSibling as HTMLElement;
-    }
-
-    if (targetCard) {
-      const scrollLeft =
-        targetCard.offsetLeft -
-        container.offsetWidth / 2 +
-        targetCard.offsetWidth / 2;
-      container.scrollTo({ left: scrollLeft, behavior: "smooth" });
-    }
-  };
-
-  // Infinite scroll jump logic
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const handleInfiniteScroll = () => {
-      const firstCard = container.children[0] as HTMLElement;
-      if (!firstCard) return;
-
-      const scrollLeft = container.scrollLeft;
-      const itemWidth = firstCard.clientWidth + 32; // card width + gap
-
-      if (scrollLeft <= itemWidth * (items.length * 0.5)) {
-        container.scrollLeft += items.length * itemWidth;
-      } else if (scrollLeft >= itemWidth * (items.length * 2.5)) {
-        container.scrollLeft -= items.length * itemWidth;
-      }
-    };
-
-    const scrollEndTimer = setTimeout(() => {
-      container.addEventListener("scroll", handleInfiniteScroll);
-    }, 500);
 
     return () => {
-      clearTimeout(scrollEndTimer);
-      container.removeEventListener("scroll", handleInfiniteScroll);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
-  }, [centeredIndex, items.length]);
+  }, [isAutoPlaying, isPaused, items.length]);
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  const goToPrevious = () => {
+    setCurrentSlide((prev) => (prev - 1 + items.length) % items.length);
+  };
+
+  const goToNext = () => {
+    setCurrentSlide((prev) => (prev + 1) % items.length);
+  };
+
+  const toggleAutoPlay = () => {
+    setIsAutoPlaying(!isAutoPlaying);
+  };
 
   return (
-    <div className="relative">
+    <div className="relative w-full max-w-4xl mx-auto carousel-container">
+      {/* Main Carousel Container */}
       <div
-        ref={scrollContainerRef}
-        className="flex gap-8 overflow-x-auto pb-8 px-[calc(50%-144px)] no-scrollbar snap-x snap-mandatory"
+        className="relative overflow-hidden rounded-3xl"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
       >
-        {loopedItems.map((item, index) => (
-          <motion.div
-            key={`${item.id}-${index}`}
-            data-carousel-item="true"
-            animate={{
-              scale: centeredIndex === index % items.length ? 1.05 : 0.95,
-              y: centeredIndex === index % items.length ? -10 : 0,
-              opacity: centeredIndex === index % items.length ? 1 : 0.6,
-            }}
-            transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            onClick={() => onCardClick(item)}
-            className="group flex-shrink-0 w-72 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden border-2 cursor-pointer snap-center"
-          >
-            <div className={`p-6 text-center border-b-4 ${item.borderColor}`}>
-              <h3 className="text-lg font-semibold text-blue-900 h-14 flex items-center justify-center">
-                {item.title}
-              </h3>
+        <div
+          className="flex transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+        >
+          {items.map((service, index) => (
+            <div key={service.id} className="w-full flex-shrink-0">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{
+                  opacity: index === currentSlide ? 1 : 0.8,
+                  scale: index === currentSlide ? 1 : 0.95,
+                }}
+                transition={{ duration: 0.5 }}
+                onClick={() => onCardClick(service)}
+                className="cursor-pointer mx-2 md:mx-4"
+              >
+                <div
+                  className={`bg-white rounded-2xl overflow-hidden transition-all duration-500 border-4 ${service.borderColor} hover:shadow-lg h-[500px] flex flex-col`}
+                >
+                  {/* Card Header */}
+                  <div className="relative p-6 md:p-8 bg-white">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-4">
+                        <div
+                          className={`w-16 h-16 md:w-20 md:h-20 rounded-xl bg-white border-3 ${service.borderColor} flex items-center justify-center`}
+                        >
+                          <service.icon
+                            className={`w-12 h-12 md:w-14 md:h-14 ${service.iconColor}`}
+                          />
+                        </div>
+                        <div>
+                          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                            {service.title}
+                          </h3>
+                          <div
+                            className={`w-16 h-1 ${service.accentColor} rounded-full`}
+                          ></div>
+                        </div>
+                      </div>
+                      <div className="text-6xl md:text-8xl opacity-10">
+                        {service.image}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="px-6 md:px-8 pb-6 md:pb-8 bg-white flex-grow flex flex-col justify-between">
+                    <div>
+                      <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-6">
+                        {service.description}
+                      </p>
+                      {/* Conditions Preview */}{" "}
+                    </div>
+                    <div className="mb-6">
+                      <h4 className="text-base font-semibold text-gray-800 mb-3">
+                        Conditions We Treat:
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {service.conditions
+                          .slice(0, 3)
+                          .map((condition: string, idx: number) => (
+                            <span
+                              key={idx}
+                              className={`px-4 py-2 ${service.accentColor} text-white text-sm font-medium rounded-full`}
+                            >
+                              {condition}
+                            </span>
+                          ))}
+                        {service.conditions.length > 3 && (
+                          <span className="px-4 py-2 bg-gray-200 text-gray-600 text-sm font-medium rounded-full">
+                            +{service.conditions.length - 3} more
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* CTA Button */}
+                    <div className="flex items-center justify-between mt-4">
+                      <button
+                        className={`flex items-center gap-2 ${service.accentColor} text-white font-semibold py-3 px-6 rounded-lg hover:shadow-md transition-all duration-300 group`}
+                      >
+                        Learn More
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                      <div className="text-sm text-gray-500">
+                        {index + 1} of {items.length}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
-            <div className="bg-gray-50 h-48 flex items-center justify-center">
-              <item.icon className="w-16 h-16 text-gray-400 group-hover:text-gray-500 transition-colors" />
-            </div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
-      <button
-        onClick={() => scrollByCard("prev")}
-        className="absolute left-0 md:left-4 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm rounded-full p-3 shadow-md hover:bg-gray-100 transition-all z-20"
-        aria-label="Previous"
-      >
-        <ChevronLeft className="text-gray-700" />
-      </button>
-      <button
-        onClick={() => scrollByCard("next")}
-        className="absolute right-0 md:right-4 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm rounded-full p-3 shadow-md hover:bg-gray-100 transition-all z-20"
-        aria-label="Next"
-      >
-        <ChevronRight className="text-gray-700" />
-      </button>
+
+      {/* Navigation Controls */}
+      <div className="flex items-center justify-between mt-8">
+        {/* Previous/Next Buttons */}
+        <div className="flex items-center gap-4">
+          <button
+            onClick={goToPrevious}
+            className="w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group border border-gray-200"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-700 group-hover:text-[var(--vp-blue)] transition-colors" />
+          </button>
+          <button
+            onClick={goToNext}
+            className="w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group border border-gray-200"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-700 group-hover:text-[var(--vp-blue)] transition-colors" />
+          </button>
+        </div>
+
+        {/* Dots Indicator */}
+        <div className="flex items-center gap-3">
+          {items.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`transition-all duration-300 rounded-full ${
+                index === currentSlide
+                  ? "w-8 h-3 bg-[var(--vp-blue)]"
+                  : "w-3 h-3 bg-gray-300 hover:bg-gray-400"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Auto-play Toggle */}
+        <button
+          onClick={toggleAutoPlay}
+          className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 text-sm font-medium ${
+            isAutoPlaying
+              ? "bg-[var(--vp-blue)] text-white hover:bg-[var(--vp-teal)]"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          }`}
+        >
+          {isAutoPlaying ? (
+            <Pause className="w-4 h-4" />
+          ) : (
+            <Play className="w-4 h-4" />
+          )}
+          {isAutoPlaying ? "Pause" : "Play"}
+        </button>
+      </div>
     </div>
   );
 };
+
+// --- AUTO CAROUSEL SECTION ---
+
+const AutoCarouselSection = ({
+  onCardClick,
+}: {
+  onCardClick: (item: any) => void;
+}) => (
+  <section className="bg-white py-20 md:py-32">
+    <div className="container mx-auto px-6">
+      <div className="text-center mb-16">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="text-2xl font-bold text-gray-600 max-w-4xl mx-auto leading-relaxed"
+        >
+          We offer a complete suite of physiotherapy services, delivered by
+          specialists and enhanced by state-of-the-art technology to maximize
+          your recovery.
+        </motion.p>
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <AutoCarousel items={coreServicesData} onCardClick={onCardClick} />
+      </motion.div>
+    </div>
+  </section>
+);
+
+// --- ADVANCED TECHNIQUES SECTION ---
+
+const AdvancedTechniquesSection = () => (
+  <section className="bg-gradient-to-br from-[var(--vp-teal)] to-[var(--vp-blue)] py-20 md:py-28">
+    <div className="container mx-auto px-6">
+      <div className="text-center mb-16">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-3xl md:text-4xl font-bold text-white mb-4"
+        >
+          Advanced Therapeutic Techniques
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="text-lg text-blue-100 max-w-3xl mx-auto"
+        >
+          We complement core therapies with state-of-the-art modalities to
+          accelerate healing and improve outcomes.
+        </motion.p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {advancedTechniquesData.map((technique, index) => (
+          <motion.div
+            key={technique.id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="group"
+          >
+            <Link
+              href={technique.techPage}
+              className="block bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border-2 border-gray-100 hover:border-gray-200 min-h-[320px] flex flex-col"
+            >
+              <div
+                className={`p-6 bg-white border-b-4 ${technique.borderColor}`}
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div
+                    className={`w-12 h-12 rounded-xl bg-gray-50 border ${technique.borderColor} flex items-center justify-center`}
+                  >
+                    <technique.icon
+                      className={`w-8 h-8 ${technique.iconColor}`}
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-[var(--vp-blue)] transition-colors line-clamp-2">
+                    {technique.title}
+                  </h3>
+                </div>
+              </div>
+              <div className="p-6 bg-white flex-1 flex flex-col">
+                <p className="text-gray-600 leading-relaxed mb-4 flex-1">
+                  {technique.description}
+                </p>
+                <div className="flex items-center text-[var(--vp-blue)] font-semibold text-sm group-hover:gap-2 transition-all mt-auto">
+                  Learn More About Technology
+                  <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+// --- SERVICE MODAL ---
 
 const ServiceModal = ({
   data,
@@ -355,30 +656,75 @@ const ServiceModal = ({
       initial={{ scale: 0.9, y: 20 }}
       animate={{ scale: 1, y: 0 }}
       exit={{ scale: 0.9, y: 20 }}
-      className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto no-scrollbar"
+      className="relative bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto no-scrollbar border-4 border-gray-200"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className={`p-8 border-t-8 ${data.borderColor}`}>
-        <div className="flex items-start sm:items-center gap-4 mb-6 flex-col sm:flex-row">
+      <div className={`p-8 bg-white border-b-4 ${data.borderColor}`}>
+        <div className="flex items-center gap-6 mb-6">
           <div
-            className={`flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center bg-blue-50`}
+            className={`w-20 h-20 rounded-xl bg-gray-50 border-2 ${data.borderColor} flex items-center justify-center shadow-sm`}
           >
-            <data.icon className="w-10 h-10 text-blue-800" />
+            <data.icon className={`w-12 h-12 ${data.iconColor}`} />
           </div>
-          <h2 className="text-3xl font-bold text-blue-900">{data.title}</h2>
-        </div>
-        <div className="space-y-6">
           <div>
-            <h3 className="font-semibold text-lg mb-2 text-gray-800">
-              Overview
-            </h3>
-            <p className="text-gray-600 leading-relaxed">{data.description}</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+              {data.title}
+            </h2>
+            <div className={`w-20 h-1 ${data.accentColor} rounded-full`}></div>
           </div>
         </div>
       </div>
+
+      <div className="p-8 space-y-8 bg-white">
+        <div>
+          <h3 className="font-bold text-2xl mb-4 text-gray-800">Overview</h3>
+          <p className="text-gray-600 leading-relaxed text-lg">
+            {data.description}
+          </p>
+        </div>
+
+        {data.conditions && (
+          <div>
+            <h3 className="font-bold text-2xl mb-4 text-gray-800">
+              Conditions We Treat
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {data.conditions.map((condition: string, index: number) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200"
+                >
+                  <div
+                    className={`w-3 h-3 ${data.accentColor} rounded-full flex-shrink-0`}
+                  ></div>
+                  <span className="text-gray-700 font-medium">{condition}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="flex flex-col sm:flex-row gap-4 pt-4">
+          <Link
+            href="/contact"
+            className={`flex items-center justify-center gap-2 ${data.accentColor} text-white font-semibold py-4 px-8 rounded-lg hover:shadow-lg transition-all duration-300 flex-1`}
+          >
+            Book Consultation
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+          <Link
+            href="/team"
+            className="flex items-center justify-center gap-2 bg-gray-100 text-gray-700 font-semibold py-4 px-8 rounded-lg hover:bg-gray-200 transition-colors flex-1 border border-gray-300"
+          >
+            Meet Our Team
+            <Users className="w-5 h-5" />
+          </Link>
+        </div>
+      </div>
+
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition-colors"
+        className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition-colors bg-white rounded-full p-3 shadow-lg border border-gray-200"
       >
         <X size={24} />
       </button>
@@ -386,106 +732,22 @@ const ServiceModal = ({
   </motion.div>
 );
 
-// --- SECTION COMPONENTS ---
+// --- HERO SECTION ---
 
-const TechniquesCarousel = ({
-  onCardClick,
-}: {
-  onCardClick: (item: any) => void;
-}) => (
-  <section className="bg-white py-20 md:py-28 overflow-x-hidden">
-    <div className="container mx-auto">
-      <div className="text-center mb-16 px-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-blue-900">
-          Detailed Overview of Therapeutic Techniques
-        </h2>
-      </div>
-      <Carousel items={techniquesData} onCardClick={onCardClick} />
-    </div>
-  </section>
-);
-
-const SpecializedProgramsCarousel = ({
-  onCardClick,
-}: {
-  onCardClick: (item: any) => void;
-}) => (
-  <section className="bg-blue-50/70 py-20 md:py-28 overflow-x-hidden">
-    <div className="container mx-auto">
-      <div className="text-center mb-16 px-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-blue-900">
-          Advanced Therapeutic Techniques
-        </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto mt-4">
-          We complement core therapies with state-of-the-art modalities to
-          accelerate healing and improve outcomes.
-        </p>
-      </div>
-      <Carousel items={programsData} onCardClick={onCardClick} />
-    </div>
-  </section>
-);
-
-// --- STATIC COMPONENTS (Hero, CTA, Footer) ---
 const ServicesHero = () => (
-  <section className="bg-[var(--vp-blue)] pt-24 pb-12 md:pt-28 md:pb-16 px-6">
+  <section className="bg-gradient-to-r from-[var(--vp-blue)] to-[var(--vp-teal)] py-12 md:py-16 px-6">
     <div className="container mx-auto text-center">
-      <motion.h1
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="text-4xl md:text-5xl font-extrabold text-white"
       >
-        Our Comprehensive Physiotherapy Services
-      </motion.h1>
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-        className="mt-4 text-lg md:text-xl text-blue-200"
-      >
-        Empowering Your Recovery, Enhancing Your Life
-      </motion.p>
-    </div>
-  </section>
-);
-
-const TeamCTA = () => (
-  <section className="bg-white py-20 md:py-28 px-6">
-    <div className="container mx-auto text-center max-w-3xl">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true, amount: 0.5 }}
-        className="text-3xl md:text-4xl font-bold text-blue-900"
-      >
-        Meet Our Expert Team
-      </motion.h2>
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        viewport={{ once: true, amount: 0.5 }}
-        className="mt-4 text-lg text-gray-600 leading-relaxed"
-      >
-        Our team of dedicated physiotherapists brings collective expertise, a
-        compassionate approach, and diverse specializations to ensure you
-        receive the highest standard of care.
-      </motion.p>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        viewport={{ once: true }}
-        className="mt-10"
-      >
-        <Link
-          href="/team"
-          className="inline-flex items-center gap-2 bg-blue-600 text-white font-semibold py-4 px-8 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-        >
-          Meet the Team <ArrowRight size={20} />
-        </Link>
+        <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+          Our Comprehensive Physiotherapy Services
+        </h1>
+        <p className="mt-4 text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
+          Empowering your Recovery, Enhancing your Life
+        </p>
       </motion.div>
     </div>
   </section>
