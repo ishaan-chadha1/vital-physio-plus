@@ -54,29 +54,22 @@ export default function App() {
 
   return (
     <>
-    <style jsx global>{`
+      <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap");
-        .font-lato {
-          font-family: "Lato", sans-serif;
-        }
+        .font-lato { font-family: "Lato", sans-serif; }
         body {
-          background-color: #f0f9ff; /* This is Tailwind's "sky-50" color */
+          background-color: #f0f9ff;
+          overflow-x: hidden; /* Prevent horizontal scroll on mobile */
         }
-        /* --- THIS CLASS WAS MISSING --- */
-        .gradient-pdf {
-          background: linear-gradient(
-            94deg,
-            var(--vp-blue) 0%,
-            var(--vp-teal) 100%
-          );
+        h1,h2,h3 {
+          /* Smooth responsive scaling */
+          line-height: 1.15;
         }
-        /* ----------------------------- */
-        :root {
-          --vp-blue: #004f8c; /* R-0 G-79  B-140 */
-          --vp-teal: #008094; /* R-0 G-128 B-148 */
-          --vp-orange: #ec691f; /* R-236 G-105 B-31  */
+        @media (max-width: 640px) {
+          h1 { font-size: clamp(1.9rem, 7vw, 2.25rem); }
+          h2 { font-size: clamp(1.5rem, 6.2vw, 1.9rem); }
+          h3 { font-size: clamp(1.25rem, 5.4vw, 1.5rem); }
         }
-
       `}</style>
     <div className="bg-white font-sans">
       <LandingNavbar />
@@ -96,73 +89,6 @@ export default function App() {
 }
 
 // Header Component
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'About Us', href: '#about' },
-    { name: 'Our Services', href: '#services' },
-    { name: 'Technology', href: '#technology' },
-    { name: 'Conditions', href: '#conditions' },
-    { name: 'Our Team', href: '#team' },
-    { name: 'Contact Us', href: '#contact' },
-  ];
-
-  return (
-    <header className="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#" className="text-2xl font-bold text-blue-900 tracking-wide">VITALPHYSIO⁺</a>
-        
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center space-x-6">
-          {navLinks.map(link => (
-            <a key={link.name} href={link.href} className="text-gray-600 hover:text-blue-600 transition-colors duration-300">{link.name}</a>
-          ))}
-          <a href="#portal" className="text-gray-600 hover:text-blue-600 transition-colors duration-300">Patient Portal</a>
-        </nav>
-        <a href="#book" className="hidden lg:inline-block bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-md">
-          Book Appointment
-        </a>
-        
-        {/* Mobile Menu Button */}
-        <div className="lg:hidden">
-          <button onClick={() => setIsMenuOpen(true)} className="text-blue-900">
-            <Menu size={28} />
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed inset-0 bg-white z-50 p-6 lg:hidden"
-          >
-            <div className="flex justify-between items-center">
-              <span className="text-2xl font-bold text-blue-900">VITALPHYSIO⁺</span>
-              <button onClick={() => setIsMenuOpen(false)} className="text-blue-900">
-                <X size={28} />
-              </button>
-            </div>
-            <nav className="mt-12 flex flex-col space-y-6 text-center">
-              {[...navLinks, { name: 'Patient Portal', href: '#portal' }].map(link => (
-                <a key={link.name} href={link.href} onClick={() => setIsMenuOpen(false)} className="text-xl text-gray-700 hover:text-blue-600 transition-colors duration-300">{link.name}</a>
-              ))}
-              <a href="#book" onClick={() => setIsMenuOpen(false)} className="mt-4 inline-block bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-lg">
-                Book Appointment
-              </a>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
-  );
-};
 
 // Hero Section Component - Updated to match the provided image
 
@@ -263,14 +189,14 @@ const ContactSection = () => {
 };
 // Journey Section Component
 const JourneySection = () => (
-  <section className="bg-blue-50/50 py-20 md:py-28 px-6">
+  <section className="bg-blue-50/50 py-16 md:py-24 px-4 sm:px-6">
     <div className="max-w-4xl mx-auto text-center">
       <motion.h2
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true, amount: 0.5 }}
-        className="text-3xl md:text-4xl font-bold text-blue-900 mb-6"
+         className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-5 md:mb-6"
       >
         Your Journey to Vitality Starts Here
       </motion.h2>
@@ -279,7 +205,7 @@ const JourneySection = () => (
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.6 }}
         viewport={{ once: true, amount: 0.5 }}
-        className="text-lg text-gray-600 leading-relaxed mb-10"
+        className="text-base sm:text-lg text-gray-600 leading-relaxed mb-8 md:mb-10"
       >
         Welcome to VitalPhysio⁺, your premier center for comprehensive physiotherapy. We are dedicated to restoring your physical function, effectively managing pain, and enhancing your overall well-being. Experience the integration of contemporary scientific advancements with highly personalized care plans, ensuring optimal outcomes for every individual.
       </motion.p>
@@ -347,25 +273,28 @@ const ServicesGrid = () => {
     },
   ];
 
-  return (
-    <section id="services" className="bg-white py-20 md:py-28 px-6 scroll-mt-20">
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+   return (
+    <section id="services" className="bg-white py-16 md:py-24 px-4 sm:px-6 scroll-mt-20">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {services.map((service, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 50, scale: 0.95 }}
+              initial={{ opacity: 0, y: 40, scale: 0.97 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              className={`bg-gray-50/50 p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col border-t-4 ${service.borderColor}`}
+              transition={{ duration: 0.45, delay: index * 0.08 }}
+              viewport={{ once: true, amount: 0.25 }}
+              className={`bg-gray-50/70 p-6 md:p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col border-t-4 ${service.borderColor}`}
             >
-              <div className={`mb-4 text-white rounded-full p-3 w-14 h-14 flex items-center justify-center ${service.borderColor === 'border-orange-500' ? 'bg-orange-500' : 'bg-teal-500'}`}>
-                <service.icon size={28} />
+              <div className={`mb-4 text-white rounded-full p-3 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center ${service.borderColor === 'border-orange-500' ? 'bg-orange-500' : 'bg-teal-500'}`}>
+                <service.icon size={24} className="md:size-28" />
               </div>
-              <h3 className="text-xl font-bold text-blue-900 mb-3">{service.title}</h3>
-              <p className="text-gray-600 leading-relaxed flex-grow mb-6">{service.description}</p>
-              <a href="#" className="font-semibold text-blue-600 hover:text-blue-800 transition-colors duration-300 self-start group">
+              <h3 className="text-lg md:text-xl font-bold text-blue-900 mb-2 md:mb-3">{service.title}</h3>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed flex-grow mb-5 md:mb-6">{service.description}</p>
+              <a
+                href="#"
+                className="font-semibold text-blue-600 hover:text-blue-800 transition-colors duration-300 self-start group text-sm md:text-base"
+              >
                 {service.link}
                 <ArrowRight className="inline-block ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
               </a>
@@ -376,7 +305,6 @@ const ServicesGrid = () => {
     </section>
   );
 };
-
 // Learn More Section
 const LearnMore = () => {
     const links = [
@@ -385,36 +313,30 @@ const LearnMore = () => {
         { name: 'Our Technology', href: '#technology' },
         { name: 'Conditions We Treat', href: '#conditions' },
     ];
-    return (
-        <section id="about" className="bg-blue-50/50 py-20 md:py-24 px-6 scroll-mt-20">
-            <div className="container mx-auto text-center">
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className="text-3xl md:text-4xl font-bold text-blue-900 mb-10"
-                >
-                    Learn More About Us
-                </motion.h2>
-                <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-                    {links.map((link, index) => (
-                        <motion.a
-                            key={link.name}
-                            href={link.href}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.15 }}
-                            viewport={{ once: true }}
-                            className="bg-white text-blue-700 font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-600 hover:text-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                        >
-                            {link.name}
-                        </motion.a>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
+return (
+    <section id="about" className="bg-blue-50/50 py-16 md:py-24 px-4 sm:px-6 scroll-mt-20">
+      <div className="container mx-auto text-center max-w-5xl">
+        <motion.h2
+          // ...existing code...
+          className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-8 md:mb-10"
+        >
+          Learn More About Us
+        </motion.h2>
+        <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 md:gap-6">
+          {links.map((link, index) => (
+            <motion.a
+              key={link.name}
+              href={link.href}
+              // ...existing code...
+              className="w-full sm:w-auto bg-white text-blue-700 font-semibold py-3 px-6 md:px-8 rounded-lg shadow-md hover:bg-blue-600 hover:text-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-sm md:text-base"
+            >
+              {link.name}
+            </motion.a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 };
 
 // CTA Section Component

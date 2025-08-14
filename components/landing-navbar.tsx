@@ -21,22 +21,20 @@ export default function LandingNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const scrollTimeoutRef = useRef(null);
+  const scrollTimeoutRef = useRef<number | null>(null);
   const lastScrollY = useRef(0);
 
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
     lastScrollY.current = currentScrollY;
 
-    if (scrollTimeoutRef.current) {
-      clearTimeout(scrollTimeoutRef.current);
-    }
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
 
     const threshold = scrolled ? 60 : 100;
     const shouldBeScrolled = currentScrollY > threshold;
 
     if (shouldBeScrolled !== scrolled) {
-      scrollTimeoutRef.current = setTimeout(() => {
+      scrollTimeoutRef.current = window.setTimeout(() => {
         setScrolled(shouldBeScrolled);
       }, 50);
     }
@@ -44,8 +42,7 @@ export default function LandingNavbar() {
 
   useEffect(() => {
     let ticking = false;
-
-    const throttledHandleScroll = () => {
+    const throttled = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
           handleScroll();
@@ -54,20 +51,22 @@ export default function LandingNavbar() {
         ticking = true;
       }
     };
-
-    window.addEventListener("scroll", throttledHandleScroll, { passive: true });
-
+    window.addEventListener("scroll", throttled, { passive: true });
     return () => {
-      window.removeEventListener("scroll", throttledHandleScroll);
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
+      window.removeEventListener("scroll", throttled);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
     };
   }, [handleScroll]);
 
+  // Lock body scroll when mobile menu open
+  useEffect(() => {
+    document.body.classList.toggle("overflow-hidden", menuOpen);
+    return () => document.body.classList.remove("overflow-hidden");
+  }, [menuOpen]);
+
   return (
     <>
-      {/* Main Header Section */}
+      {/* Main Header Section (desktop initial) */}
       <header
         className={`fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 will-change-transform transition-all duration-700 ease-in-out ${
           scrolled
@@ -78,7 +77,6 @@ export default function LandingNavbar() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between py-4">
             <div className="flex-1 hidden lg:block" />
-
             <div className="flex-1 flex justify-center">
               <Image
                 src="/logo.png"
@@ -89,7 +87,6 @@ export default function LandingNavbar() {
                 className="object-contain h-18 w-auto"
               />
             </div>
-
             <div className="flex-1 flex items-center justify-end space-x-4">
               <div className="hidden lg:flex items-center space-x-3">
                 <Link
@@ -105,7 +102,6 @@ export default function LandingNavbar() {
                   Patient Portal
                 </Link>
               </div>
-
               <button
                 className="lg:hidden p-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
                 onClick={() => setMenuOpen(true)}
@@ -118,7 +114,7 @@ export default function LandingNavbar() {
         </div>
       </header>
 
-      {/* Navigation Section - Moves to Top When Header Slides Away */}
+      {/* Navigation Bar (desktop persistent) */}
       <nav
         className={`fixed left-0 w-full z-40 border-b border-gray-200 will-change-transform transition-all duration-700 ease-in-out ${
           scrolled
@@ -182,87 +178,68 @@ export default function LandingNavbar() {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Full-Screen Popup Menu */}
       {menuOpen && (
-        <div
-          className="fixed inset-0 z-60 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
-          onClick={() => setMenuOpen(false)}
-        />
+        <div className="fixed inset-0 z-[70]">
+          <div
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={() => setMenuOpen(false)}
+          />
+            <div className="absolute inset-0 bg-white flex flex-col p-6 pt-5 overflow-y-auto">
+              <div className="flex items-center justify-between mb-6">
+                <Image
+                  src="/logo.png"
+                  alt="Vital Physio+ Logo"
+                  width={180}
+                  height={56}
+                  className="h-10 w-auto object-contain"
+                />
+                <button
+                  onClick={() => setMenuOpen(false)}
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  aria-label="Close menu"
+                >
+                  <X size={26} />
+                </button>
+              </div>
+
+              <nav className="flex flex-col gap-1 mb-8">
+                {navLinks.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="w-full text-left px-4 py-3 rounded-lg font-medium text-gray-700 bg-gray-50 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </nav>
+
+              <div className="mt-auto flex flex-col gap-3">
+                <Link
+                  href="/#book"
+                  onClick={() => setMenuOpen(false)}
+                  className="w-full bg-blue-900 text-white font-semibold py-3 rounded-lg text-center hover:bg-blue-800 transition-colors"
+                >
+                  Book Now
+                </Link>
+                <Link
+                  href="/portal"
+                  onClick={() => setMenuOpen(false)}
+                  className="w-full bg-teal-600 text-white font-semibold py-3 rounded-lg text-center hover:bg-teal-700 transition-colors"
+                >
+                  Patient Portal
+                </Link>
+              </div>
+            </div>
+        </div>
       )}
 
-      {/* Mobile Menu Sidebar */}
-      <aside
-        className={`fixed top-0 right-0 z-60 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 ease-out ${
-          menuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="p-6 h-full flex flex-col">
-          <div className="flex justify-end mb-6">
-            <button
-              onClick={() => setMenuOpen(false)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              aria-label="Close menu"
-            >
-              <X size={24} />
-            </button>
-          </div>
-
-          <div className="flex justify-center mb-8">
-            <Image
-              src="/logo.png"
-              alt="Vital Physio+ Logo"
-              width={200}
-              height={60}
-              className="object-contain h-12 w-auto"
-            />
-          </div>
-
-          <nav className="flex flex-col space-y-2 mb-8 flex-1">
-            <Link
-              href="/"
-              onClick={() => setMenuOpen(false)}
-              className="font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-orange-500 text-transparent bg-clip-text text-lg py-2"
-            >
-              VitalPhysio+
-            </Link>
-
-            {navLinks.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-gray-700 hover:text-teal-600 font-medium py-3 px-2 border-b border-gray-100 transition-colors duration-200 hover:bg-gray-50 rounded-lg"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="space-y-3 pt-4 border-t border-gray-200">
-            <Link
-              href="/#book"
-              onClick={() => setMenuOpen(false)}
-              className="block w-full bg-blue-900 text-white font-semibold py-3 rounded-lg text-center hover:bg-blue-800 transition-colors duration-200"
-            >
-              Book Now
-            </Link>
-            <Link
-              href="/portal"
-              onClick={() => setMenuOpen(false)}
-              className="block w-full bg-teal-600 text-white font-semibold py-3 rounded-lg text-center hover:bg-teal-700 transition-colors duration-200"
-            >
-              Patient Portal
-            </Link>
-          </div>
-        </div>
-      </aside>
-
-      {/* Content Spacer */}
+      {/* Spacer (retain existing layout offset) */}
       <div
         className="w-full transition-all duration-700 ease-in-out"
-        style={{
-          height: scrolled ? "64px" : "144px",
-        }}
+        style={{ height: scrolled ? "64px" : "144px" }}
       />
     </>
   );
