@@ -66,7 +66,7 @@ const modalitiesData = [
   {
     id: 2,
     title: "rPMS (Repetitive Magnetic Stimulation)",
-    image: "/SalusTalentPr.png",
+    image: "/rPMS.jpg",
     placeholderImage: "https://via.placeholder.com/600x400/ff69b4/ffffff?text=rPMS+Device",
     borderColor: "border-pink-400",
     shadowColor: "shadow-pink-200",
@@ -107,7 +107,7 @@ const modalitiesData = [
   {
     id: 5,
     title: "UI Chair (HIFEM Technology)",
-    image: "/UIChair.png",
+    image: "/ui-chair.jpg",
     placeholderImage: "https://via.placeholder.com/600x400/6495ed/ffffff?text=UI+Chair",
     borderColor: "border-indigo-400",
     shadowColor: "shadow-indigo-200",
@@ -124,7 +124,7 @@ const modalitiesData = [
   {
     id: 6,
     title: "Spinal Decompression",
-    image: "/Spinal-Decompression.png",
+    image: "/Spinal-Decompression.jpg",
     placeholderImage: "https://via.placeholder.com/400x400/4169e1/ffffff?text=VitalPhysio",
     borderColor: "border-blue-400",
     shadowColor: "shadow-blue-200",
