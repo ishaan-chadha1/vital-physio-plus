@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Zap,
@@ -11,7 +11,9 @@ import {
   Bone,
   ChevronRight,
   X,
+  Sparkles,
 } from "lucide-react";
+import Image from "next/image";
 import Footer from "@/components/footer";
 import LandingNavbar from "@/components/landing-navbar";
 import TechnologyTable from "@/components/technology-table";
@@ -44,13 +46,16 @@ const tableData = [
     benefit: "Data-driven progress, precise resistance",
   },
 ];
+
 const modalitiesData = [
   {
     id: 1,
     title: "High-Intensity Laser",
-    icon: Zap,
-    borderColor: "border-red-500",
-    bg: "bg-gradient-to-br from-[#fceabb] via-[#f8b500] to-[#f76d1a]",
+    image: "/Laser.png",
+    placeholderImage: "https://via.placeholder.com/600x400/ffa500/ffffff?text=High-Intensity+Laser",
+    borderColor: "border-orange-400",
+    shadowColor: "shadow-orange-200",
+    accentColor: "from-orange-400 to-yellow-400",
     description:
       "This advanced laser penetrates deep into tissues to stimulate cellular repair at the source. It's a powerful, non-invasive tool for rapid pain relief and reduced inflammation.",
     treats:
@@ -61,9 +66,11 @@ const modalitiesData = [
   {
     id: 2,
     title: "rPMS (Repetitive Magnetic Stimulation)",
-    icon: Atom,
-    borderColor: "border-orange-500",
-    bg: "bg-gradient-to-br from-[#fee2b8] via-[#faad63] to-[#d16ba5]",
+    image: "/SalusTalentPr.png",
+    placeholderImage: "https://via.placeholder.com/600x400/ff69b4/ffffff?text=rPMS+Device",
+    borderColor: "border-pink-400",
+    shadowColor: "shadow-pink-200",
+    accentColor: "from-pink-400 to-rose-400",
     description:
       "With deep magnetic pulses that penetrate up to 10cm, rPMS targets nerves and muscles directly. It's excellent for managing chronic pain, reducing spasticity, and promoting neural regeneration.",
     treats: "Chronic pain, spasticity, nerve damage.",
@@ -73,9 +80,11 @@ const modalitiesData = [
   {
     id: 3,
     title: "AI-Powered Smart Gym (Aeroleap Pro)",
-    icon: Dumbbell,
-    borderColor: "border-purple-500",
-    bg: "bg-gradient-to-br from-[#e0c3fc] via-[#8ec5fc] to-[#89f7fe]",
+    image: "/AroleapPro.png",
+    placeholderImage: "https://via.placeholder.com/600x400/9370db/ffffff?text=Smart+Gym",
+    borderColor: "border-purple-400",
+    shadowColor: "shadow-purple-200",
+    accentColor: "from-purple-400 to-blue-400",
     description:
       "Our smart gym uses AI-controlled resistance for precise strength training. With over 150 exercises and real-time feedback, it's ideal for post-op rehab and athletic conditioning, ensuring every movement is perfect.",
     treats: "Post-op weakness, athletic conditioning needs.",
@@ -84,9 +93,11 @@ const modalitiesData = [
   {
     id: 4,
     title: "Shockwave Therapy",
-    icon: Wind,
-    borderColor: "border-green-500",
-    bg: "bg-gradient-to-br from-[#d9f99d] via-[#bef264] to-[#34d399]",
+    image: "/HIL.png",
+    placeholderImage: "https://via.placeholder.com/600x400/90ee90/ffffff?text=Shockwave+Therapy",
+    borderColor: "border-green-400",
+    shadowColor: "shadow-green-200",
+    accentColor: "from-green-400 to-emerald-400",
     description:
       "Used for chronic tendon issues, this therapy delivers high-energy acoustic waves to break down calcifications, stimulate blood flow, and regenerate damaged tissue.",
     treats: "Plantar fasciitis, tennis elbow, shoulder tendinopathies.",
@@ -96,9 +107,11 @@ const modalitiesData = [
   {
     id: 5,
     title: "UI Chair (HIFEM Technology)",
-    icon: ShieldCheck,
-    borderColor: "border-indigo-500",
-    bg: "bg-gradient-to-br from-[#dbeafe] via-[#818cf8] to-[#6366f1]",
+    image: "/UIChair.png",
+    placeholderImage: "https://via.placeholder.com/600x400/6495ed/ffffff?text=UI+Chair",
+    borderColor: "border-indigo-400",
+    shadowColor: "shadow-indigo-200",
+    accentColor: "from-indigo-400 to-purple-400",
     description:
       "A revolutionary, non-invasive pelvic floor trainer. A single session induces over 12,000 deep contractions, effectively restoring bladder control, improving sexual function, and strengthening core musculature—all while you remain fully clothed.",
     treats: "Urinary incontinence, pelvic pain, post-natal weakness.",
@@ -111,9 +124,11 @@ const modalitiesData = [
   {
     id: 6,
     title: "Spinal Decompression",
-    icon: Bone,
-    borderColor: "border-blue-500",
-    bg: "bg-gradient-to-br from-[#dbeafe] via-[#60a5fa] to-[#3b82f6]",
+    image: "/Spinal-Decompression.png",
+    placeholderImage: "https://via.placeholder.com/400x400/4169e1/ffffff?text=VitalPhysio",
+    borderColor: "border-blue-400",
+    shadowColor: "shadow-blue-200",
+    accentColor: "from-blue-400 to-sky-400",
     description:
       "Gentle, non-surgical therapy to relieve back and neck pain by reducing pressure on the spinal discs and nerves.",
     treats: "Herniated discs, Sciatica.",
@@ -125,6 +140,11 @@ const modalitiesData = [
 
 export default function TechnologyPage() {
   const [modalData, setModalData] = useState(null);
+  const [imageErrors, setImageErrors] = useState({});
+
+  const handleImageError = (modalityId) => {
+    setImageErrors(prev => ({ ...prev, [modalityId]: true }));
+  };
 
   return (
     <>
@@ -134,9 +154,8 @@ export default function TechnologyPage() {
           font-family: "Lato", sans-serif;
         }
         body {
-          background-color: #f0f9ff; /* This is Tailwind's "sky-50" color */
+          background-color: #f0f9ff;
         }
-        /* --- THIS CLASS WAS MISSING --- */
         .gradient-pdf {
           background: linear-gradient(
             94deg,
@@ -144,19 +163,22 @@ export default function TechnologyPage() {
             var(--vp-teal) 100%
           );
         }
-        /* ----------------------------- */
         :root {
-          --vp-blue: #004f8c; /* R-0 G-79  B-140 */
-          --vp-teal: #008094; /* R-0 G-128 B-148 */
-          --vp-orange: #ec691f; /* R-236 G-105 B-31  */
+          --vp-blue: #004f8c;
+          --vp-teal: #008094;
+          --vp-orange: #ec691f;
+        }
+
+        .floating-shadow {
+          filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.15));
         }
 
         .teal-table-card {
-          background-color: #0f766e; /* Solid dark teal background */
+          background-color: #0f766e;
           box-shadow:
             0 10px 25px -5px rgba(0, 0, 0, 0.1),
             0 10px 10px -5px rgba(0, 0, 0, 0.04);
-          border-radius: 0.5rem; /* 8px rounded corners */
+          border-radius: 0.5rem;
           overflow: hidden;
         }
         .teal-table-head {
@@ -165,14 +187,14 @@ export default function TechnologyPage() {
         }
         .teal-table-title {
           color: #ffffff;
-          font-size: 1.5rem; /* 24px */
+          font-size: 1.5rem;
           font-weight: 700;
         }
         .teal-table th {
-          background: rgba(255, 255, 255, 0.1); /* Lighter header background */
+          background: rgba(255, 255, 255, 0.1);
           color: #ffffff;
           font-weight: 600;
-          font-size: 0.875rem; /* 14px */
+          font-size: 0.875rem;
           padding: 1rem 1.5rem;
           letter-spacing: 0.025em;
         }
@@ -189,18 +211,20 @@ export default function TechnologyPage() {
           transition: background 0.2s;
         }
         .teal-table tbody tr:last-child {
-          border-bottom: none; /* No border on the last row */
+          border-bottom: none;
         }
         .teal-table tbody tr:hover td {
           background: #ffffff !important;
-          color: #134e4a !important; /* Darkest teal for text on hover */
+          color: #134e4a !important;
         }
         .teal-table tbody tr:hover {
           background: #ffffff !important;
         }
       `}</style>
+      
       <LandingNavbar />
-      {/* HERO BANNER (THINNER BANNER) */}
+      
+      {/* HERO BANNER */}
       <section className="gradient-pdf relative w-full max-h-[150px] py-12 md:py-16 flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 opacity-20 pointer-events-none"
@@ -263,103 +287,135 @@ export default function TechnologyPage() {
         </div>
       </section>
 
-      {/* MODALITIES SECTION - Alternating layout */}
+      {/* MODALITIES SECTION */}
       <section className="bg-white py-8 md:py-14">
-        <div className="max-w-5xl mx-auto flex flex-col gap-14 md:gap-20 px-4">
+        <div className="max-w-7xl mx-auto flex flex-col gap-16 md:gap-20 px-4">
           {modalitiesData.map((modality, idx) => (
-            <div
+            <motion.div
               key={modality.id}
-              className={`flex flex-col md:flex-row items-stretch ${
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              className={`flex flex-col md:flex-row items-center ${
                 idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              } md:gap-10 gap-6 group`}
+              } md:gap-12 gap-8`}
             >
-              {/* Image Card */}
-              <motion.div
-                whileHover={{
-                  y: -4,
-                  scale: 1.015,
-                  boxShadow: "0 8px 24px #0001",
-                }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onClick={() => setModalData(modality)}
-                className={`w-full md:w-1/2 rounded-2xl shadow-lg border-2 ${
-                  modality.borderColor
-                } cursor-pointer bg-white hover:shadow-xl transition group`}
-              >
-                <div
-                  className={`flex flex-col justify-center min-h-[260px] ${modality.bg}`}
+              {/* Image - No background, just the image with shadow */}
+              <div className="w-full md:w-1/2 flex justify-center">
+                <motion.div
+                  whileHover={{ y: -8, scale: 1.03 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                  onClick={() => setModalData(modality)}
+                  className="relative cursor-pointer group"
                 >
-                  <div className="flex flex-col items-center justify-center py-9">
-                    <modality.icon className="w-14 h-14 text-white drop-shadow-md" />
-                  </div>
-                </div>
-              </motion.div>
+                  {/* Gradient accent behind image on hover */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${modality.accentColor} opacity-0 group-hover:opacity-20 blur-3xl transition-opacity duration-500 scale-110`} />
+                  
+                  {/* Main image with floating shadow */}
+                  <img
+                    src={imageErrors[modality.id] ? modality.placeholderImage : modality.image}
+                    alt={modality.title}
+                    className={`relative z-10 w-auto max-w-full h-auto max-h-[280px] md:max-h-[350px] object-contain floating-shadow rounded-lg transition-transform duration-300`}
+                    onError={() => handleImageError(modality.id)}
+                  />
+                  
+                  {/* Subtle glow effect on hover */}
+                  <div className="absolute -inset-4 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                </motion.div>
+              </div>
 
               {/* Content */}
               <div className="flex flex-col justify-center w-full md:w-1/2">
-                <div className="h-full flex flex-col justify-center gap-4 px-2 py-1">
-                  <h3 className="text-2xl font-bold text-blue-900">
-                    {modality.title}
-                  </h3>
-                  <p className="text-gray-800 text-base font-medium">
+                <div className="space-y-5">
+                  <div>
+                    <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+                      {modality.title}
+                    </h3>
+                    <div className={`w-20 h-1 bg-gradient-to-r ${modality.accentColor} rounded-full`} />
+                  </div>
+                  
+                  <p className="text-gray-700 text-base md:text-lg leading-relaxed">
                     {modality.description}
                   </p>
-                  <div className="space-y-1 mt-2">
-                    <p>
-                      <span className="font-semibold text-blue-700">
-                        Treats:{" "}
+                  
+                  <div className="space-y-4 pt-2">
+                    <motion.div 
+                      className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-4 border border-gray-200"
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 400 }}
+                    >
+                      <span className="font-bold text-gray-900 text-sm uppercase tracking-wider block mb-2">
+                        Treats
                       </span>
-                      <span className="text-gray-700">{modality.treats}</span>
-                    </p>
-                    <p>
-                      <span className="font-semibold text-blue-700">
-                        Benefit:{" "}
+                      <span className="text-gray-700 text-base">{modality.treats}</span>
+                    </motion.div>
+                    
+                    <motion.div 
+                      className={`bg-gradient-to-r ${modality.accentColor} bg-opacity-10 rounded-xl p-4 border ${modality.borderColor}`}
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 400 }}
+                    >
+                      <span className="font-bold text-gray-900 text-sm uppercase tracking-wider block mb-2">
+                        Key Benefit
                       </span>
-                      <span className="text-gray-700">{modality.benefit}</span>
-                    </p>
+                      <span className="text-gray-700 text-base">{modality.benefit}</span>
+                    </motion.div>
+                    
                     {modality.link && (
-                      <a
+                      <motion.a
                         href={modality.link.href}
-                        className="inline-block mt-3 text-blue-700 font-medium hover:underline transition"
+                        className="inline-flex items-center mt-4 text-blue-600 font-semibold hover:text-blue-800 transition-colors group"
+                        whileHover={{ x: 6 }}
                       >
                         {modality.link.text}
-                      </a>
+                        <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </motion.a>
                     )}
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* TABLE CARD */}
       <TechnologyTable />
+      
       {/* CTA SECTION */}
-      <section className="w-full bg-blue-50 flex flex-col items-center justify-center py-12 md:py-16">
-        <div className="max-w-xl w-full flex flex-col items-center px-4 text-center">
-          <div className="mb-6">
-            <h4 className="text-lg md:text-xl font-semibold text-blue-900 mb-3">
+      <section className="w-full bg-gradient-to-br from-blue-50 to-sky-50 flex flex-col items-center justify-center py-16 md:py-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-xl w-full flex flex-col items-center px-4 text-center"
+        >
+          <div className="mb-8">
+            <h4 className="text-xl md:text-2xl font-bold text-blue-900 mb-3">
               Ready to benefit from our advanced technology and expert care?
             </h4>
           </div>
-          <a
+          <motion.a
             href="#book"
-            className="inline-flex items-center bg-gradient-to-r from-blue-600 to-sky-400 hover:from-blue-700 hover:to-blue-500 text-white font-bold py-3 px-10 rounded-xl shadow-lg text-lg transition"
+            className="inline-flex items-center bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold py-4 px-8 md:px-12 rounded-full shadow-xl text-base md:text-lg transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
           >
-            Schedule your personalized consultation at VitalPhysio⁺
+            Schedule your personalized consultation
             <ChevronRight className="ml-2 w-5 h-5" />
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
       </section>
 
       {/* FOOTER */}
       <Footer />
 
-      {/* MODAL for cards */}
+      {/* MODAL */}
       <AnimatePresence>
         {modalData && (
-          <ModalityModal data={modalData} onClose={() => setModalData(null)} />
+          <ModalityModal data={modalData} onClose={() => setModalData(null)} imageErrors={imageErrors} />
         )}
       </AnimatePresence>
     </>
@@ -367,58 +423,69 @@ export default function TechnologyPage() {
 }
 
 // --- MODAL COMPONENT ---
-
-function ModalityModal({ data, onClose }) {
+function ModalityModal({ data, onClose, imageErrors }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4"
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.96, opacity: 0.85 }}
+        initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.96, opacity: 0.85 }}
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto no-scrollbar"
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 300 }}
+        className="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={`p-7 border-t-8 ${data.borderColor}`}>
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-14 h-14 flex items-center justify-center bg-blue-50 rounded-lg">
-              <data.icon className="w-8 h-8 text-blue-800" />
-            </div>
-            <h2 className="text-2xl font-bold text-blue-900">{data.title}</h2>
-          </div>
-          <div className="space-y-5">
-            <div>
-              <p className="text-gray-700">{data.description}</p>
-            </div>
-            <div>
-              <span className="font-semibold text-blue-700">Treats: </span>
-              <span className="text-gray-700">{data.treats}</span>
-            </div>
-            <div>
-              <span className="font-semibold text-blue-700">Benefit: </span>
-              <span className="text-gray-700">{data.benefit}</span>
-            </div>
-            {data.link && (
-              <a
-                href={data.link.href}
-                className="block mt-4 text-blue-600 font-medium hover:underline"
-              >
-                {data.link.text}
-              </a>
-            )}
+        <div className="relative p-8">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-all duration-200"
+          >
+            <X size={20} />
+          </button>
+          
+          {/* Modal Header with Image */}
+          <div className="flex flex-col items-center mb-6">
+            <img
+              src={imageErrors?.[data.id] ? data.placeholderImage : data.image}
+              alt={data.title}
+              className="w-auto max-w-full h-auto max-h-48 object-contain mb-4 floating-shadow"
+            />
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">
+              {data.title}
+            </h2>
+            <div className={`w-20 h-1 bg-gradient-to-r ${data.accentColor} rounded-full mt-3`} />
           </div>
         </div>
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-700"
-        >
-          <X size={24} />
-        </button>
+        
+        <div className="px-8 pb-8 space-y-4">
+          <p className="text-gray-700 leading-relaxed text-center">{data.description}</p>
+          
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-200">
+            <span className="font-bold text-blue-900 block mb-1">Treats:</span>
+            <span className="text-gray-700">{data.treats}</span>
+          </div>
+          
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-5 border border-green-200">
+            <span className="font-bold text-green-900 block mb-1">Key Benefit:</span>
+            <span className="text-gray-700">{data.benefit}</span>
+          </div>
+          
+          {data.link && (
+            <motion.a
+              href={data.link.href}
+              className="inline-flex items-center mt-4 text-blue-600 font-semibold hover:text-blue-800 group"
+              whileHover={{ x: 4 }}
+            >
+              {data.link.text}
+              <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </motion.a>
+          )}
+        </div>
       </motion.div>
     </motion.div>
   );
