@@ -174,13 +174,16 @@ const ContactSection = () => {
             viewport={{ once: true }}
             className="bg-gray-100 rounded-2xl overflow-hidden"
           >
-            <div className="w-full h-full min-h-[400px] flex items-center justify-center">
-              <div className="text-center p-8">
-                <MapPin className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 text-lg font-medium">Google Maps</p>
-                <p className="text-gray-400 text-sm mt-2">Interactive map will be embedded here</p>
-              </div>
-            </div>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d972.1943809465693!2d77.66542842290029!3d12.92201575241767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae13b33756fb95%3A0xaae9a01bf274f3f1!2sVitalPhysio%2B!5e0!3m2!1sen!2sin!4v1756645280286!5m2!1sen!2sin"
+              width="600"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="VitalPhysio+ Clinic Location"
+            ></iframe>
           </motion.div>
         </div>
       </div>
