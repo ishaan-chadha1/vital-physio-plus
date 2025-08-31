@@ -7,8 +7,35 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Vital Physio +",
-  description: "Welcome to Vital Physio +, an AI-powered physiotherapy clinic.",
+  title: "VitalPhysio+ | Advanced Physiotherapy & Rehabilitation",
+  description: "VitalPhysio+ offers advanced physiotherapy, rehabilitation, and wellness services. Book your appointment today!",
+  metadataBase: new URL('https://yourdomain.com'),
+  openGraph: {
+    title: "VitalPhysio+ | Advanced Physiotherapy & Rehabilitation",
+    description: "VitalPhysio+ offers advanced physiotherapy, rehabilitation, and wellness services. Book your appointment today!",
+    url: "https://yourdomain.com/",
+    siteName: "VitalPhysio+",
+    images: [
+      {
+        url: "/logo.png",
+        width: 800,
+        height: 600,
+        alt: "VitalPhysio+ Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "VitalPhysio+ | Advanced Physiotherapy & Rehabilitation",
+    description: "VitalPhysio+ offers advanced physiotherapy, rehabilitation, and wellness services. Book your appointment today!",
+    images: ["/logo.png"],
+    creator: "@yourtwitterhandle"
+  },
+  alternates: {
+    canonical: "https://yourdomain.com/"
+  },
 };
 
 export default function RootLayout({
