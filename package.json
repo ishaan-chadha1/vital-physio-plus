@@ -6,26 +6,14 @@
     "start": "next start"
   },
   "dependencies": {
-    "@11labs/react": "^0.0.7",
-    "@calcom/embed-react": "^1.5.2",
-    "@fastify/formbody": "^8.0.2",
-    "@fastify/websocket": "^11.1.0",
-    "@google/generative-ai": "^0.22.0",
     "@headlessui/react": "^2.2.1",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-checkbox": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.1",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
-    "@rjsf/core": "^5.24.8",
-    "@rjsf/validator-ajv8": "^5.24.8",
-    "@supabase/ssr": "latest",
-    "@supabase/supabase-js": "latest",
-    "axios": "^1.8.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "dotenv": "^16.5.0",
-    "fastify": "^5.3.3",
     "framer-motion": "^12.6.3",
     "heroicons": "^2.2.0",
     "lucide-react": "^0.468.0",
@@ -33,9 +21,7 @@
     "next-themes": "^0.4.3",
     "prettier": "^3.3.3",
     "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "vercel": "^42.3.0",
-    "ws": "^8.18.2"
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",

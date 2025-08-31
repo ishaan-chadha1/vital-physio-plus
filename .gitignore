@@ -10,9 +10,6 @@
 !.yarn/releases
 !.yarn/versions
 
-conversational-ai-twilio/node_modules
-exotel-elevenlabs-voicebot/node_modules
-
 # testing
 /coverage
 
