@@ -142,9 +142,9 @@ return (
                 <Image
                   src="/logo.png"
                   alt="VitalPhysio⁺ Logo"
-                  width={100}
-                  height={100}
-                  className="object-contain h-4 w-auto transition-opacity duration-200 group-hover:opacity-90"
+                  width={200}
+                  height={200}
+                  className="object-contain h-8 w-auto transition-opacity duration-200 group-hover:opacity-90"
                 />
                 <span className="absolute left-4 right-4 bottom-0 h-0.5 bg-gradient-to-r from-blue-600 to-teal-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
               </Link>
