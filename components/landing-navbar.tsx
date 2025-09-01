@@ -140,7 +140,7 @@ return (
                 className="relative px-4 py-2 group whitespace-nowrap mr-8 flex items-center"
               >
                 <Image
-                  src="/VitalPhysio⁺.png"
+                  src="/VitalPhysio+.png"
                   alt="VitalPhysio⁺ Logo"
                   width={100}
                   height={100}
