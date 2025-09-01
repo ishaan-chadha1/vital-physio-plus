@@ -15,8 +15,6 @@ export function BookingButtonInline() {
       >
         Contact Us to Book
       </button>
-    </div>
-  );
-}
+      </div>
   );
 }
