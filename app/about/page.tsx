@@ -225,7 +225,7 @@ const WhyChooseUs = () => {
             >
               <img
                 src="https://placehold.co/600x700/003366/FFFFFF?text=VitalPhysio%2B+Clinic"
-                alt="Modern and welcoming interior of VitalPhysio+ clinic"
+                alt="Modern and welcoming interior of VitalPhysio⁺ clinic"
                 className="w-full h-full object-cover"
                 onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                   const target = e.target as HTMLImageElement;

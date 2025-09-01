@@ -7,20 +7,20 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "VitalPhysio+ | Advanced Physiotherapy & Rehabilitation",
-  description: "VitalPhysio+ offers advanced physiotherapy, rehabilitation, and wellness services. Book your appointment today!",
+  title: "VitalPhysio⁺ | Advanced Physiotherapy & Rehabilitation",
+  description: "VitalPhysio⁺ offers advanced physiotherapy, rehabilitation, and wellness services. Book your appointment today!",
   metadataBase: new URL('https://yourdomain.com'),
   openGraph: {
-    title: "VitalPhysio+ | Advanced Physiotherapy & Rehabilitation",
-    description: "VitalPhysio+ offers advanced physiotherapy, rehabilitation, and wellness services. Book your appointment today!",
+    title: "VitalPhysio⁺ | Advanced Physiotherapy & Rehabilitation",
+    description: "VitalPhysio⁺ offers advanced physiotherapy, rehabilitation, and wellness services. Book your appointment today!",
     url: "https://yourdomain.com/",
-    siteName: "VitalPhysio+",
+    siteName: "VitalPhysio⁺",
     images: [
       {
         url: "/logo.png",
         width: 800,
         height: 600,
-        alt: "VitalPhysio+ Logo",
+        alt: "VitalPhysio⁺ Logo",
       },
     ],
     locale: "en_US",
@@ -28,8 +28,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "VitalPhysio+ | Advanced Physiotherapy & Rehabilitation",
-    description: "VitalPhysio+ offers advanced physiotherapy, rehabilitation, and wellness services. Book your appointment today!",
+    title: "VitalPhysio⁺ | Advanced Physiotherapy & Rehabilitation",
+    description: "VitalPhysio⁺ offers advanced physiotherapy, rehabilitation, and wellness services. Book your appointment today!",
     images: ["/logo.png"],
     creator: "@yourtwitterhandle"
   },

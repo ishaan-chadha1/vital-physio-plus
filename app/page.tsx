@@ -182,7 +182,7 @@ const ContactSection = () => {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="VitalPhysio+ Clinic Location"
+              title="VitalPhysio⁺ Clinic Location"
             ></iframe>
           </motion.div>
         </div>

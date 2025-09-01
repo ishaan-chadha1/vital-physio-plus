@@ -140,8 +140,8 @@ return (
                 className="relative px-4 py-2 group whitespace-nowrap mr-8 flex items-center"
               >
                 <Image
-                  src="/VitalPhysio+.png"
-                  alt="VitalPhysio+ Logo"
+                  src="/VitalPhysio⁺.png"
+                  alt="VitalPhysio⁺ Logo"
                   width={100}
                   height={100}
                   className="object-contain h-4 w-auto transition-opacity duration-200 group-hover:opacity-90"

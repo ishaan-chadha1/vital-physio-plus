@@ -33,7 +33,7 @@ export default function TeamPage() {
       image: "/api/placeholder/300/400",
       experience: "15+ Years",
       qualifications: ["BPT", "MPT (Orthopedics)", "PhD in Sports Medicine"],
-      bio: "Dr. Priya founded VitalPhysio+ with a vision to revolutionize rehabilitation care in India. Her expertise in advanced orthopedic techniques has helped thousands of patients regain their mobility and confidence.",
+      bio: "Dr. Priya founded VitalPhysio⁺ with a vision to revolutionize rehabilitation care in India. Her expertise in advanced orthopedic techniques has helped thousands of patients regain their mobility and confidence.",
       achievements: [
         "Certified Manual Therapy Specialist",
         "Former Head Physiotherapist at AIIMS",
