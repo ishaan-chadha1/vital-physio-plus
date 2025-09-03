@@ -1,5 +1,5 @@
 'use client';
-
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import LandingNavbar from '@/components/landing-navbar';
 import Footer from '@/components/footer';
@@ -55,88 +55,50 @@ const FaqItem = ({ question, children }) => {
 };
 
 export default function App() {
-  useEffect(() => {
-    const faqJsonLd = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Why choose VitalPhysio?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "We are Bengaluru's most trusted rehab center because we deliver personalized, evidence-based therapy. Our experts follow international standards and use the latest technology to ensure safe, effective outcomes for your recovery."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What does the '+' in VitalPhysio mean?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The '+' signifies our commitment to go above and beyond standard care. It means every treatment plan includes added value like advanced equipment, continuous progress monitoring, and AI-powered concierge support, all at no hidden cost."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How does the AI Concierge (C³) work?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "C³ is your integrated AI care coordinator, available 24/7 in our Patient Portal. It helps you schedule appointments, sends reminders for your home exercises, and answers questions based on your personal rehabilitation plan."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do I book an appointment?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "You can easily book by clicking the 'Book Your Consultation' button on our site, which takes you to our contact page, or by calling our clinic directly. Soon, you'll also be able to ask AI assistants like ChatGPT to schedule for you."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Do you accept health insurance?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "We are currently not empanelled by any insurance company. However, we would be able to help you with all the required documentation that you may require for seeking a reimbursement of your treatment charges after completion of your therapy at VitalPhysio."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What should I bring to my first session?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Please complete our online medical history form via the Patient Portal beforehand. On the day of your visit, bring any relevant reports (like X-rays or doctor's notes) and wear comfortable, loose-fitting clothing."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Do you offer home or online therapy?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, our Home & Tele-Rehabilitation program provides personalized care in the comfort of your home. We use virtual sessions and digital exercise plans to ensure you receive expert guidance without needing to travel."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can physiotherapy help me avoid surgery?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "In many cases, yes. For musculoskeletal conditions like back pain or joint injuries, targeted physiotherapy can significantly improve function and reduce pain, often delaying or completely eliminating the need for surgery."
-          }
-        }
-      ]
-    };
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.innerHTML = JSON.stringify(faqJsonLd);
-    document.head.appendChild(script);
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, []);
-
   return (
     <>
+      <Head>
+        <title>Frequently Asked Questions | VitalPhysio⁺</title>
+        <meta
+          name="description"
+          content="Find answers to common questions about our physiotherapy services, booking process, and more at VitalPhysio⁺."
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "How do I book an appointment?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "You can book an appointment by calling us or using our online booking system."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Do you accept health insurance?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "We provide documentation for insurance reimbursement."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "What conditions do you treat?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "We treat a wide range of conditions, including back pain, sports injuries, neurological disorders, and more."
+                  }
+                }
+              ]
+            }),
+          }}
+        />
+      </Head>
       <style jsx global>{`
         :root {
           --vp-blue: #004f8c;

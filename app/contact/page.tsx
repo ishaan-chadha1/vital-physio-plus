@@ -1,5 +1,5 @@
 "use client";
-
+import Head from 'next/head';
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
@@ -22,7 +22,40 @@ export default function ContactPage() {
   return (
     
     <>
-    
+      <Head>
+        <title>Contact Us | VitalPhysio⁺</title>
+        <meta
+          name="description"
+          content="Get in touch with VitalPhysio⁺ for expert physiotherapy services in Bengaluru. Call us or visit our clinic today!"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "name": "VitalPhysio⁺",
+              "image": "https://vitalphysio.plus/opengraph-image.png",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "2nd Floor, P V Complex, Opp. Iblur Lake Park",
+                "addressLocality": "Bellandur",
+                "addressRegion": "Karnataka",
+                "postalCode": "560103",
+                "addressCountry": "IN"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "12.921956",
+                "longitude": "77.665225"
+              },
+              "url": "https://vitalphysio.plus/contact",
+              "telephone": "+91 80473 59900",
+              "openingHours": "Mo-Sa 09:00-18:00"
+            }),
+          }}
+        />
+      </Head>
       <style jsx global>{`
       @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap');
       :root {

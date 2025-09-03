@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Head from 'next/head';
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Zap,
@@ -148,6 +149,19 @@ export default function TechnologyPage() {
 
   return (
     <>
+     <Head>
+        <title>Advanced Technology | VitalPhysio⁺</title>
+        <meta
+          name="description"
+          content="Discover the cutting-edge technology used at VitalPhysio⁺ to provide advanced physiotherapy and rehabilitation services in Bengaluru."
+        />
+        <meta
+          name="keywords"
+          content="physiotherapy technology, advanced rehabilitation, cutting-edge physiotherapy, Bengaluru physiotherapy technology"
+        />
+        <meta name="author" content="VitalPhysio⁺" />
+        <meta name="robots" content="index, follow" />
+      </Head>
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap");
         .font-lato {

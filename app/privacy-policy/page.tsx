@@ -1,10 +1,18 @@
 "use client";
 
+import Head from "next/head";
 import LandingNavbar from "@/components/landing-navbar";
 
 export default function PrivacyPolicyPage() {
   return (
     <>
+      <Head>
+        <title>Privacy Policy | VitalPhysio⁺</title>
+        <meta
+          name="description"
+          content="Read our privacy policy to understand how VitalPhysio⁺ handles your personal data and ensures your privacy."
+        />
+      </Head>
       <LandingNavbar />
       <section className="bg-white py-20 px-6 text-blue-900 animate-fade-in-up">
         <div className="max-w-4xl mx-auto space-y-10">

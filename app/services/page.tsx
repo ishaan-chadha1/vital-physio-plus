@@ -33,6 +33,7 @@ import LandingNavbar from "@/components/landing-navbar";
 import Footer from "@/components/footer";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import CTA from "@/components/CTA";
+import Head from "next/head";
 
 // --- DATA ---
 
@@ -271,6 +272,13 @@ export default function ServicesPage() {
 
   return (
     <>
+      <Head>
+        <title>Our Services | VitalPhysio⁺</title>
+        <meta
+          name="description"
+          content="Explore the wide range of physiotherapy and rehabilitation services offered at VitalPhysio⁺ in Bengaluru."
+        />
+      </Head>
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap");
 
@@ -601,7 +609,7 @@ const AdvancedTechniquesSection = () => (
           >
             <Link
               href={technique.techPage}
-              className="block bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border-2 border-gray-100 hover:border-gray-200 min-h-[320px] flex flex-col"
+              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border-2 border-gray-100 hover:border-gray-200 min-h-[320px] flex flex-col"
             >
               <div
                 className={`p-6 bg-white border-b-4 ${technique.borderColor}`}

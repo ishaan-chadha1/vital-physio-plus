@@ -1,5 +1,5 @@
 "use client";
-
+import Head from 'next/head'
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Footer from "@/components/footer";
@@ -18,7 +18,15 @@ import LandingNavbar from "@/components/landing-navbar"; // Assuming navbar is i
 // Main About Page Component
 export default function AboutPage() {
   return (
+    
     <div className="bg-white">
+       <Head>
+        <title>About Us | VitalPhysio⁺</title>
+        <meta
+          name="description"
+          content="Learn more about VitalPhysio⁺, our mission, and our expert team providing advanced physiotherapy services in Bengaluru."
+        />
+      </Head>
       <LandingNavbar />
       <main>
         <AboutHero />

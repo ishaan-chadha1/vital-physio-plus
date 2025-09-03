@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const baseUrl = 'https://yourdomain.com'; // Change to your production domain
+  const baseUrl = 'https://vitalphysio.plus'; // Change to your production domain
   const pages = [
     '',
     '/about',

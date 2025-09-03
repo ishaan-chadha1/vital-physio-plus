@@ -15,6 +15,7 @@ import {
 import LandingNavbar from "@/components/landing-navbar";
 import Footer from "@/components/footer";
 import CTA from "@/components/CTA";
+import Head from 'next/head';
 
 // Clinical Table Data
 const clinicalTable = [
@@ -261,7 +262,20 @@ export default function ConditionsPdfPage() {
     return () => clearInterval(timer);
   }, [orthopedicSections.length]);
   return (
-    <>
+    <>  
+        <Head>
+        <title>Conditions We Treat | VitalPhysio⁺</title>
+        <meta
+          name="description"
+          content="Explore the wide range of conditions treated at VitalPhysio⁺, including orthopedic, neurological, sports injuries, chronic pain, and women's health in Bengaluru."
+        />
+        <meta
+          name="keywords"
+          content="physiotherapy conditions, orthopedic conditions, neurological rehabilitation, sports injuries, chronic pain, women's health, Bengaluru physiotherapy"
+        />
+        <meta name="author" content="VitalPhysio⁺" />
+        <meta name="robots" content="index, follow" />
+      </Head>
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap");
 
