@@ -132,7 +132,7 @@ export default function ContactPage() {
       </section>
 
       {/* Main Contact Section */}
-      <section className="py-14 lg:pt-20 lg:pb-24 bg-white px-2">
+      <section className="py-14 lg:pt-20 lg:pb-24 bg-white px-2 sm:px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-9">
           {/* Left: Details and Map */}
           <motion.div
@@ -204,15 +204,15 @@ export default function ContactPage() {
               >
                 <div className="flex flex-col gap-2">
                   <label htmlFor="name">Your Name*</label>
-                  <input required id="name" type="text" name="name" minLength={2} className="py-2 px-4" />
+                  <input required id="name" type="text" name="name" minLength={2} className="py-2 px-4 w-full" />
                 </div>
                 <div className="flex flex-col gap-2">
                   <label htmlFor="email">Email Address*</label>
-                  <input required id="email" type="email" name="email" className="py-2 px-4" />
+                  <input required id="email" type="email" name="email" className="py-2 px-4 w-full" />
                 </div>
                 <div className="flex flex-col gap-2">
                   <label htmlFor="phone">Phone Number</label>
-                  <input id="phone" type="tel" name="phone" className="py-2 px-4" />
+                  <input id="phone" type="tel" name="phone" className="py-2 px-4 w-full" />
                 </div>
                 <div className="flex flex-col gap-2">
                   <label htmlFor="message">Your Message*</label>

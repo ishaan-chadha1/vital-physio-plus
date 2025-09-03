@@ -760,3 +760,23 @@ const ServicesHero = () => (
     </div>
   </section>
 );
+
+// Add responsive utilities to service cards
+<section className="bg-white py-16 md:py-24 px-4 sm:px-6 scroll-mt-20">
+  <div className="max-w-6xl mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {coreServicesData.map((service, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 40, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.45, delay: index * 0.08 }}
+          viewport={{ once: true, amount: 0.25 }}
+          className="p-6 bg-white rounded-lg shadow-lg"
+        >
+          <h3 className="text-xl font-bold">{service.title}</h3>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</section>;
