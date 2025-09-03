@@ -16,6 +16,7 @@ import LandingNavbar from "@/components/landing-navbar";
 import Footer from "@/components/footer";
 import CTA from "@/components/CTA";
 import Head from 'next/head';
+import Link from 'next/link';
 
 // Clinical Table Data
 const clinicalTable = [
@@ -269,12 +270,17 @@ export default function ConditionsPdfPage() {
           name="description"
           content="Explore the wide range of conditions treated at VitalPhysio⁺, including orthopedic, neurological, sports injuries, chronic pain, and women's health in Bengaluru."
         />
-        <meta
-          name="keywords"
-          content="physiotherapy conditions, orthopedic conditions, neurological rehabilitation, sports injuries, chronic pain, women's health, Bengaluru physiotherapy"
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "MedicalCondition",
+              "name": "Conditions Treated at VitalPhysio⁺",
+              "description": "We treat back pain, sports injuries, neurological disorders, chronic pain, and more.",
+            }),
+          }}
         />
-        <meta name="author" content="VitalPhysio⁺" />
-        <meta name="robots" content="index, follow" />
       </Head>
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap");

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import LandingNavbar from "@/components/landing-navbar";
 import Footer from "@/components/footer";
+import Link from 'next/link';
 
 export default function ContactPage() {
     
@@ -275,6 +276,32 @@ export default function ContactPage() {
                   We do not have direct empanelment, but we provide the required documentation for you to seek reimbursement after your therapy depending on your policy.
                 </div>
               </details>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Additional Links Section */}
+      <section className="py-8 bg-white">
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto px-4"
+        >
+          <div className="rounded-2xl shadow px-7 py-7">
+            <h3 className="text-xl font-semibold text-sky-900 mb-4 text-center">Learn More</h3>
+            <div className="flex flex-col gap-3 text-center">
+              <p>
+                Learn more <Link href="/about" className="text-blue-600 underline">about us</Link> and our mission.
+              </p>
+              <p>
+                Explore our <Link href="/services" className="text-blue-600 underline">services</Link> to see how we can help you.
+              </p>
+              <p>
+                Have questions? Visit our <Link href="/faq" className="text-blue-600 underline">FAQ page</Link>.
+              </p>
             </div>
           </div>
         </motion.div>
