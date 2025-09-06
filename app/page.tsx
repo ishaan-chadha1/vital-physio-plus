@@ -19,11 +19,9 @@ import {
   X
 } from 'lucide-react';
 import HowWeAreDifferent from '@/components/how-we-are-different';
-import Hero from '@/components/hero';
 import Footer from '@/components/footer';
 import LandingNavbar from '@/components/landing-navbar';
 import CTA from '@/components/CTA';
-
 
 // Main App Component - This combines all sections into a single, cohesive page.
 export default function App() {
@@ -91,6 +89,44 @@ export default function App() {
 // Header Component
 
 // Hero Section Component - Updated to match the provided image
+
+const Hero = () => (
+  <section className="bg-gradient-to-br from-blue-900 to-teal-600 text-white py-16 md:py-24 px-4 sm:px-6">
+    <div className="max-w-6xl mx-auto text-center">
+      <motion.h1
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6"
+      >
+        Welcome to VitalPhysio⁺
+      </motion.h1>
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.6 }}
+        viewport={{ once: true }}
+        className="text-sm sm:text-base md:text-lg text-blue-100 leading-relaxed mb-8"
+      >
+        Your trusted partner in physiotherapy and rehabilitation. Let us help you achieve your health and mobility goals.
+      </motion.p>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
+        viewport={{ once: true }}
+      >
+        <a
+          href="#book"
+          className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 text-sm sm:text-base"
+        >
+          Book Your Consultation
+        </a>
+      </motion.div>
+    </div>
+  </section>
+);
 
 const ContactSection = () => {
   return (
