@@ -16,7 +16,7 @@ const Footer = () => {
         {/* Navigation Links */}
         <div className="flex items-center justify-center space-x-3 text-sm">
           {/* UPDATED: Links are now fully white with a subtle hover effect */}
-          <a href="#privacy" className="transition-colors duration-300 text-white">
+          <a href="/privacy-policy" className="transition-colors duration-300 text-white">
             Privacy Policy
           </a>
           {/* UPDATED: Separator is slightly more visible */}
