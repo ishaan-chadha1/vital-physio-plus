@@ -19,9 +19,11 @@ import {
   X
 } from 'lucide-react';
 import HowWeAreDifferent from '@/components/how-we-are-different';
+import Hero from '@/components/hero';
 import Footer from '@/components/footer';
 import LandingNavbar from '@/components/landing-navbar';
 import CTA from '@/components/CTA';
+
 
 // Main App Component - This combines all sections into a single, cohesive page.
 export default function App() {
@@ -90,75 +92,37 @@ export default function App() {
 
 // Hero Section Component - Updated to match the provided image
 
-const Hero = () => (
-  <section className="bg-gradient-to-br from-blue-900 to-teal-600 text-white py-16 md:py-24 px-4 sm:px-6">
-    <div className="max-w-6xl mx-auto text-center">
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6"
-      >
-        Welcome to VitalPhysio⁺
-      </motion.h1>
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.6 }}
-        viewport={{ once: true }}
-        className="text-sm sm:text-base md:text-lg text-blue-100 leading-relaxed mb-8"
-      >
-        Your trusted partner in physiotherapy and rehabilitation. Let us help you achieve your health and mobility goals.
-      </motion.p>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.4, duration: 0.5 }}
-        viewport={{ once: true }}
-      >
-        <a
-          href="#book"
-          className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 text-sm sm:text-base"
-        >
-          Book Your Consultation
-        </a>
-      </motion.div>
-    </div>
-  </section>
-);
-
 const ContactSection = () => {
   return (
-    <section className="bg-white py-12 md:py-20 px-4 sm:px-6">
+    <section className="bg-white py-16 md:py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-12"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-4 font-lato">Visit Our Clinic</h2>
-          <p className="text-sm sm:text-base md:text-lg text-gray-600">Bengaluru's Premier Physiotherapy Center</p>
-          <p className="text-gray-600 mt-2 text-sm sm:text-base">Combining evidence-based treatments with highly personalized care to restore your full function.</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4 font-lato">Visit Our Clinic</h2>
+          <p className="text-xl text-gray-600">Bengaluru's Premier Physiotherapy Center</p>
+          <p className="text-gray-600 mt-2">Combining evidence-based treatments with highly personalized care to restore your full function.</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <div className="grid md:grid-cols-2 gap-12">
           {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="space-y-6"
+            className="space-y-8"
           >
-            <div className="bg-blue-50 p-4 sm:p-6 rounded-2xl">
-              <h3 className="text-lg sm:text-xl font-bold text-blue-900 mb-4">Contact Details</h3>
+            <div className="bg-blue-50 p-6 rounded-2xl">
+              <h3 className="text-xl font-bold text-blue-900 mb-6">Contact Details</h3>
+              
               <div className="space-y-4">
-                {/* Address */}
                 <div className="flex items-start space-x-4">
-                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 flex-shrink-0 mt-1" />
+                  <MapPin className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">Our Address:</h4>
                     <p className="text-gray-600 text-sm leading-relaxed">
@@ -166,9 +130,9 @@ const ContactSection = () => {
                     </p>
                   </div>
                 </div>
-                {/* Phone */}
+
                 <div className="flex items-center space-x-4">
-                  <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 flex-shrink-0" />
+                  <Phone className="w-6 h-6 text-blue-600 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">Schedule an Appointment:</h4>
                     <p className="text-blue-600 font-semibold">+91 80473 59900</p>
@@ -176,25 +140,23 @@ const ContactSection = () => {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 flex-shrink-0" />
+                  <Phone className="w-6 h-6 text-blue-600 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">General Queries:</h4>
                     <p className="text-blue-600 font-semibold">+91 80473 59090</p>
                   </div>
                 </div>
 
-                {/* Email */}
                 <div className="flex items-center space-x-4">
-                  <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 flex-shrink-0" />
+                  <Mail className="w-6 h-6 text-blue-600 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">E-Mail:</h4>
                     <p className="text-blue-600 font-semibold">Contact@VitalPhysio.Plus</p>
                   </div>
                 </div>
 
-                {/* Opening Hours */}
                 <div className="flex items-center space-x-4">
-                  <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 flex-shrink-0" />
+                  <Clock className="w-6 h-6 text-blue-600 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">Opening Hours:</h4>
                     <p className="text-gray-600">Every Day: 07:00 AM - 09:00 PM</p>
@@ -214,8 +176,8 @@ const ContactSection = () => {
           >
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d972.1943809465693!2d77.66542842290029!3d12.92201575241767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae13b33756fb95%3A0xaae9a01bf274f3f1!2sVitalPhysio%2B!5e0!3m2!1sen!2sin!4v1756645280286!5m2!1sen!2sin"
-              width="100%"
-              height="300"
+              width="600"
+              height="450"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
@@ -230,14 +192,14 @@ const ContactSection = () => {
 };
 // Journey Section Component
 const JourneySection = () => (
-  <section className="bg-blue-50/50 py-12 md:py-20 px-4 sm:px-6">
+  <section className="bg-blue-50/50 py-16 md:py-24 px-4 sm:px-6">
     <div className="max-w-4xl mx-auto text-center">
       <motion.h2
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true, amount: 0.5 }}
-        className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-900 mb-4 md:mb-6"
+         className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-5 md:mb-6"
       >
         Your Journey to Vitality Starts Here
       </motion.h2>
@@ -246,9 +208,9 @@ const JourneySection = () => (
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.6 }}
         viewport={{ once: true, amount: 0.5 }}
-        className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed mb-6 md:mb-8"
+        className="text-base sm:text-lg text-gray-600 leading-relaxed mb-8 md:mb-10"
       >
-        Welcome to VitalPhysio⁺, your premier center for comprehensive physiotherapy. We are dedicated to restoring your physical function, effectively managing pain, and enhancing your overall well-being.
+        Welcome to VitalPhysio⁺, your premier center for comprehensive physiotherapy. We are dedicated to restoring your physical function, effectively managing pain, and enhancing your overall well-being. Experience the integration of contemporary scientific advancements with highly personalized care plans, ensuring optimal outcomes for every individual.
       </motion.p>
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
@@ -258,7 +220,7 @@ const JourneySection = () => (
       >
         <a
           href="#services"
-          className="inline-block bg-blue-600 text-white font-semibold py-2 px-6 sm:py-3 sm:px-8 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-sm sm:text-base"
+          className="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
         >
           Explore Our World-Class Services
         </a>
@@ -314,8 +276,8 @@ const ServicesGrid = () => {
     },
   ];
 
-  return (
-    <section id="services" className="bg-white py-12 md:py-20 px-4 sm:px-6 scroll-mt-20">
+   return (
+    <section id="services" className="bg-white py-16 md:py-24 px-4 sm:px-6 scroll-mt-20">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {services.map((service, index) => (
@@ -325,16 +287,16 @@ const ServicesGrid = () => {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.45, delay: index * 0.08 }}
               viewport={{ once: true, amount: 0.25 }}
-              className={`bg-gray-50 p-4 sm:p-6 md:p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col border-t-4 ${service.borderColor}`}
+              className={`bg-gray-50/70 p-6 md:p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col border-t-4 ${service.borderColor}`}
             >
-              <div className={`mb-4 text-white rounded-full p-3 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center ${service.borderColor === 'border-orange-500' ? 'bg-orange-500' : 'bg-teal-500'}`}>
-                <service.icon size={20} className="sm:size-24" />
+              <div className={`mb-4 text-white rounded-full p-3 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center ${service.borderColor === 'border-orange-500' ? 'bg-orange-500' : 'bg-teal-500'}`}>
+                <service.icon size={24} className="md:size-28" />
               </div>
-              <h3 className="text-base sm:text-lg md:text-xl font-bold text-blue-900 mb-2 md:mb-3">{service.title}</h3>
-              <p className="text-sm sm:text-base text-gray-600 leading-relaxed flex-grow mb-4 md:mb-5">{service.description}</p>
+              <h3 className="text-lg md:text-xl font-bold text-blue-900 mb-2 md:mb-3">{service.title}</h3>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed flex-grow mb-5 md:mb-6">{service.description}</p>
               <a
                 href="#"
-                className="font-semibold text-blue-600 hover:text-blue-800 transition-colors duration-300 self-start group text-sm sm:text-base"
+                className="font-semibold text-blue-600 hover:text-blue-800 transition-colors duration-300 self-start group text-sm md:text-base"
               >
                 {service.link}
                 <ArrowRight className="inline-block ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -358,10 +320,7 @@ return (
     <section id="about" className="bg-blue-50/50 py-16 md:py-24 px-4 sm:px-6 scroll-mt-20">
       <div className="container mx-auto text-center max-w-5xl">
         <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          // ...existing code...
           className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-8 md:mb-10"
         >
           Learn More About Us
@@ -371,10 +330,7 @@ return (
             <motion.a
               key={link.name}
               href={link.href}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
+              // ...existing code...
               className="w-full sm:w-auto bg-white text-blue-700 font-semibold py-3 px-6 md:px-8 rounded-lg shadow-md hover:bg-blue-600 hover:text-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-sm md:text-base"
             >
               {link.name}

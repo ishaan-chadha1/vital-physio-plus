@@ -21,7 +21,7 @@ const Footer = () => {
           </a>
           {/* UPDATED: Separator is slightly more visible */}
           <span className="text-white/60">|</span>
-          <a href="#terms" className="transition-colors duration-300 text-white">
+          <a href="/tos" className="transition-colors duration-300 text-white">
             Terms of Service
           </a>
           <span className="text-white/60">|</span>
