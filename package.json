@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@calcom/embed-react": "^1.5.3",
     "@headlessui/react": "^2.2.1",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-checkbox": "^1.1.1",

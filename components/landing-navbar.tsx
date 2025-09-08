@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { getCalApi } from "@calcom/embed-react";
+
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect, useCallback, useRef } from "react";
@@ -63,7 +65,12 @@ export default function LandingNavbar() {
     document.body.classList.toggle("overflow-hidden", menuOpen);
     return () => document.body.classList.remove("overflow-hidden");
   }, [menuOpen]);
-
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({"namespace":"consultation"});
+      cal("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+    })();
+  }, [])
 return (
   <>
     {/* Main Header Section (desktop initial) */}
@@ -89,12 +96,15 @@ return (
             </div>
           <div className="flex-1 flex items-center justify-end space-x-4">
             <div className="hidden lg:flex items-center space-x-3">
-              <Link
-                href="/#book"
+              <button
+                type="button"
+                data-cal-namespace="consultation"
+                data-cal-link="vital-physio-plus/consultation"
+                data-cal-config='{"layout":"month_view"}'
                 className="bg-blue-900 text-white font-semibold py-2.5 px-5 rounded-lg shadow-md hover:bg-blue-800 hover:shadow-lg transition-all duration-200 text-sm transform hover:-translate-y-0.5"
               >
                 Book Now
-              </Link>
+              </button>
               <Link
                 href="/portal"
                 className="bg-teal-600 text-white font-semibold py-2.5 px-5 rounded-lg shadow-md hover:bg-teal-700 hover:shadow-lg transition-all duration-200 text-sm transform hover:-translate-y-0.5"
@@ -219,13 +229,15 @@ return (
           </nav>
 
             <div className="mt-auto flex flex-col gap-3">
-              <Link
-                href="/#book"
-                onClick={() => setMenuOpen(false)}
-                className="w-full bg-blue-900 text-white font-semibold py-3 rounded-lg text-center hover:bg-blue-800 transition-colors"
+              <button
+                type="button"
+                data-cal-namespace="consultation"
+                data-cal-link="vital-physio-plus/consultation"
+                data-cal-config='{"layout":"month_view"}'
+                className="bg-blue-900 text-white font-semibold py-2.5 px-5 rounded-lg shadow-md hover:bg-blue-800 hover:shadow-lg transition-all duration-200 text-sm transform hover:-translate-y-0.5"
               >
                 Book Now
-              </Link>
+              </button>
               <Link
                 href="/portal"
                 onClick={() => setMenuOpen(false)}
