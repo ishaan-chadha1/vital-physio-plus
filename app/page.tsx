@@ -746,10 +746,10 @@ const ServicesGrid = () => {
 // Learn More Section
 const LearnMore = () => {
   const links = [
-    { name: "Why VitalPhysio⁺?", href: "#why-us" },
-    { name: "Our Services", href: "#services" },
-    { name: "Our Technology", href: "#technology" },
-    { name: "Conditions We Treat", href: "#conditions" },
+    { name: "Why VitalPhysio⁺?", href: "/about" },
+    { name: "Our Services", href: "/services" },
+    { name: "Our Technology", href: "/technology" },
+    { name: "Conditions We Treat", href: "/conditions" },
   ];
   return (
     <section
@@ -758,7 +758,6 @@ const LearnMore = () => {
     >
       <div className="container mx-auto text-center max-w-5xl">
         <motion.h2
-          // ...existing code...
           className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-8 md:mb-10"
         >
           Learn More About Us
