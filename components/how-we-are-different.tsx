@@ -81,7 +81,7 @@ export default function c() {
                     <Award className="w-4 h-4 text-white" />
                   </motion.div>
                   <h3 className="text-lg md:text-xl font-bold text-blue-700 group-hover:text-blue-800 transition-colors duration-300">
-                    Why choose VitalPhysio<span className="text-indigo-500">+</span>?
+                    Why choose VitalPhysio<span className="text-indigo-500">⁺</span>?
                   </h3>
                 </div>
                 <motion.p
@@ -115,8 +115,8 @@ export default function c() {
                     <Plus className="w-4 h-4 text-white" />
                   </motion.div>
                   <h3 className="text-lg md:text-xl font-bold text-teal-700 group-hover:text-teal-800 transition-colors duration-300">
-                    What does the "<span className="text-teal-500">+</span>" in VitalPhysio
-                    <span className="text-teal-500">+</span> mean?
+                    What does the "<span className="text-teal-500">⁺</span>" in VitalPhysio
+                    <span className="text-teal-500"></span> mean?
                   </h3>
                 </div>
                 <motion.p

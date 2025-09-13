@@ -130,11 +130,10 @@ export default function App() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
                 <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                  Cutting-Edge Technology for Advanced Recovery
+                  Frequently Asked Questions
                 </h1>
                 <p className="mt-4 text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
-                  Explore the innovative tools and techniques we use to
-                  accelerate healing and enhance outcomes.
+                  Find answers to common questions about our physiotherapy services, booking process, and more at VitalPhysio⁺.
                 </p>
               </motion.div>
             </div>
