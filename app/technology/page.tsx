@@ -1,5 +1,5 @@
 "use client";
-
+import { getCalApi } from "@calcom/embed-react";
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { motion, AnimatePresence } from "framer-motion";
@@ -284,16 +284,18 @@ export default function TechnologyPage() {
               healing, reduce pain, and restore function more effectively than
               traditional methods.
             </p>
-            <p className="font-semibold text-blue-900 mt-4">
-              Explore how our cutting-edge equipment can benefit your journey to
-              vitality.
-            </p>
           </div>
         </div>
       </section>
-
+        
       {/* MODALITIES SECTION */}
       <section className="bg-white py-8 md:py-14">
+  <div className="text-center mb-12">
+    <h2 className="text-3xl md:text-4xl font-bold text-blue-900 leading-tight">
+        Explore how our cutting-edge equipment can benefit your journey to vitality.
+    </h2>
+    <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-teal-400 mx-auto mt-6 rounded-full"></div>
+  </div>
         <div className="max-w-7xl mx-auto flex flex-col gap-16 md:gap-20 px-4">
           {modalitiesData.map((modality, idx) => (
             <motion.div
@@ -419,8 +421,13 @@ export default function TechnologyPage() {
             className="inline-flex items-center bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold py-4 px-8 md:px-12 rounded-full shadow-xl text-base md:text-lg transition-all duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
-          >
-            Schedule your personalized consultation
+
+                  data-cal-namespace="consultation"
+                  data-cal-link="vital-physio-plus/consultation"
+                  data-cal-config='{"layout":"month_view"}'
+                 >
+                  Book Now
+
             <ChevronRight className="ml-2 w-5 h-5" />
           </motion.a>
         </motion.div>

@@ -32,7 +32,7 @@ export default function AboutPage() {
         <AboutHero />
         <MissionVisionValues />
         <WhyChooseUs />
-        <TeamCTA />
+        {/* <TeamCTA /> */}
       </main>
       <Footer />
     </div>

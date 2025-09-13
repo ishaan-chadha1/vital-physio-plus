@@ -13,7 +13,7 @@ const navLinks = [
   { name: "Conditions We Treat", href: "/conditions" },
   { name: "Cutting-Edge Technology", href: "/technology" },
   { name: "About Us", href: "/about" },
-  { name: "Our Team", href: "/team" },
+  // { name: "Our Team", href: "/team" },
   { name: "Knowledge Hub", href: "/knowledge" },
   { name: "FAQs", href: "/faq" },
   { name: "Contact Us", href: "/contact" },
