@@ -319,8 +319,10 @@ export default function KnowledgeHubPage() {
   {categories.map((category, idx) => (
     <button
       key={idx}
-      className={`category-pill ${
-        selectedCategory === category ? "bg-blue-600 text-white" : ""
+      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+        selectedCategory === category
+          ? "bg-blue-600 text-white shadow-md"
+          : "bg-gray-200 text-gray-700 hover:bg-gray-300"
       }`}
       onClick={() =>
         setSelectedCategory(category === selectedCategory ? "" : category)
@@ -329,13 +331,15 @@ export default function KnowledgeHubPage() {
       {category}
     </button>
   ))}
-</div> {selectedCategory && (
+</div>
+{selectedCategory && (
   <div className="flex justify-center mt-4">
     <button
-      className="category-pill bg-red-500 text-white"
+      className="p-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors"
       onClick={() => setSelectedCategory("")}
+      aria-label="Clear filter"
     >
-      Clear Filter
+      <X className="w-5 h-5" />
     </button>
   </div>
 )}
