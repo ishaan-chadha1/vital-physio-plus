@@ -147,7 +147,19 @@ const ContactSection = () => {
                     </h4>
                     <p className="text-gray-600 text-sm leading-relaxed">
                       VitalPhysio⁺, 2nd Floor, P V Complex, Opp. Iblur Lake
-                      Park, Bellandur, Bengaluru, Karnataka, India - 560103
+                      Park, Karnataka, India - 560102
+                    </p>
+                  </div>
+                </div>
+
+               <div className="flex items-center space-x-4">
+                  <Phone className="w-6 h-6 text-blue-600 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">
+                      Appointments & Support (24/7):
+                    </h4>
+                    <p className="text-blue-600 font-semibold">
+                      +91 80353 17531
                     </p>
                   </div>
                 </div>
@@ -156,10 +168,10 @@ const ContactSection = () => {
                   <Phone className="w-6 h-6 text-blue-600 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      Schedule an Appointment:
+                      Management Support:
                     </h4>
                     <p className="text-blue-600 font-semibold">
-                      +91 80473 59900
+                      +91 80353 17720
                     </p>
                   </div>
                 </div>

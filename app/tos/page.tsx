@@ -20,7 +20,7 @@ export default function TermsOfService() {
                   </h1>
                   <p className="mt-3">
                     <span className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
-                      <strong className="mr-1">Effective Date:</strong> September 09, 2025
+                      <strong className="mr-1">Effective Date:</strong> October 02, 2025
                     </span>
                   </p>
                 </header>

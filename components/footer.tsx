@@ -25,7 +25,7 @@ const Footer = () => {
             Terms of Service
           </a>
           <span className="text-white/60">|</span>
-          <a href="#blog" className="transition-colors duration-300 text-white">
+          <a href="/knowledge" className="transition-colors duration-300 text-white">
             Blog & Resources
           </a>
         </div>
