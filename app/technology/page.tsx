@@ -394,36 +394,6 @@ export default function TechnologyPage() {
         </div>
       </section>
 
-      {/* Add responsive utilities to technology cards */}
-      <section className="bg-white py-8 md:py-14">
-        <div className="max-w-7xl mx-auto flex flex-col gap-16 md:gap-20 px-4">
-          {modalitiesData.map((modality, idx) => (
-            <motion.div
-              key={modality.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: idx * 0.08 }}
-              className={`flex flex-col md:flex-row items-center ${
-                idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              } md:gap-12 gap-8`}
-            >
-              <div className="w-full md:w-1/2">
-                <img
-                  src={modality.image}
-                  alt={modality.title}
-                  className="w-full h-auto rounded-lg shadow-lg"
-                />
-              </div>
-              <div className="w-full md:w-1/2">
-                <h3 className="text-3xl font-bold">{modality.title}</h3>
-                <p className="text-lg">{modality.description}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
       {/* TABLE CARD */}
       <TechnologyTable />
       
