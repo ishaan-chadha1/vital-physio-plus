@@ -146,7 +146,7 @@ export default function TermsOfService() {
                     <h4 id="t6-3-a" className="mt-4 text-lg sm:text-xl font-semibold text-gray-900">Treatment Classification</h4>
                     <ul className="mt-2 list-disc pl-6 space-y-2">
                       <li><strong>Short-Term (≤ 30 days):</strong> Full payment required before commencement; no discounts or staggered options.</li>
-                      <li><strong>Extended (> 30 days):</strong> Options below.</li>
+                      <li><strong>Extended ({'>'} 30 days):</strong> Options below.</li>
                     </ul>
 
                     <h4 id="t6-3-b" className="mt-4 text-lg sm:text-xl font-semibold text-gray-900">Payment Options for Extended Treatment</h4>
