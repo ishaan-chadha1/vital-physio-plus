@@ -285,24 +285,24 @@ export default function KnowledgeHubPage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="relative w-full max-w-2xl"
           >
-           <div className="relative w-full max-w-2xl">
-  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-  <input
-    type="text"
-    placeholder="Search articles (e.g., 'back pain')"
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-    className="search-input bg-white text-gray-900 placeholder-gray-500"
-  />
-  {searchTerm && (
-    <button
-      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-      onClick={() => setSearchTerm("")}
-    >
-      <X className="w-5 h-5" />
-    </button>
-  )}
-</div>
+            <div className="relative w-full max-w-2xl">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search articles (e.g., 'back pain')"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input bg-white text-gray-900 placeholder-gray-500"
+              />
+              {searchTerm && (
+                <button
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  onClick={() => setSearchTerm("")}
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+            </div>
           </motion.div>
 
           {/* CATEGORY PILLS */}
@@ -315,34 +315,36 @@ export default function KnowledgeHubPage() {
             <p className="text-white/90 text-sm font-medium mb-4">
               Browse by Category
             </p>
-<div className="flex flex-wrap gap-3 justify-center">
-  {categories.map((category, idx) => (
-    <button
-      key={idx}
-      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-        selectedCategory === category
-          ? "bg-blue-600 text-white shadow-md"
-          : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-      }`}
-      onClick={() =>
-        setSelectedCategory(category === selectedCategory ? "" : category)
-      }
-    >
-      {category}
-    </button>
-  ))}
-</div>
-{selectedCategory && (
-  <div className="flex justify-center mt-4">
-    <button
-      className="p-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors"
-      onClick={() => setSelectedCategory("")}
-      aria-label="Clear filter"
-    >
-      <X className="w-5 h-5" />
-    </button>
-  </div>
-)}
+            <div className="flex flex-wrap gap-3 justify-center">
+              {categories.map((category, idx) => (
+                <button
+                  key={idx}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    selectedCategory === category
+                      ? "bg-blue-600 text-white shadow-md"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                  }`}
+                  onClick={() =>
+                    setSelectedCategory(
+                      category === selectedCategory ? "" : category
+                    )
+                  }
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+            {selectedCategory && (
+              <div className="flex justify-center mt-4">
+                <button
+                  className="p-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors"
+                  onClick={() => setSelectedCategory("")}
+                  aria-label="Clear filter"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            )}
           </motion.div>
         </div>
       </section>
