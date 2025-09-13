@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
+  X,
   Search,
   ChevronRight,
   ArrowRight,
@@ -16,15 +17,16 @@ import LandingNavbar from "@/components/landing-navbar";
 // --- DATA ---
 const categories = [
   "Women's Health",
-  "Sports Rehab", 
+  "Sports Rehab",
   "Neurological Care",
   "Wellness Tips",
-  "Pain Management"
+  "Pain Management",
 ];
 
 const featuredArticle = {
   title: "5 Key Exercises to Perform After Knee Surgery",
-  subtitle: "Regaining strength and mobility after knee surgery is crucial. Our lead physiotherapists team, outlines five essential, safe exercises to get you back on your feet.",
+  subtitle:
+    "Regaining strength and mobility after knee surgery is crucial. Our lead physiotherapists team, outlines five essential, safe exercises to get you back on your feet.",
   category: "Knee Exercises",
   tag: "Post-Operative Rehab",
   image: "/knee-surgery-exercises.jpg", // placeholder
@@ -33,15 +35,18 @@ const featuredArticle = {
 const recentArticles = [
   {
     title: "Physiotherapy for Chronic Low Back Pain",
-    description: "Discover evidence-backed pathways to relieve chronic low back pain through active physiotherapy and lifestyle changes.",
+    description:
+      "Discover evidence-backed pathways to relieve chronic low back pain through active physiotherapy and lifestyle changes.",
     category: "Pain Management",
     subcategory: "Wellness Tips",
     image: "/low-back-pain.jpg", // Photograph: Person doing guided back exercises or physiotherapy session
     link: "/knowledge/low-back-pain",
   },
   {
-    title: "Desk Job and Neck Pain? How Bengaluru’s Professionals Can Find Relief",
-    description: "Learn how to combat “tech neck” with targeted exercises, ergonomic tips, and expert physiotherapy for desk workers.",
+    title:
+      "Desk Job and Neck Pain? How Bengaluru’s Professionals Can Find Relief",
+    description:
+      "Learn how to combat “tech neck” with targeted exercises, ergonomic tips, and expert physiotherapy for desk workers.",
     category: "Pain Management",
     subcategory: "Wellness Tips",
     image: "/desk-neck-pain.jpg", // Photograph: Office worker stretching neck at desk or ergonomic workstation setup
@@ -49,7 +54,8 @@ const recentArticles = [
   },
   {
     title: "Women's Health: Physiotherapy Across Lifespan",
-    description: "Explore tailored physiotherapy solutions for pregnancy, postpartum, menopause, and pelvic health challenges.",
+    description:
+      "Explore tailored physiotherapy solutions for pregnancy, postpartum, menopause, and pelvic health challenges.",
     category: "Women's Health",
     subcategory: "Pain Management, Wellness Tips",
     image: "/womens-health-physio.jpg", // Short Video: Female physiotherapist demonstrating pelvic floor exercises or prenatal care
@@ -57,7 +63,8 @@ const recentArticles = [
   },
   {
     title: "“Runner’s Knee” & “Frozen Shoulder”",
-    description: "Understand causes and recovery strategies for common urban sports injuries like runner’s knee and frozen shoulder.",
+    description:
+      "Understand causes and recovery strategies for common urban sports injuries like runner’s knee and frozen shoulder.",
     category: "Sports Rehab",
     subcategory: "Pain Management, Wellness Tips",
     image: "/runners-knee-frozen-shoulder.jpg", // Photograph: Jogger with knee brace or physiotherapist assisting shoulder rehab
@@ -65,7 +72,8 @@ const recentArticles = [
   },
   {
     title: "Ergonomics for Work-from-Home",
-    description: "Tips for IT professionals to set up ergonomic home workstations and reduce pain with expert physiotherapy guidance.",
+    description:
+      "Tips for IT professionals to set up ergonomic home workstations and reduce pain with expert physiotherapy guidance.",
     category: "Wellness Tips",
     subcategory: "Pain Management",
     image: "/ergonomics-work-from-home.jpg", // Photograph: Home office setup with ergonomic accessories or stretching break
@@ -73,7 +81,8 @@ const recentArticles = [
   },
   {
     title: "Sports Injury First Aid",
-    description: "Immediate first aid steps for sports injuries to minimize damage and accelerate healing before physiotherapy.",
+    description:
+      "Immediate first aid steps for sports injuries to minimize damage and accelerate healing before physiotherapy.",
     category: "Sports Rehab",
     subcategory: "Pain Management",
     image: "/sports-injury-first-aid.jpg", // Short Video: Demonstration of RICE method (Rest, Ice, Compression, Elevation)
@@ -81,7 +90,8 @@ const recentArticles = [
   },
   {
     title: "Physiotherapy for Seniors",
-    description: "Helping seniors maintain mobility, reduce pain, and prevent falls through personalized geriatric physiotherapy.",
+    description:
+      "Helping seniors maintain mobility, reduce pain, and prevent falls through personalized geriatric physiotherapy.",
     category: "Wellness Tips",
     subcategory: "Pain Management",
     image: "/physiotherapy-for-seniors.jpg", // Photograph: Elderly person doing balance exercises with physiotherapist support
@@ -89,7 +99,8 @@ const recentArticles = [
   },
   {
     title: "Pediatric Physiotherapy",
-    description: "Fun and family-centered strategies to support children’s developmental and rehabilitative needs through physiotherapy.",
+    description:
+      "Fun and family-centered strategies to support children’s developmental and rehabilitative needs through physiotherapy.",
     category: "Neurological Care",
     subcategory: "Wellness Tips",
     image: "/pediatric-physiotherapy.jpg", // Short Video: Pediatric physiotherapist engaging a child with play-based exercises
@@ -97,7 +108,8 @@ const recentArticles = [
   },
   {
     title: "Post-Surgical Rehabilitation",
-    description: "Evidence-based post-op physiotherapy protocols to restore function and strength after orthopedic surgeries.",
+    description:
+      "Evidence-based post-op physiotherapy protocols to restore function and strength after orthopedic surgeries.",
     category: "Pain Management",
     subcategory: "Wellness Tips",
     image: "/post-surgical-rehabilitation.jpg", // Photograph: Patient doing guided leg exercises with physiotherapist
@@ -105,15 +117,18 @@ const recentArticles = [
   },
   {
     title: "Understanding Electrotherapy & Modern Physio Modalities",
-    description: "A science-backed guide to electrotherapy modalities and their role within a holistic rehabilitation plan.",
+    description:
+      "A science-backed guide to electrotherapy modalities and their role within a holistic rehabilitation plan.",
     category: "Pain Management",
     subcategory: "Wellness Tips",
     image: "/electrotherapy-modalities.jpg", // Photograph: Physiotherapy machine in use or therapist applying TENS
     link: "/knowledge/electrotherapy-modalities",
   },
   {
-    title: "The Future of Physiotherapy—Tech Innovations Reshaping Care in India",
-    description: "Explore how AI, robotics, and virtual physiotherapy are transforming care in Bengaluru and beyond.",
+    title:
+      "The Future of Physiotherapy—Tech Innovations Reshaping Care in India",
+    description:
+      "Explore how AI, robotics, and virtual physiotherapy are transforming care in Bengaluru and beyond.",
     category: "Wellness Tips",
     subcategory: "Tech Innovations",
     image: "/future-of-physiotherapy.jpg", // Short Video: Animated overview of AI and wearable tech in physiotherapy
@@ -121,7 +136,8 @@ const recentArticles = [
   },
   {
     title: "A Physiotherapist's Guide to Managing Fibromyalgia Pain",
-    description: "Learn how a structured physiotherapy program can help manage the chronic pain and fatigue associated with fibromyalgia.",
+    description:
+      "Learn how a structured physiotherapy program can help manage the chronic pain and fatigue associated with fibromyalgia.",
     category: "Pain Management",
     subcategory: "Chronic Pain",
     image: "/fibromyalgia-guide.jpg",
@@ -129,7 +145,8 @@ const recentArticles = [
   },
   {
     title: "Preventing Common Shoulder Injuries in Swimmers",
-    description: "Discover key strengthening and stretching exercises to protect your shoulders and improve your performance in the pool.",
+    description:
+      "Discover key strengthening and stretching exercises to protect your shoulders and improve your performance in the pool.",
     category: "Sports Rehab",
     subcategory: "Sports Injury",
     image: "/swimmer-shoulder.jpg",
@@ -137,7 +154,8 @@ const recentArticles = [
   },
   {
     title: "5 Key Exercises to Perform After Knee Surgery",
-    description: "Regaining strength and mobility after knee surgery is crucial. Our lead physiotherapists outline five essential, safe exercises to get you back on your feet.",
+    description:
+      "Regaining strength and mobility after knee surgery is crucial. Our lead physiotherapists outline five essential, safe exercises to get you back on your feet.",
     category: "Knee Exercises",
     subcategory: "Post-Operative Rehab",
     image: "/knee-surgery-exercises.jpg",
@@ -146,7 +164,16 @@ const recentArticles = [
 ];
 export default function KnowledgeHubPage() {
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const filteredArticles = recentArticles.filter((article) => {
+    const matchesCategory =
+      selectedCategory === "" || article.category === selectedCategory;
+    const matchesSearch =
+      searchTerm === "" ||
+      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      article.description.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
   return (
     <>
       <style jsx global>{`
@@ -205,7 +232,9 @@ export default function KnowledgeHubPage() {
         }
         .article-card:hover {
           transform: translateY(-4px);
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+          box-shadow:
+            0 20px 25px -5px rgba(0, 0, 0, 0.1),
+            0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         .tag-badge {
           background-color: #dbeafe;
@@ -241,7 +270,8 @@ export default function KnowledgeHubPage() {
               Patient Knowledge Hub
             </h1>
             <p className="text-white/90 text-xl md:text-2xl font-light">
-              Your one-stop library of expert-curated resources for your care journey.
+              Your one-stop library of expert-curated resources for your care
+              journey.
             </p>
             <p className="text-white/80 text-lg md:text-xl font-light mt-2">
               Find articles, guides, and answers to your questions.
@@ -255,14 +285,24 @@ export default function KnowledgeHubPage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="relative w-full max-w-2xl"
           >
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search articles (eg. 'back pain')"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input bg-white text-gray-900 placeholder-gray-500"
-            />
+           <div className="relative w-full max-w-2xl">
+  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+  <input
+    type="text"
+    placeholder="Search articles (e.g., 'back pain')"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="search-input bg-white text-gray-900 placeholder-gray-500"
+  />
+  {searchTerm && (
+    <button
+      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+      onClick={() => setSearchTerm("")}
+    >
+      <X className="w-5 h-5" />
+    </button>
+  )}
+</div>
           </motion.div>
 
           {/* CATEGORY PILLS */}
@@ -272,14 +312,33 @@ export default function KnowledgeHubPage() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="mt-8"
           >
-            <p className="text-white/90 text-sm font-medium mb-4">Browse by Category</p>
-            <div className="flex flex-wrap gap-3 justify-center">
-              {categories.map((category, idx) => (
-                <button key={idx} className="category-pill hover:scale-105">
-                  {category}
-                </button>
-              ))}
-            </div>
+            <p className="text-white/90 text-sm font-medium mb-4">
+              Browse by Category
+            </p>
+<div className="flex flex-wrap gap-3 justify-center">
+  {categories.map((category, idx) => (
+    <button
+      key={idx}
+      className={`category-pill ${
+        selectedCategory === category ? "bg-blue-600 text-white" : ""
+      }`}
+      onClick={() =>
+        setSelectedCategory(category === selectedCategory ? "" : category)
+      }
+    >
+      {category}
+    </button>
+  ))}
+</div> {selectedCategory && (
+  <div className="flex justify-center mt-4">
+    <button
+      className="category-pill bg-red-500 text-white"
+      onClick={() => setSelectedCategory("")}
+    >
+      Clear Filter
+    </button>
+  </div>
+)}
           </motion.div>
         </div>
       </section>
@@ -287,97 +346,102 @@ export default function KnowledgeHubPage() {
       {/* MAIN CONTENT */}
       <section className="bg-gray-50 py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-6">
-
-<div className="mb-16">
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6 }}
-    className="featured-card p-8 md:p-12"
-  >
-    <div className="flex flex-col md:flex-row items-center gap-8">
-      <div className="flex-1">
-        <div className="mb-4">
-          <span className="tag-badge">{featuredArticle.category}</span>
-          <span className="ml-3 text-white/80 text-sm font-medium">
-            Featured Article
-          </span>
-        </div>
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-          {featuredArticle.title}
-        </h2>
-        <p className="text-white/90 text-lg mb-6 leading-relaxed">
-          {featuredArticle.subtitle}
-        </p>
-        <div className="mb-6">
-          <span className="inline-flex items-center bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium">
-            <Tag className="w-4 h-4 mr-2" />
-            {featuredArticle.tag}
-          </span>
-        </div>
-        <a
-          href="/knowledge/knee-pain-exercises" // Update with the correct link to the article
-          className="inline-flex items-center bg-white text-blue-900 font-semibold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors"
-        >
-          Read Full Article
-          <ChevronRight className="ml-2 w-5 h-5" />
-        </a>
-      </div>
-      <div className="w-full md:w-1/3">
-        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 text-center">
-          <p className="text-white/60 text-sm mb-2">[Placeholder: Plan a video or an image as appropriate.]</p>
-        </div>
-      </div>
-    </div>
-  </motion.div>
-</div>
+          <div className="mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="featured-card p-8 md:p-12"
+            >
+              <div className="flex flex-col md:flex-row items-center gap-8">
+                <div className="flex-1">
+                  <div className="mb-4">
+                    <span className="tag-badge">
+                      {featuredArticle.category}
+                    </span>
+                    <span className="ml-3 text-white/80 text-sm font-medium">
+                      Featured Article
+                    </span>
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+                    {featuredArticle.title}
+                  </h2>
+                  <p className="text-white/90 text-lg mb-6 leading-relaxed">
+                    {featuredArticle.subtitle}
+                  </p>
+                  <div className="mb-6">
+                    <span className="inline-flex items-center bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium">
+                      <Tag className="w-4 h-4 mr-2" />
+                      {featuredArticle.tag}
+                    </span>
+                  </div>
+                  <a
+                    href="/knowledge/knee-pain-exercises" // Update with the correct link to the article
+                    className="inline-flex items-center bg-white text-blue-900 font-semibold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors"
+                  >
+                    Read Full Article
+                    <ChevronRight className="ml-2 w-5 h-5" />
+                  </a>
+                </div>
+                <div className="w-full md:w-1/3">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 text-center">
+                    <p className="text-white/60 text-sm mb-2">
+                      [Placeholder: Plan a video or an image as appropriate.]
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
 
           {/* RECENT ARTICLES */}
           <div>
             <div className="flex items-center justify-between mb-8">
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900">Recent Articles</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
+                Recent Articles
+              </h3>
               <button className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700 transition-colors">
                 View All
                 <ArrowRight className="ml-2 w-5 h-5" />
               </button>
             </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-  {recentArticles.map((article, idx) => (
-    <motion.div
-      key={idx}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: idx * 0.1 }}
-      className="article-card group cursor-pointer"
-    >
-      <a href={article.link} className="block">
-        <div className="p-6">
-          <div className="mb-4">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-sm font-semibold text-blue-600">
-                {article.category}
-              </span>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredArticles.map((article, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  className="article-card group cursor-pointer"
+                >
+                  <a href={article.link} className="block">
+                    <div className="p-6">
+                      <div className="mb-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-sm font-semibold text-blue-600">
+                            {article.category}
+                          </span>
+                        </div>
+                        <span className="text-sm text-gray-500 font-medium">
+                          {article.subcategory}
+                        </span>
+                      </div>
+                      <h4 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-600 transition-colors">
+                        {article.title}
+                      </h4>
+                      <p className="text-gray-700 text-sm leading-relaxed mb-4">
+                        {article.description}
+                      </p>
+                      <button className="inline-flex items-center text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors">
+                        Read More
+                        <ArrowRight className="ml-1 w-4 h-4" />
+                      </button>
+                    </div>
+                  </a>
+                </motion.div>
+              ))}
             </div>
-            <span className="text-sm text-gray-500 font-medium">
-              {article.subcategory}
-            </span>
-          </div>
-          <h4 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-600 transition-colors">
-            {article.title}
-          </h4>
-          <p className="text-gray-700 text-sm leading-relaxed mb-4">
-            {article.description}
-          </p>
-          <button className="inline-flex items-center text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors">
-            Read More
-            <ArrowRight className="ml-1 w-4 h-4" />
-          </button>
-        </div>
-      </a>
-    </motion.div>
-  ))}
-</div>
           </div>
         </div>
       </section>
