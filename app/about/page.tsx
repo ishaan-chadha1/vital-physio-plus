@@ -45,26 +45,20 @@ const AboutHero = () => (
   // Use the brand's primary blue color from the global style variable.
   // Reduced vertical padding (py-12 md:py-16) to make the banner thinner.
   // Added top padding (pt-24) to ensure content isn't hidden by the navbar.
-  <section className="bg-[var(--vp-blue)] pt-24 pb-12 md:pt-28 md:pb-16 px-6">
+    <section className="bg-gradient-to-r from-[var(--vp-blue)] to-[var(--vp-teal)] py-12 md:py-16 px-6">
     <div className="container mx-auto text-center">
-      <motion.h1
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        // Changed text color to white for contrast against the dark blue background.
-        className="text-4xl md:text-5xl font-extrabold text-white"
       >
-        About VitalPhysio⁺
-      </motion.h1>
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-        // Changed subheading text color for readability.
-        className="mt-4 text-lg md:text-xl text-blue-200"
-      >
-        Our Commitment to Your Well-being
-      </motion.p>
+        <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+         About VitalPhysio⁺
+        </h1>
+        <p className="mt-4 text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
+          Dedicated to Enhancing Lives Through Expert Physiotherapy and Compassionate Care
+        </p>
+      </motion.div>
     </div>
   </section>
 );

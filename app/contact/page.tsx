@@ -114,23 +114,22 @@ export default function ContactPage() {
       
       <LandingNavbar />
 
-      {/* Hero Banner */}
-      <section className="contact-banner min-h-[250px] py-14 flex items-center justify-center relative overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0, y: 28, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.83, ease: "easeOut" }}
-          className="z-10 max-w-2xl mx-auto px-5 text-center"
-        >
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-2 drop-shadow lato-font">
-            Contact VitalPhysio⁺
-          </h1>
-          <p className="text-white/90 text-lg mt-3">
-            Reach out—our team is ready to guide you, answer your questions, and get you started.
-          </p>
-        </motion.div>
-      </section>
-
+        <section className="bg-gradient-to-r from-[var(--vp-blue)] to-[var(--vp-teal)] py-12 md:py-16 px-6">
+    <div className="container mx-auto text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+          Contact Vital Physio⁺
+        </h1>
+        <p className="mt-4 text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
+          We're here to help you on your journey to better health. Reach out to us with any questions or to schedule an appointment.
+        </p>
+      </motion.div>
+    </div>
+  </section>
       {/* Main Contact Section */}
       <section className="py-14 lg:pt-20 lg:pb-24 bg-white px-2 sm:px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-9">

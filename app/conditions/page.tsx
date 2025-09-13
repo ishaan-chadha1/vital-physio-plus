@@ -347,34 +347,22 @@ export default function ConditionsPdfPage() {
 
       {/* HERO BANNER */}
       {/* THIN BLUE HERO BANNER */}
-      <section className="gradient-conditions relative w-full py-8 md:py-12 flex items-center justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-20 pointer-events-none"
-          style={{
-            background:
-              "url('/physio_banner_overlay.svg') repeat, linear-gradient(94deg, #163774 0%, #47a5d6 100%)",
-            backgroundBlendMode: "overlay",
-          }}
-        />
-        <div className="relative z-10 flex flex-col items-center max-w-5xl mx-auto px-6 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-white font-extrabold text-4xl md:text-5xl drop-shadow-2xl tracking-tight font-lato mb-4"
-          >
-            Conditions We Expertly Treat
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-white/90 text-lg md:text-3xl font-medium"
-          >
-            Restoring Health & Function for a Better Life in Bengaluru
-          </motion.p>
-        </div>
-      </section>
+      <section className="bg-gradient-to-r from-[var(--vp-blue)] to-[var(--vp-teal)] py-12 md:py-16 px-6">
+  <div className="container mx-auto text-center">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+        Conditions We Expertly Treat
+      </h1>
+      <p className="mt-4 text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
+        Restoring Health & Function for a Better Life in Bengaluru
+      </p>
+    </motion.div>
+  </div>
+</section>
 
       {/* INTRO SECTION */}
       <section className="bg-gradient-to-br from-blue-50 to-cyan-50 py-16 md:py-20 px-6">

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Head from 'next/head';
+import Head from "next/head";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Zap,
@@ -53,7 +53,8 @@ const modalitiesData = [
     id: 1,
     title: "High-Intensity Laser",
     image: "/Laser.png",
-    placeholderImage: "https://via.placeholder.com/600x400/ffa500/ffffff?text=High-Intensity+Laser",
+    placeholderImage:
+      "https://via.placeholder.com/600x400/ffa500/ffffff?text=High-Intensity+Laser",
     borderColor: "border-orange-400",
     shadowColor: "shadow-orange-200",
     accentColor: "from-orange-400 to-yellow-400",
@@ -68,7 +69,8 @@ const modalitiesData = [
     id: 2,
     title: "rPMS (Repetitive Magnetic Stimulation)",
     image: "/rPMS.jpg",
-    placeholderImage: "https://via.placeholder.com/600x400/ff69b4/ffffff?text=rPMS+Device",
+    placeholderImage:
+      "https://via.placeholder.com/600x400/ff69b4/ffffff?text=rPMS+Device",
     borderColor: "border-pink-400",
     shadowColor: "shadow-pink-200",
     accentColor: "from-pink-400 to-rose-400",
@@ -82,7 +84,8 @@ const modalitiesData = [
     id: 3,
     title: "AI-Powered Smart Gym (Aeroleap Pro)",
     image: "/AroleapPro.png",
-    placeholderImage: "https://via.placeholder.com/600x400/9370db/ffffff?text=Smart+Gym",
+    placeholderImage:
+      "https://via.placeholder.com/600x400/9370db/ffffff?text=Smart+Gym",
     borderColor: "border-purple-400",
     shadowColor: "shadow-purple-200",
     accentColor: "from-purple-400 to-blue-400",
@@ -95,7 +98,8 @@ const modalitiesData = [
     id: 4,
     title: "Shockwave Therapy",
     image: "/HIL.png",
-    placeholderImage: "https://via.placeholder.com/600x400/90ee90/ffffff?text=Shockwave+Therapy",
+    placeholderImage:
+      "https://via.placeholder.com/600x400/90ee90/ffffff?text=Shockwave+Therapy",
     borderColor: "border-green-400",
     shadowColor: "shadow-green-200",
     accentColor: "from-green-400 to-emerald-400",
@@ -109,7 +113,8 @@ const modalitiesData = [
     id: 5,
     title: "UI Chair (HIFEM Technology)",
     image: "/ui-chair.jpg",
-    placeholderImage: "https://via.placeholder.com/600x400/6495ed/ffffff?text=UI+Chair",
+    placeholderImage:
+      "https://via.placeholder.com/600x400/6495ed/ffffff?text=UI+Chair",
     borderColor: "border-indigo-400",
     shadowColor: "shadow-indigo-200",
     accentColor: "from-indigo-400 to-purple-400",
@@ -126,7 +131,8 @@ const modalitiesData = [
     id: 6,
     title: "Spinal Decompression",
     image: "/Spinal-Decompression.jpg",
-    placeholderImage: "https://via.placeholder.com/400x400/4169e1/ffffff?text=VitalPhysio",
+    placeholderImage:
+      "https://via.placeholder.com/400x400/4169e1/ffffff?text=VitalPhysio",
     borderColor: "border-blue-400",
     shadowColor: "shadow-blue-200",
     accentColor: "from-blue-400 to-sky-400",
@@ -144,12 +150,12 @@ export default function TechnologyPage() {
   const [imageErrors, setImageErrors] = useState({});
 
   const handleImageError = (modalityId) => {
-    setImageErrors(prev => ({ ...prev, [modalityId]: true }));
+    setImageErrors((prev) => ({ ...prev, [modalityId]: true }));
   };
 
   return (
     <>
-     <Head>
+      <Head>
         <title>Advanced Technology | VitalPhysio⁺</title>
         <meta
           name="description"
@@ -235,40 +241,25 @@ export default function TechnologyPage() {
           background: #ffffff !important;
         }
       `}</style>
-      
+
       <LandingNavbar />
-      
+
       {/* HERO BANNER */}
-      <section className="gradient-pdf relative w-full max-h-[150px] py-12 md:py-16 flex items-center justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-20 pointer-events-none"
-          style={{
-            background:
-              "url('/physio_banner_overlay.svg') repeat, linear-gradient(94deg, #163774 0%, #47a5d6 100%)",
-            backgroundBlendMode: "overlay",
-          }}
-        />
-        <div className="relative z-10 flex flex-col items-center max-w-2xl mx-auto px-6 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
+      <section className="bg-gradient-to-r from-[var(--vp-blue)] to-[var(--vp-teal)] py-12 md:py-16 px-6">
+        <div className="container mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-10 text-white font-extrabold text-3xl md:text-5xl drop-shadow-lg tracking-tight font-lato"
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            Cutting-Edge Technology
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.38 }}
-            className="text-white/90 mt-4 md:text-lg font-medium md:mt-7"
-          >
-            At <span className="font-semibold text-blue-100">VitalPhysio⁺</span>
-            , we invest in state-of-the-art equipment that accelerates healing
-            beyond traditional methods.
-            <br />
-            Each device is chosen for its proven clinical benefit.
-          </motion.p>
+            <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+              Cutting-Edge Technology
+            </h1>
+            <p className="mt-4 text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
+              Explore the innovative tools and techniques we use to accelerate
+              healing and enhance outcomes.
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -324,16 +315,22 @@ export default function TechnologyPage() {
                   className="relative cursor-pointer group"
                 >
                   {/* Gradient accent behind image on hover */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${modality.accentColor} opacity-0 group-hover:opacity-20 blur-3xl transition-opacity duration-500 scale-110`} />
-                  
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${modality.accentColor} opacity-0 group-hover:opacity-20 blur-3xl transition-opacity duration-500 scale-110`}
+                  />
+
                   {/* Main image with floating shadow */}
                   <img
-                    src={imageErrors[modality.id] ? modality.placeholderImage : modality.image}
+                    src={
+                      imageErrors[modality.id]
+                        ? modality.placeholderImage
+                        : modality.image
+                    }
                     alt={modality.title}
                     className={`relative z-10 w-auto max-w-full h-auto max-h-[280px] md:max-h-[350px] object-contain floating-shadow rounded-lg transition-transform duration-300`}
                     onError={() => handleImageError(modality.id)}
                   />
-                  
+
                   {/* Subtle glow effect on hover */}
                   <div className="absolute -inset-4 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 </motion.div>
@@ -346,15 +343,17 @@ export default function TechnologyPage() {
                     <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
                       {modality.title}
                     </h3>
-                    <div className={`w-20 h-1 bg-gradient-to-r ${modality.accentColor} rounded-full`} />
+                    <div
+                      className={`w-20 h-1 bg-gradient-to-r ${modality.accentColor} rounded-full`}
+                    />
                   </div>
-                  
+
                   <p className="text-gray-700 text-base md:text-lg leading-relaxed">
                     {modality.description}
                   </p>
-                  
+
                   <div className="space-y-4 pt-2">
-                    <motion.div 
+                    <motion.div
                       className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-4 border border-gray-200"
                       whileHover={{ scale: 1.02 }}
                       transition={{ type: "spring", stiffness: 400 }}
@@ -362,10 +361,12 @@ export default function TechnologyPage() {
                       <span className="font-bold text-gray-900 text-sm uppercase tracking-wider block mb-2">
                         Treats
                       </span>
-                      <span className="text-gray-700 text-base">{modality.treats}</span>
+                      <span className="text-gray-700 text-base">
+                        {modality.treats}
+                      </span>
                     </motion.div>
-                    
-                    <motion.div 
+
+                    <motion.div
                       className={`bg-gradient-to-r ${modality.accentColor} bg-opacity-10 rounded-xl p-4 border ${modality.borderColor}`}
                       whileHover={{ scale: 1.02 }}
                       transition={{ type: "spring", stiffness: 400 }}
@@ -373,9 +374,11 @@ export default function TechnologyPage() {
                       <span className="font-bold text-gray-900 text-sm uppercase tracking-wider block mb-2">
                         Key Benefit
                       </span>
-                      <span className="text-gray-700 text-base">{modality.benefit}</span>
+                      <span className="text-gray-700 text-base">
+                        {modality.benefit}
+                      </span>
                     </motion.div>
-                    
+
                     {modality.link && (
                       <motion.a
                         href={modality.link.href}
@@ -396,10 +399,10 @@ export default function TechnologyPage() {
 
       {/* TABLE CARD */}
       <TechnologyTable />
-      
+
       {/* CTA SECTION */}
       <section className="w-full bg-gradient-to-br from-blue-50 to-sky-50 flex flex-col items-center justify-center py-16 md:py-20">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -429,7 +432,11 @@ export default function TechnologyPage() {
       {/* MODAL */}
       <AnimatePresence>
         {modalData && (
-          <ModalityModal data={modalData} onClose={() => setModalData(null)} imageErrors={imageErrors} />
+          <ModalityModal
+            data={modalData}
+            onClose={() => setModalData(null)}
+            imageErrors={imageErrors}
+          />
         )}
       </AnimatePresence>
     </>
@@ -461,7 +468,7 @@ function ModalityModal({ data, onClose, imageErrors }) {
           >
             <X size={20} />
           </button>
-          
+
           {/* Modal Header with Image */}
           <div className="flex flex-col items-center mb-6">
             <img
@@ -472,23 +479,29 @@ function ModalityModal({ data, onClose, imageErrors }) {
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">
               {data.title}
             </h2>
-            <div className={`w-20 h-1 bg-gradient-to-r ${data.accentColor} rounded-full mt-3`} />
+            <div
+              className={`w-20 h-1 bg-gradient-to-r ${data.accentColor} rounded-full mt-3`}
+            />
           </div>
         </div>
-        
+
         <div className="px-8 pb-8 space-y-4">
-          <p className="text-gray-700 leading-relaxed text-center">{data.description}</p>
-          
+          <p className="text-gray-700 leading-relaxed text-center">
+            {data.description}
+          </p>
+
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-200">
             <span className="font-bold text-blue-900 block mb-1">Treats:</span>
             <span className="text-gray-700">{data.treats}</span>
           </div>
-          
+
           <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-5 border border-green-200">
-            <span className="font-bold text-green-900 block mb-1">Key Benefit:</span>
+            <span className="font-bold text-green-900 block mb-1">
+              Key Benefit:
+            </span>
             <span className="text-gray-700">{data.benefit}</span>
           </div>
-          
+
           {data.link && (
             <motion.a
               href={data.link.href}
