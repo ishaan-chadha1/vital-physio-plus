@@ -278,10 +278,34 @@ const Modal = ({
   onClose: () => void;
   children: React.ReactNode;
 }) => {
+  useEffect(() => {
+    if (isOpen) {
+      // Freeze background scrolling
+      document.body.style.overflow = "hidden";
+    } else {
+      // Restore background scrolling
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      // Ensure scrolling is restored when the component unmounts
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm"
+      onClick={handleOutsideClick} // Close modal on outside click
+    >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -790,72 +814,3 @@ const LearnMore = () => {
     </section>
   );
 };
-
-// CTA Section Component
-// const CTA = () => (
-//   <section id="book" className="bg-gradient-to-br from-blue-900 to-teal-600 text-white py-20 md:py-28 px-6 scroll-mt-20">
-//     <div className="container mx-auto text-center max-w-3xl">
-//       <motion.h2
-//         initial={{ opacity: 0, y: 30 }}
-//         whileInView={{ opacity: 1, y: 0 }}
-//         transition={{ duration: 0.6 }}
-//         viewport={{ once: true }}
-//         className="text-3xl md:text-4xl font-bold mb-4 text-white"
-//       >
-//         Ready to Start Your Journey to Better Health?
-//       </motion.h2>
-//       <motion.p
-//         initial={{ opacity: 0, y: 20 }}
-//         whileInView={{ opacity: 1, y: 0 }}
-//         transition={{ delay: 0.2, duration: 0.6 }}
-//         viewport={{ once: true }}
-//         className="text-lg text-blue-100 leading-relaxed mb-10"
-//       >
-//         VitalPhysio⁺ is ready to help you achieve your health and mobility goals. Contact us today to schedule your personalized consultation.
-//       </motion.p>
-//       <motion.div
-//         initial={{ opacity: 0, scale: 0.9 }}
-//         whileInView={{ opacity: 1, scale: 1 }}
-//         transition={{ delay: 0.4, duration: 0.5 }}
-//         viewport={{ once: true }}
-//       >
-//         <a
-//           href="#consultation"
-//           className="inline-block bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold py-4 px-10 rounded-lg transition-transform transform hover:scale-105 shadow-xl"
-//         >
-//           Book Your Consultation Now
-//         </a>
-//       </motion.div>
-//     </div>
-//   </section>
-// );
-
-// Footer Component
-// const Footer = () => (
-//    <footer
-//       className="text-white"
-//       style={{ backgroundColor: footerBackgroundColor }}
-//     >
-//       <div className="container mx-auto px-6 py-8 text-center">
-//         {/* Copyright Information */}
-//         <p className="mb-2 text-sm text-white/80">
-//           &copy; {new Date().getFullYear()} VitalPhysio⁺. All rights reserved. Bengaluru, Karnataka, India.
-//         </p>
-
-//         {/* Navigation Links */}
-//         <div className="flex items-center justify-center space-x-3 text-sm">
-//           <a href="#privacy" className="transition-colors duration-300 hover:text-white/70">
-//             Privacy Policy
-//           </a>
-//           <span className="text-white/50">|</span>
-//           <a href="#terms" className="transition-colors duration-300 hover:text-white/70">
-//             Terms of Service
-//           </a>
-//           <span className="text-white/50">|</span>
-//           <a href="#blog" className="transition-colors duration-300 hover:text-white/70">
-//             Blog & Resources
-//           </a>
-//         </div>
-//       </div>
-//     </footer>
-// );
