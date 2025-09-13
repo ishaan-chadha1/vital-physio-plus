@@ -36,24 +36,114 @@ const recentArticles = [
     description: "Learn how a structured physiotherapy program can help manage the chronic pain and fatigue associated with fibromyalgia.",
     category: "Pain Management",
     subcategory: "Chronic Pain",
-    image: "/fibromyalgia-guide.jpg", // placeholder
+    image: "/fibromyalgia-guide.jpg",
+    link: "/knowledge/fibromyalgia-guide",
   },
   {
     title: "Preventing Common Shoulder Injuries in Swimmers",
     description: "Discover key strengthening and stretching exercises to protect your shoulders and improve your performance in the pool.",
     category: "Sports Rehab",
     subcategory: "Sports Injury",
-    image: "/swimmer-shoulder.jpg", // placeholder
+    image: "/swimmer-shoulder.jpg",
+    link: "/knowledge/swimmer-shoulder",
   },
   {
     title: "Understanding the UI Chair: A Breakthrough in Pelvic Health",
     description: "Explore how non-invasive HIFEM technology can dramatically improve pelvic floor strength and address issues like incontinence.",
     category: "Women's Health",
     subcategory: "Women's Health Physio",
-    image: "/ui-chair-breakthrough.jpg", // placeholder
-  }
+    image: "/ui-chair-breakthrough.jpg",
+    link: "/knowledge/ui-chair-breakthrough",
+  },
+  {
+    title: "5 Key Exercises to Perform After Knee Surgery",
+    description: "Regaining strength and mobility after knee surgery is crucial. Our lead physiotherapists outline five essential, safe exercises to get you back on your feet.",
+    category: "Knee Exercises",
+    subcategory: "Post-Operative Rehab",
+    image: "/knee-surgery-exercises.jpg",
+    link: "/knowledge/knee-pain-exercises",
+  },
+  {
+    title: "Physiotherapy for Chronic Low Back Pain",
+    description: "Discover evidence-based recovery options for chronic low back pain, busting myths and providing sustainable solutions.",
+    category: "Pain Management",
+    subcategory: "Wellness Tips",
+    image: "/low-back-pain.jpg",
+    link: "/knowledge/low-back-pain",
+  },
+  {
+    title: "Desk Job and Neck Pain? How Bengaluru’s Professionals Can Find Relief",
+    description: "Learn how physiotherapy can help tech professionals and desk workers overcome persistent neck pain and stiffness.",
+    category: "Pain Management",
+    subcategory: "Wellness Tips",
+    image: "/desk-neck-pain.jpg",
+    link: "/knowledge/desk-neck-pain",
+  },
+  {
+    title: "Runner’s Knee and Frozen Shoulder",
+    description: "Learn how physiotherapy can help prevent and recover from common issues like runner’s knee and frozen shoulder.",
+    category: "Sports Rehab",
+    subcategory: "Pain Management",
+    image: "/runners-knee-frozen-shoulder.jpg",
+    link: "/knowledge/runners-knee-frozen-shoulder",
+  },
+  {
+    title: "Ergonomics for Work-from-Home",
+    description: "Simple physiotherapy tips for IT professionals in Bengaluru to improve posture and reduce pain while working remotely.",
+    category: "Wellness Tips",
+    subcategory: "Pain Management",
+    image: "/ergonomics-work-from-home.jpg",
+    link: "/knowledge/ergonomics-work-from-home",
+  },
+  {
+    title: "Sports Injury First Aid",
+    description: "Learn the 5-step first aid plan for sports injuries to ensure faster recovery and better outcomes.",
+    category: "Wellness Tips",
+    subcategory: "Pain Management",
+    image: "/sports-injury-first-aid.jpg",
+    link: "/knowledge/sports-injury-first-aid",
+  },
+  {
+    title: "Physiotherapy for Seniors",
+    description: "Discover how geriatric physiotherapy helps seniors stay active, independent, and pain-free.",
+    category: "Wellness Tips",
+    subcategory: "Pain Management",
+    image: "/physiotherapy-for-seniors.jpg",
+    link: "/knowledge/physiotherapy-for-seniors",
+  },
+  {
+    title: "Pediatric Physiotherapy",
+    description: "Learn how pediatric physiotherapy empowers children to overcome movement challenges with fun, engaging therapy.",
+    category: "Neurological Care",
+    subcategory: "Wellness Tips",
+    image: "/pediatric-physiotherapy.jpg",
+    link: "/knowledge/pediatric-physiotherapy",
+  },
+  {
+    title: "Post-Surgical Rehabilitation",
+    description: "Optimize your recovery after orthopedic surgery with evidence-based physiotherapy techniques.",
+    category: "Pain Management",
+    subcategory: "Wellness Tips",
+    image: "/post-surgical-rehabilitation.jpg",
+    link: "/knowledge/post-surgical-rehabilitation",
+  },
+  {
+    title: "Understanding Electrotherapy & Modern Physio Modalities",
+    description: "Learn about TENS, ultrasound, laser therapy, and other modalities used in physiotherapy for pain relief and recovery.",
+    category: "Wellness Tips",
+    subcategory: "Pain Management",
+    image: "/electrotherapy-modalities.jpg",
+    link: "/knowledge/electrotherapy-modalities",
+  },
+  {
+    title: "The Future of Physiotherapy—Tech Innovations Reshaping Care in India",
+    description: "Explore how AI, robotics, and virtual physiotherapy are transforming care in Bengaluru and beyond.",
+    category: "Wellness Tips",
+    subcategory: "Tech Innovations",
+    image: "/future-of-physiotherapy.jpg",
+    link: "/knowledge/future-of-physiotherapy",
+  },
 ];
-
 export default function KnowledgeHubPage() {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -250,49 +340,42 @@ export default function KnowledgeHubPage() {
               </button>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {recentArticles.map((article, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="article-card group cursor-pointer"
-                >
-                  <div className="p-6">
-                    <div className="mb-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm font-semibold text-blue-600">
-                          {article.category}
-                        </span>
-                      </div>
-                      <span className="text-sm text-gray-500 font-medium">
-                        {article.subcategory}
-                      </span>
-                    </div>
-                    
-                    <h4 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-600 transition-colors">
-                      {article.title}
-                    </h4>
-                    
-                    <p className="text-gray-700 text-sm leading-relaxed mb-4">
-                      {article.description}
-                    </p>
-
-                    <div className="bg-gray-100 rounded-lg p-6 mb-4">
-                      <p className="text-gray-400 text-xs text-center">
-                        [Placeholder: Plan a video or an image as appropriate.]
-                      </p>
-                    </div>
-                    
-                    <button className="inline-flex items-center text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors">
-                      Read More
-                      <ArrowRight className="ml-1 w-4 h-4" />
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+  {recentArticles.map((article, idx) => (
+    <motion.div
+      key={idx}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: idx * 0.1 }}
+      className="article-card group cursor-pointer"
+    >
+      <a href={article.link} className="block">
+        <div className="p-6">
+          <div className="mb-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-sm font-semibold text-blue-600">
+                {article.category}
+              </span>
             </div>
+            <span className="text-sm text-gray-500 font-medium">
+              {article.subcategory}
+            </span>
+          </div>
+          <h4 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-600 transition-colors">
+            {article.title}
+          </h4>
+          <p className="text-gray-700 text-sm leading-relaxed mb-4">
+            {article.description}
+          </p>
+          <button className="inline-flex items-center text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors">
+            Read More
+            <ArrowRight className="ml-1 w-4 h-4" />
+          </button>
+        </div>
+      </a>
+    </motion.div>
+  ))}
+</div>
           </div>
         </div>
       </section>
