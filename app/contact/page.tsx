@@ -1,27 +1,50 @@
 "use client";
-import Head from 'next/head';
+import Head from "next/head";
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import LandingNavbar from "@/components/landing-navbar";
 import Footer from "@/components/footer";
-import Link from 'next/link';
+import Link from "next/link";
+import emailjs from "@emailjs/browser";
 
 export default function ContactPage() {
-    
   const [sent, setSent] = useState(false);
   const formRef = useRef(null);
 
-  // Animate form submit for demonstration (no backend post here)
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => setSent(false), 2900);
-    if (formRef.current) formRef.current.reset();
+
+    const formData = new FormData(e.target);
+
+    const templateParams = {
+      user_name: formData.get("name"),
+      user_email: formData.get("email"),
+      user_phone: formData.get("phone"),
+      message: formData.get("message"),
+    };
+
+    emailjs
+      .send(
+        "service_fsw1kjj", // Your Service ID
+        "template_eciw4ca", // Your Template ID
+        templateParams,
+        "jAlpw06qTazAWPFTh" // Your Public Key
+      )
+      .then(
+        (response) => {
+          console.log("SUCCESS!", response.status, response.text);
+          setSent(true);
+          setTimeout(() => setSent(false), 2900); // Reset the "sent" state after 2.9 seconds
+          if (formRef.current) formRef.current.reset(); // Reset the form
+        },
+        (error) => {
+          console.error("FAILED...", error);
+        }
+      );
   };
 
   return (
-    
     <>
       <Head>
         <title>Contact Us | VitalPhysio⁺</title>
@@ -43,43 +66,45 @@ export default function ContactPage() {
                 "addressLocality": "Bellandur",
                 "addressRegion": "Karnataka",
                 "postalCode": "560103",
-                "addressCountry": "IN"
+                "addressCountry": "IN",
               },
               "geo": {
                 "@type": "GeoCoordinates",
                 "latitude": "12.921956",
-                "longitude": "77.665225"
+                "longitude": "77.665225",
               },
               "url": "https://vitalphysio.plus/contact",
               "telephone": "+91 80473 59900",
-              "openingHours": "Mo-Sa 09:00-18:00"
+              "openingHours": "Mo-Sa 09:00-18:00",
             }),
           }}
         />
       </Head>
       <style jsx global>{`
-      @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap');
-      :root {
+        @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap");
+        :root {
           --vp-blue: #004f8c; /* R-0 G-79  B-140 */
           --vp-teal: #008094; /* R-0 G-128 B-148 */
           --vp-orange: #ec691f; /* R-236 G-105 B-31  */
         }
         .contact-banner {
-          background: linear-gradient(94deg,
+          background: linear-gradient(
+            94deg,
             var(--vp-blue) 0%,
-            var(--vp-teal) 100%);
+            var(--vp-teal) 100%
+          );
         }
         .contact-card {
-          background: rgba(255,255,255,0.98);
+          background: rgba(255, 255, 255, 0.98);
           border-radius: 2rem;
-          box-shadow: 0 8px 44px 0 rgba(28,150,202,0.18);
+          box-shadow: 0 8px 44px 0 rgba(28, 150, 202, 0.18);
         }
         .primary-btn {
-          background: linear-gradient(89deg,#12d2c5 0%, #3b82f6 100%);
+          background: linear-gradient(89deg, #12d2c5 0%, #3b82f6 100%);
         }
         .primary-btn:hover {
           filter: brightness(1.07) saturate(1.09);
-          box-shadow: 0 8px 32px 0 rgba(28,180,182,0.13);
+          box-shadow: 0 8px 32px 0 rgba(28, 180, 182, 0.13);
           transform: scale(1.02);
         }
         .contact-form input,
@@ -88,7 +113,7 @@ export default function ContactPage() {
           border: 1.5px solid #d7eef7;
           border-radius: 0.7rem;
           outline: none;
-          transition: border .2s, box-shadow .2s;
+          transition: border 0.2s, box-shadow 0.2s;
         }
         .contact-form input:focus,
         .contact-form textarea:focus {
@@ -100,7 +125,7 @@ export default function ContactPage() {
           color: #146b97;
         }
         .contact-gradient-card {
-          background: linear-gradient(98deg,#f3fcfe 77%,#e3f0fa 100%);
+          background: linear-gradient(98deg, #f3fcfe 77%, #e3f0fa 100%);
         }
         .quick-faqs summary {
           font-weight: 600;
@@ -108,28 +133,30 @@ export default function ContactPage() {
           cursor: pointer;
         }
         .lato-font {
-          font-family: 'Lato', sans-serif;
+          font-family: "Lato", sans-serif;
         }
       `}</style>
-      
+
       <LandingNavbar />
 
-        <section className="bg-gradient-to-r from-[var(--vp-blue)] to-[var(--vp-teal)] py-12 md:py-16 px-6">
-    <div className="container mx-auto text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-          Contact Vital Physio⁺
-        </h1>
-        <p className="mt-4 text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
-          We're here to help you on your journey to better health. Reach out to us with any questions or to schedule an appointment.
-        </p>
-      </motion.div>
-    </div>
-  </section>
+      <section className="bg-gradient-to-r from-[var(--vp-blue)] to-[var(--vp-teal)] py-12 md:py-16 px-6">
+        <div className="container mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+              Contact Vital Physio⁺
+            </h1>
+            <p className="mt-4 text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
+              We're here to help you on your journey to better health. Reach out
+              to us with any questions or to schedule an appointment.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Main Contact Section */}
       <section className="py-14 lg:pt-20 lg:pb-24 bg-white px-2 sm:px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-9">
@@ -142,27 +169,48 @@ export default function ContactPage() {
             className="flex flex-col gap-8"
           >
             <div className="contact-card px-7 py-8">
-              <h2 className="text-2xl font-bold text-sky-900 mb-4">Our Details</h2>
+              <h2 className="text-2xl font-bold text-sky-900 mb-4">
+                Our Details
+              </h2>
               <div className="mb-2">
                 <p className="text-base text-gray-700">
-                  <span className="font-semibold text-cyan-700">Address:</span><br />
-                  2<sup>nd</sup> Floor, P V Complex, Opp. Iblur Lake Park,<br />
+                  <span className="font-semibold text-cyan-700">Address:</span>
+                  <br />
+                  2<sup>nd</sup> Floor, P V Complex, Opp. Iblur Lake Park,
+                  <br />
                   Bellandur, Bengaluru, Karnataka, India – 560103
                 </p>
               </div>
               <div className="mb-2">
                 <p className="text-base text-gray-700">
-                  <span className="font-semibold text-cyan-700">Schedule an Appointment:</span> +91 80473 59900<br />
-                  <span className="font-semibold text-cyan-700">General Queries:</span> +91 80473 59090<br />
-                  <span className="font-semibold text-cyan-700">Email:</span> <a href="mailto:Contact@VitalPhysio.Plus" className="text-blue-600 underline">Contact@VitalPhysio.Plus</a>
+                  <span className="font-semibold text-cyan-700">
+                    Schedule an Appointment:
+                  </span>{" "}
+                  +91 80473 59900
+                  <br />
+                  <span className="font-semibold text-cyan-700">
+                    General Queries:
+                  </span>{" "}
+                  +91 80473 59090
+                  <br />
+                  <span className="font-semibold text-cyan-700">Email:</span>{" "}
+                  <a
+                    href="mailto:Contact@VitalPhysio.Plus"
+                    className="text-blue-600 underline"
+                  >
+                    Contact@VitalPhysio.Plus
+                  </a>
                 </p>
               </div>
               <div className="mt-2 text-base text-gray-700">
-                <span className="font-semibold text-cyan-700">Opening Hours:</span><br />
+                <span className="font-semibold text-cyan-700">
+                  Opening Hours:
+                </span>
+                <br />
                 Every Day: 07:00 AM – 09:00 PM
               </div>
             </div>
-            
+
             {/* MAP */}
             <div className="contact-card px-0 pb-0 pt-0 overflow-hidden">
               <iframe
@@ -174,7 +222,7 @@ export default function ContactPage() {
                   borderRadius: "2rem",
                   width: "100%",
                   minHeight: 200,
-                  maxHeight: 270
+                  maxHeight: 270,
                 }}
                 allowFullScreen
                 loading="lazy"
@@ -194,7 +242,9 @@ export default function ContactPage() {
           >
             {/* FORM */}
             <div className="contact-card px-7 py-8 flex flex-col">
-              <h2 className="text-2xl font-bold text-sky-900 mb-4">Send Us a Message</h2>
+              <h2 className="text-2xl font-bold text-sky-900 mb-4">
+                Send Us a Message
+              </h2>
               <form
                 className="contact-form flex flex-col gap-4"
                 autoComplete="off"
@@ -203,26 +253,50 @@ export default function ContactPage() {
               >
                 <div className="flex flex-col gap-2">
                   <label htmlFor="name">Your Name*</label>
-                  <input required id="name" type="text" name="name" minLength={2} className="py-2 px-4 w-full" />
+                  <input
+                    required
+                    id="name"
+                    type="text"
+                    name="name"
+                    minLength={2}
+                    className="py-2 px-4 w-full"
+                  />
                 </div>
                 <div className="flex flex-col gap-2">
                   <label htmlFor="email">Email Address*</label>
-                  <input required id="email" type="email" name="email" className="py-2 px-4 w-full" />
+                  <input
+                    required
+                    id="email"
+                    type="email"
+                    name="email"
+                    className="py-2 px-4 w-full"
+                  />
                 </div>
                 <div className="flex flex-col gap-2">
                   <label htmlFor="phone">Phone Number</label>
-                  <input id="phone" type="tel" name="phone" className="py-2 px-4 w-full" />
+                  <input
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    className="py-2 px-4 w-full"
+                  />
                 </div>
                 <div className="flex flex-col gap-2">
                   <label htmlFor="message">Your Message*</label>
-                  <textarea required id="message" name="message" rows={4} className="py-2 px-4 resize-none"></textarea>
+                  <textarea
+                    required
+                    id="message"
+                    name="message"
+                    rows={4}
+                    className="py-2 px-4 resize-none"
+                  ></textarea>
                 </div>
                 <motion.button
                   type="submit"
                   whileHover={{
                     scale: 1.035,
                     boxShadow: "0 8px 36px 0 rgba(30,176,220,0.12)",
-                    background: "linear-gradient(90deg,#3ee3b8 0%, #33b9ff 100%)"
+                    background: "linear-gradient(90deg,#3ee3b8 0%, #33b9ff 100%)",
                   }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 270, damping: 19 }}
@@ -255,24 +329,34 @@ export default function ContactPage() {
           className="max-w-4xl mx-auto px-4"
         >
           <div className="contact-gradient-card rounded-2xl shadow px-7 py-7">
-            <h3 className="text-xl font-semibold text-sky-900 mb-4 text-center">Quick Questions</h3>
+            <h3 className="text-xl font-semibold text-sky-900 mb-4 text-center">
+              Quick Questions
+            </h3>
             <div className="quick-faqs flex flex-col gap-3">
               <details>
                 <summary>How do I book an appointment?</summary>
                 <div className="ml-3 mt-2 text-gray-700">
-                  The easiest way is to call us at <b>+91-80473 59900</b> or fill out the contact form. You can also chat with our C³—your personal Concierge Care Coordinator for instant scheduling help.
+                  The easiest way is to call us at <b>+91-80473 59900</b> or
+                  fill out the contact form. You can also chat with our C³—your
+                  personal Concierge Care Coordinator for instant scheduling
+                  help.
                 </div>
               </details>
               <details>
                 <summary>What should I bring to my first session?</summary>
                 <div className="ml-3 mt-2 text-gray-700">
-                  Bring any relevant medical documents (X-rays, MRI, doctor's notes) and wear comfortable clothing. You can also fill your medical history in advance via our Patient Portal to save time.
+                  Bring any relevant medical documents (X-rays, MRI, doctor's
+                  notes) and wear comfortable clothing. You can also fill your
+                  medical history in advance via our Patient Portal to save
+                  time.
                 </div>
               </details>
               <details>
                 <summary>Do you accept health insurance?</summary>
                 <div className="ml-3 mt-2 text-gray-700">
-                  We do not have direct empanelment, but we provide the required documentation for you to seek reimbursement after your therapy depending on your policy.
+                  We do not have direct empanelment, but we provide the required
+                  documentation for you to seek reimbursement after your therapy
+                  depending on your policy.
                 </div>
               </details>
             </div>
@@ -290,16 +374,30 @@ export default function ContactPage() {
           className="max-w-4xl mx-auto px-4"
         >
           <div className="rounded-2xl shadow px-7 py-7">
-            <h3 className="text-xl font-semibold text-sky-900 mb-4 text-center">Learn More</h3>
+            <h3 className="text-xl font-semibold text-sky-900 mb-4 text-center">
+              Learn More
+            </h3>
             <div className="flex flex-col gap-3 text-center">
               <p>
-                Learn more <Link href="/about" className="text-blue-600 underline">about us</Link> and our mission.
+                Learn more{" "}
+                <Link href="/about" className="text-blue-600 underline">
+                  about us
+                </Link>{" "}
+                and our mission.
               </p>
               <p>
-                Explore our <Link href="/services" className="text-blue-600 underline">services</Link> to see how we can help you.
+                Explore our{" "}
+                <Link href="/services" className="text-blue-600 underline">
+                  services
+                </Link>{" "}
+                to see how we can help you.
               </p>
               <p>
-                Have questions? Visit our <Link href="/faq" className="text-blue-600 underline">FAQ page</Link>.
+                Have questions? Visit our{" "}
+                <Link href="/faq" className="text-blue-600 underline">
+                  FAQ page
+                </Link>
+                .
               </p>
             </div>
           </div>

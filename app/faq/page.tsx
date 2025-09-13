@@ -1,10 +1,11 @@
 "use client";
 import Head from "next/head";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import LandingNavbar from "@/components/landing-navbar";
 import Footer from "@/components/footer";
-import { motion, AnimatePresence } from "framer-motion";
-// You can create a separate file for icons or import them from a library like 'react-icons'
+import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
+
 const PlusIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -59,6 +60,41 @@ const FaqItem = ({ question, children }) => {
 };
 
 export default function App() {
+  const [sent, setSent] = useState(false);
+  const formRef = useRef(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    const templateParams = {
+      user_name: formData.get("name"),
+      user_email: formData.get("email"),
+      user_phone: formData.get("phone"),
+      message: formData.get("question"),
+    };
+
+    emailjs
+      .send(
+        "service_fsw1kjj", // Your Service ID
+        "template_eciw4ca", // Your Template ID
+        templateParams,
+        "jAlpw06qTazAWPFTh" // Your Public Key
+      )
+      .then(
+        (response) => {
+          console.log("SUCCESS!", response.status, response.text);
+          setSent(true);
+          setTimeout(() => setSent(false), 2900); // Reset the "sent" state after 2.9 seconds
+          if (formRef.current) formRef.current.reset(); // Reset the form
+        },
+        (error) => {
+          console.error("FAILED...", error);
+        }
+      );
+  };
+
   return (
     <>
       <Head>
@@ -133,13 +169,13 @@ export default function App() {
                   Frequently Asked Questions
                 </h1>
                 <p className="mt-4 text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
-                  Find answers to common questions about our physiotherapy services, booking process, and more at VitalPhysio⁺.
+                  Find answers to common questions about our physiotherapy
+                  services, booking process, and more at VitalPhysio⁺.
                 </p>
               </motion.div>
             </div>
           </section>
 
-          {/* This div now correctly constrains the rest of the content */}
           <div className="container mx-auto px-6 py-12 md:py-20">
             {/* FAQs Section */}
             <section className="max-w-3xl mx-auto">
@@ -171,57 +207,6 @@ export default function App() {
                     questions based on your personal rehabilitation plan.
                   </p>
                 </FaqItem>
-
-                <FaqItem question="How do I book an appointment?">
-                  <p>
-                    You can easily book by clicking the "Book Your Consultation"
-                    button on our site, which takes you to our contact page, or
-                    by calling our clinic directly. Soon, you'll also be able to
-                    ask AI assistants like ChatGPT to schedule for you.
-                  </p>
-                </FaqItem>
-
-                <FaqItem question="Do you accept health insurance?">
-                  <p>
-                    We are currently not empanelled by any insurance company.
-                    However, we would be able to help you with all the required
-                    documentation that you may require for seeking a
-                    reimbursement of your treatment charges after completion of
-                    your therapy at VitalPhysio.
-                  </p>
-                </FaqItem>
-
-                <FaqItem question="What should I bring to my first session?">
-                  <p>
-                    Please complete our online medical history form via the
-                    Patient Portal beforehand. On the day of your visit, bring
-                    any relevant reports (like X-rays or doctor's notes) and
-                    wear comfortable, loose-fitting clothing.
-                  </p>
-                </FaqItem>
-
-                <FaqItem question="Do you offer home or online therapy?">
-                  <p>
-                    Yes, our Home & Tele-Rehabilitation program provides
-                    personalized care in the comfort of your home. We use
-                    virtual sessions and digital exercise plans to ensure you
-                    receive expert guidance without needing to travel.
-                  </p>
-                </FaqItem>
-
-                <FaqItem question="Can physiotherapy help me avoid surgery?">
-                  <p>
-                    In many cases, yes. For musculoskeletal conditions like back
-                    pain or joint injuries, targeted physiotherapy can
-                    significantly improve function and reduce pain, often
-                    delaying or completely eliminating the need for surgery. You
-                    can{" "}
-                    <a href="#" className="text-teal-600 underline">
-                      see the conditions we treat
-                    </a>
-                    .
-                  </p>
-                </FaqItem>
               </div>
             </section>
 
@@ -236,7 +221,11 @@ export default function App() {
                 Our expert team will get back to you shortly.
               </p>
 
-              <form className="space-y-6">
+              <form
+                className="space-y-6"
+                ref={formRef}
+                onSubmit={handleSubmit}
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label
@@ -248,7 +237,9 @@ export default function App() {
                     <input
                       type="text"
                       id="name"
+                      name="name"
                       className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                      required
                     />
                   </div>
                   <div>
@@ -261,7 +252,9 @@ export default function App() {
                     <input
                       type="email"
                       id="email"
+                      name="email"
                       className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                      required
                     />
                   </div>
                 </div>
@@ -275,6 +268,7 @@ export default function App() {
                   <input
                     type="tel"
                     id="phone"
+                    name="phone"
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
                   />
                 </div>
@@ -287,8 +281,10 @@ export default function App() {
                   </label>
                   <textarea
                     id="question"
+                    name="question"
                     rows={4}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                    required
                   ></textarea>
                 </div>
                 <div className="text-center">
@@ -296,8 +292,13 @@ export default function App() {
                     type="submit"
                     className="bg-teal-600 text-white font-semibold px-8 py-3 rounded-full hover:bg-teal-700 transition-colors duration-300"
                   >
-                    Submit to Our Experts
+                    {sent ? "Message Sent!" : "Submit to Our Experts"}
                   </button>
+                  {sent && (
+                    <p className="text-green-600 font-semibold pt-2">
+                      Thank you! We'll get back to you shortly.
+                    </p>
+                  )}
                 </div>
               </form>
             </section>

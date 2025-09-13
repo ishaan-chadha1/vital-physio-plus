@@ -142,7 +142,6 @@ export default function ContactForm() {
                 Send Message
               </button>
             </form>
-
             <div className="mt-8 pt-6 border-t border-gray-200">
               <h3 className="font-semibold text-lg mb-4">Contact Information</h3>
               <div className="space-y-2 text-gray-600">
