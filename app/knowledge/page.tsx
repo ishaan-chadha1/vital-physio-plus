@@ -36,15 +36,15 @@ const recentArticles = [
     description: "Discover evidence-backed pathways to relieve chronic low back pain through active physiotherapy and lifestyle changes.",
     category: "Pain Management",
     subcategory: "Wellness Tips",
-    image: "/low-back-pain.jpg",
+    image: "/low-back-pain.jpg", // Photograph: Person doing guided back exercises or physiotherapy session
     link: "/knowledge/low-back-pain",
   },
   {
-    title: "Desk Job and Neck Pain",
+    title: "Desk Job and Neck Pain? How Bengaluru’s Professionals Can Find Relief",
     description: "Learn how to combat “tech neck” with targeted exercises, ergonomic tips, and expert physiotherapy for desk workers.",
     category: "Pain Management",
     subcategory: "Wellness Tips",
-    image: "/desk-neck-pain.jpg",
+    image: "/desk-neck-pain.jpg", // Photograph: Office worker stretching neck at desk or ergonomic workstation setup
     link: "/knowledge/desk-neck-pain",
   },
   {
@@ -52,15 +52,15 @@ const recentArticles = [
     description: "Explore tailored physiotherapy solutions for pregnancy, postpartum, menopause, and pelvic health challenges.",
     category: "Women's Health",
     subcategory: "Pain Management, Wellness Tips",
-    image: "/womens-health-physio.jpg",
-    link: "/knowledge/womens-health-physio",
+    image: "/womens-health-physio.jpg", // Short Video: Female physiotherapist demonstrating pelvic floor exercises or prenatal care
+    link: "/knowledge/ui-chair-breakthrough",
   },
   {
-    title: "Runner’s Knee & Frozen Shoulder",
+    title: "“Runner’s Knee” & “Frozen Shoulder”",
     description: "Understand causes and recovery strategies for common urban sports injuries like runner’s knee and frozen shoulder.",
     category: "Sports Rehab",
     subcategory: "Pain Management, Wellness Tips",
-    image: "/runners-knee-frozen-shoulder.jpg",
+    image: "/runners-knee-frozen-shoulder.jpg", // Photograph: Jogger with knee brace or physiotherapist assisting shoulder rehab
     link: "/knowledge/runners-knee-frozen-shoulder",
   },
   {
@@ -68,7 +68,7 @@ const recentArticles = [
     description: "Tips for IT professionals to set up ergonomic home workstations and reduce pain with expert physiotherapy guidance.",
     category: "Wellness Tips",
     subcategory: "Pain Management",
-    image: "/ergonomics-work-from-home.jpg",
+    image: "/ergonomics-work-from-home.jpg", // Photograph: Home office setup with ergonomic accessories or stretching break
     link: "/knowledge/ergonomics-work-from-home",
   },
   {
@@ -76,7 +76,7 @@ const recentArticles = [
     description: "Immediate first aid steps for sports injuries to minimize damage and accelerate healing before physiotherapy.",
     category: "Sports Rehab",
     subcategory: "Pain Management",
-    image: "/sports-injury-first-aid.jpg",
+    image: "/sports-injury-first-aid.jpg", // Short Video: Demonstration of RICE method (Rest, Ice, Compression, Elevation)
     link: "/knowledge/sports-injury-first-aid",
   },
   {
@@ -84,7 +84,7 @@ const recentArticles = [
     description: "Helping seniors maintain mobility, reduce pain, and prevent falls through personalized geriatric physiotherapy.",
     category: "Wellness Tips",
     subcategory: "Pain Management",
-    image: "/physiotherapy-for-seniors.jpg",
+    image: "/physiotherapy-for-seniors.jpg", // Photograph: Elderly person doing balance exercises with physiotherapist support
     link: "/knowledge/physiotherapy-for-seniors",
   },
   {
@@ -92,7 +92,7 @@ const recentArticles = [
     description: "Fun and family-centered strategies to support children’s developmental and rehabilitative needs through physiotherapy.",
     category: "Neurological Care",
     subcategory: "Wellness Tips",
-    image: "/pediatric-physiotherapy.jpg",
+    image: "/pediatric-physiotherapy.jpg", // Short Video: Pediatric physiotherapist engaging a child with play-based exercises
     link: "/knowledge/pediatric-physiotherapy",
   },
   {
@@ -100,24 +100,48 @@ const recentArticles = [
     description: "Evidence-based post-op physiotherapy protocols to restore function and strength after orthopedic surgeries.",
     category: "Pain Management",
     subcategory: "Wellness Tips",
-    image: "/post-surgical-rehabilitation.jpg",
+    image: "/post-surgical-rehabilitation.jpg", // Photograph: Patient doing guided leg exercises with physiotherapist
     link: "/knowledge/post-surgical-rehabilitation",
   },
   {
-    title: "Understanding Electrotherapy",
+    title: "Understanding Electrotherapy & Modern Physio Modalities",
     description: "A science-backed guide to electrotherapy modalities and their role within a holistic rehabilitation plan.",
     category: "Pain Management",
     subcategory: "Wellness Tips",
-    image: "/electrotherapy-modalities.jpg",
+    image: "/electrotherapy-modalities.jpg", // Photograph: Physiotherapy machine in use or therapist applying TENS
     link: "/knowledge/electrotherapy-modalities",
   },
   {
-    title: "The Future of Physiotherapy",
-    description: "Exploring telehealth, AI, robotics, and wearable tech shaping the future of accessible, personalized physiotherapy.",
+    title: "The Future of Physiotherapy—Tech Innovations Reshaping Care in India",
+    description: "Explore how AI, robotics, and virtual physiotherapy are transforming care in Bengaluru and beyond.",
     category: "Wellness Tips",
-    subcategory: "",
-    image: "/future-of-physiotherapy.jpg",
+    subcategory: "Tech Innovations",
+    image: "/future-of-physiotherapy.jpg", // Short Video: Animated overview of AI and wearable tech in physiotherapy
     link: "/knowledge/future-of-physiotherapy",
+  },
+  {
+    title: "A Physiotherapist's Guide to Managing Fibromyalgia Pain",
+    description: "Learn how a structured physiotherapy program can help manage the chronic pain and fatigue associated with fibromyalgia.",
+    category: "Pain Management",
+    subcategory: "Chronic Pain",
+    image: "/fibromyalgia-guide.jpg",
+    link: "/knowledge/fibromyalgia-guide",
+  },
+  {
+    title: "Preventing Common Shoulder Injuries in Swimmers",
+    description: "Discover key strengthening and stretching exercises to protect your shoulders and improve your performance in the pool.",
+    category: "Sports Rehab",
+    subcategory: "Sports Injury",
+    image: "/swimmer-shoulder.jpg",
+    link: "/knowledge/swimmer-shoulder",
+  },
+  {
+    title: "5 Key Exercises to Perform After Knee Surgery",
+    description: "Regaining strength and mobility after knee surgery is crucial. Our lead physiotherapists outline five essential, safe exercises to get you back on your feet.",
+    category: "Knee Exercises",
+    subcategory: "Post-Operative Rehab",
+    image: "/knee-surgery-exercises.jpg",
+    link: "/knowledge/knee-pain-exercises",
   },
 ];
 export default function KnowledgeHubPage() {
@@ -263,48 +287,50 @@ export default function KnowledgeHubPage() {
       {/* MAIN CONTENT */}
       <section className="bg-gray-50 py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-6">
-          
-          {/* FEATURED ARTICLE */}
-          <div className="mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="featured-card p-8 md:p-12"
-            >
-              <div className="flex flex-col md:flex-row items-center gap-8">
-                <div className="flex-1">
-                  <div className="mb-4">
-                    <span className="tag-badge">{featuredArticle.category}</span>
-                    <span className="ml-3 text-white/80 text-sm font-medium">
-                      Featured Article
-                    </span>
-                  </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-                    {featuredArticle.title}
-                  </h2>
-                  <p className="text-white/90 text-lg mb-6 leading-relaxed">
-                    {featuredArticle.subtitle}
-                  </p>
-                  <div className="mb-6">
-                    <span className="inline-flex items-center bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium">
-                      <Tag className="w-4 h-4 mr-2" />
-                      {featuredArticle.tag}
-                    </span>
-                  </div>
-                  <button className="inline-flex items-center bg-white text-blue-900 font-semibold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors">
-                    Read Full Article
-                    <ChevronRight className="ml-2 w-5 h-5" />
-                  </button>
-                </div>
-                <div className="w-full md:w-1/3">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 text-center">
-                    <p className="text-white/60 text-sm mb-2">[Placeholder: Plan a video or an image as appropriate.]</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+
+<div className="mb-16">
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    className="featured-card p-8 md:p-12"
+  >
+    <div className="flex flex-col md:flex-row items-center gap-8">
+      <div className="flex-1">
+        <div className="mb-4">
+          <span className="tag-badge">{featuredArticle.category}</span>
+          <span className="ml-3 text-white/80 text-sm font-medium">
+            Featured Article
+          </span>
+        </div>
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+          {featuredArticle.title}
+        </h2>
+        <p className="text-white/90 text-lg mb-6 leading-relaxed">
+          {featuredArticle.subtitle}
+        </p>
+        <div className="mb-6">
+          <span className="inline-flex items-center bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium">
+            <Tag className="w-4 h-4 mr-2" />
+            {featuredArticle.tag}
+          </span>
+        </div>
+        <a
+          href="/knowledge/knee-pain-exercises" // Update with the correct link to the article
+          className="inline-flex items-center bg-white text-blue-900 font-semibold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors"
+        >
+          Read Full Article
+          <ChevronRight className="ml-2 w-5 h-5" />
+        </a>
+      </div>
+      <div className="w-full md:w-1/3">
+        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 text-center">
+          <p className="text-white/60 text-sm mb-2">[Placeholder: Plan a video or an image as appropriate.]</p>
+        </div>
+      </div>
+    </div>
+  </motion.div>
+</div>
 
           {/* RECENT ARTICLES */}
           <div>
