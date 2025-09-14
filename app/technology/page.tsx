@@ -52,6 +52,7 @@ const modalitiesData = [
   {
     id: 1,
     title: "High-Intensity Laser",
+    anchorId: "high-intensity-laser", // Add this
     image: "/Laser.png",
     placeholderImage:
       "https://via.placeholder.com/600x400/ffa500/ffffff?text=High-Intensity+Laser",
@@ -68,6 +69,7 @@ const modalitiesData = [
   {
     id: 2,
     title: "rPMS (Repetitive Magnetic Stimulation)",
+    anchorId: "rpms", // Add this
     image: "/rPMS.jpg",
     placeholderImage:
       "https://via.placeholder.com/600x400/ff69b4/ffffff?text=rPMS+Device",
@@ -83,6 +85,7 @@ const modalitiesData = [
   {
     id: 3,
     title: "AI-Powered Smart Gym (Aeroleap Pro)",
+    anchorId: "ai-smart-gym", // Add this
     image: "/AroleapPro.png",
     placeholderImage:
       "https://via.placeholder.com/600x400/9370db/ffffff?text=Smart+Gym",
@@ -97,6 +100,7 @@ const modalitiesData = [
   {
     id: 4,
     title: "Shockwave Therapy",
+    anchorId: "shockwave-therapy", // Add this
     image: "/HIL.png",
     placeholderImage:
       "https://via.placeholder.com/600x400/90ee90/ffffff?text=Shockwave+Therapy",
@@ -112,6 +116,7 @@ const modalitiesData = [
   {
     id: 5,
     title: "UI Chair (HIFEM Technology)",
+    anchorId: "ui-chair", // Add this
     image: "/ui-chair.jpg",
     placeholderImage:
       "https://via.placeholder.com/600x400/6495ed/ffffff?text=UI+Chair",
@@ -130,6 +135,7 @@ const modalitiesData = [
   {
     id: 6,
     title: "Spinal Decompression",
+    anchorId: "spinal-decompression", // Add this
     image: "/Spinal-Decompression.jpg",
     placeholderImage:
       "https://via.placeholder.com/400x400/4169e1/ffffff?text=VitalPhysio",
@@ -142,7 +148,6 @@ const modalitiesData = [
     benefit: "Reduces nerve compression, eases pain.",
   },
 ];
-
 // --- COMPONENT ---
 
 export default function TechnologyPage() {
@@ -152,6 +157,32 @@ export default function TechnologyPage() {
   const handleImageError = (modalityId) => {
     setImageErrors((prev) => ({ ...prev, [modalityId]: true }));
   };
+   useEffect(() => {
+    const handleAnchorScroll = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.getElementById(hash.substring(1));
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }, 100); // Small delay to ensure page is loaded
+        }
+      }
+    };
+
+    // Handle initial load
+    handleAnchorScroll();
+
+    // Handle hash changes
+    window.addEventListener('hashchange', handleAnchorScroll);
+
+    return () => {
+      window.removeEventListener('hashchange', handleAnchorScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -182,6 +213,15 @@ export default function TechnologyPage() {
             var(--vp-blue) 0%,
             var(--vp-teal) 100%
           );
+        }
+        .scroll-mt-24 {
+          scroll-margin-top: 6rem;
+        }
+        .floating-shadow {
+          filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.15));
+        }
+        html {
+          scroll-behavior: smooth;
         }
         :root {
           --vp-blue: #004f8c;
@@ -287,26 +327,28 @@ export default function TechnologyPage() {
           </div>
         </div>
       </section>
-        
+
       {/* MODALITIES SECTION */}
       <section className="bg-white py-8 md:py-14">
-  <div className="text-center mb-12">
-    <h2 className="text-3xl md:text-4xl font-bold text-blue-900 leading-tight">
-        Explore how our cutting-edge equipment can benefit your journey to vitality.
-    </h2>
-    <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-teal-400 mx-auto mt-6 rounded-full"></div>
-  </div>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-blue-900 leading-tight">
+            Explore how our cutting-edge equipment can benefit your journey to
+            vitality.
+          </h2>
+          <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-teal-400 mx-auto mt-6 rounded-full"></div>
+        </div>
         <div className="max-w-7xl mx-auto flex flex-col gap-16 md:gap-20 px-4">
           {modalitiesData.map((modality, idx) => (
             <motion.div
               key={modality.id}
+              id={modality.anchorId}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
               className={`flex flex-col md:flex-row items-center ${
                 idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              } md:gap-12 gap-8`}
+              } md:gap-12 gap-8 scroll-mt-24`}
             >
               {/* Image - No background, just the image with shadow */}
               <div className="w-full md:w-1/2 flex justify-center">
@@ -421,13 +463,11 @@ export default function TechnologyPage() {
             className="inline-flex items-center bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold py-4 px-8 md:px-12 rounded-full shadow-xl text-base md:text-lg transition-all duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
-
-                  data-cal-namespace="consultation"
-                  data-cal-link="vital-physio-plus/consultation"
-                  data-cal-config='{"layout":"month_view"}'
-                 >
-                  Book Now
-
+            data-cal-namespace="consultation"
+            data-cal-link="vital-physio-plus/consultation"
+            data-cal-config='{"layout":"month_view"}'
+          >
+            Book Now
             <ChevronRight className="ml-2 w-5 h-5" />
           </motion.a>
         </motion.div>

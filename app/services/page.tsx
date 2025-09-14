@@ -1874,11 +1874,6 @@ export default function ServicesPage() {
     setConditionModalData(null);
   };
   
-  // Add this function near the top of your component, before the return statement
-  const handleTechRedirect = (techPath: string) => {
-    window.location.href = `/technology${techPath}`;
-  };
-
   return (
     <>
       <Head>
@@ -2162,79 +2157,84 @@ const AutoCarousel = ({
 };
 
 
-const AdvancedTechniquesSection = () => (
-  <section className="bg-gradient-to-br from-[var(--vp-teal)] to-[var(--vp-blue)] py-20 md:py-28">
-    <div className="container mx-auto px-6">
-      <div className="text-center mb-16">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-bold text-white mb-4"
-        >
-          Advanced Therapeutic Techniques
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="text-lg text-blue-100 max-w-3xl mx-auto"
-        >
-          We complement core therapies with state-of-the-art modalities to
-          accelerate healing and improve outcomes.
-        </motion.p>
-      </div>
+const AdvancedTechniquesSection = () => {
+  // Add this function inside the component
+  const handleTechRedirect = (techPath: string) => {
+    window.location.href = `/technology${techPath}`;
+  };
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {advancedTechniquesData.map((technique, index) => (
-          <motion.div
-            key={technique.id}
-            initial={{ opacity: 0, y: 30 }}
+  return (
+    <section className="bg-gradient-to-br from-[var(--vp-teal)] to-[var(--vp-blue)] py-20 md:py-28">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            className="group"
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-bold text-white mb-4"
           >
-            <button
-              onClick={() => handleTechRedirect(`#${technique.anchorId}`)}
-              className="w-full bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border-2 border-gray-100 hover:border-gray-200 min-h-[320px] flex flex-col text-left"
-            >
-              <div
-                className={`p-6 bg-white border-b-4 ${technique.borderColor}`}
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div
-                    className={`w-12 h-12 rounded-xl bg-gray-50 border ${technique.borderColor} flex items-center justify-center`}
-                  >
-                    <technique.icon
-                      className={`w-8 h-8 ${technique.iconColor}`}
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-[var(--vp-blue)] transition-colors line-clamp-2">
-                    {technique.title}
-                  </h3>
-                </div>
-              </div>
-              <div className="p-6 bg-white flex-1 flex flex-col">
-                <p className="text-gray-600 leading-relaxed mb-4 flex-1">
-                  {technique.description}
-                </p>
-                <div className="flex items-center text-[var(--vp-blue)] font-semibold text-sm group-hover:gap-2 transition-all mt-auto">
-                  Learn More About Technology
-                  <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </button>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-// --- AUTO CAROUSEL SECTION ---
+            Advanced Therapeutic Techniques
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="text-lg text-blue-100 max-w-3xl mx-auto"
+          >
+            We complement core therapies with state-of-the-art modalities to
+            accelerate healing and improve outcomes.
+          </motion.p>
+        </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {advancedTechniquesData.map((technique, index) => (
+            <motion.div
+              key={technique.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              className="group"
+            >
+              <button
+                onClick={() => handleTechRedirect(`#${technique.anchorId}`)}
+                className="w-full bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border-2 border-gray-100 hover:border-gray-200 min-h-[320px] flex flex-col text-left"
+              >
+                <div
+                  className={`p-6 bg-white border-b-4 ${technique.borderColor}`}
+                >
+                  <div className="flex items-center gap-4 mb-4">
+                    <div
+                      className={`w-12 h-12 rounded-xl bg-gray-50 border ${technique.borderColor} flex items-center justify-center`}
+                    >
+                      <technique.icon
+                        className={`w-8 h-8 ${technique.iconColor}`}
+                      />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-[var(--vp-blue)] transition-colors line-clamp-2">
+                      {technique.title}
+                    </h3>
+                  </div>
+                </div>
+                <div className="p-6 bg-white flex-1 flex flex-col">
+                  <p className="text-gray-600 leading-relaxed mb-4 flex-1">
+                    {technique.description}
+                  </p>
+                  <div className="flex items-center text-[var(--vp-blue)] font-semibold text-sm group-hover:gap-2 transition-all mt-auto">
+                    Learn More About Technology
+                    <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </button>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 const AutoCarouselSection = ({
   onConditionClick,
 }: {
@@ -2367,7 +2367,27 @@ const ConditionModal = ({
         className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden border-4 border-[#004F8C]"
         onClick={handleModalContentClick}
       >
+        {/* Close Button - Fixed position */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-white hover:text-gray-200 transition-colors bg-black/20 rounded-full p-3 shadow-lg backdrop-blur-sm z-20"
+          aria-label="Close modal"
+        >
+          <X size={24} />
+        </button>
+
         {/* Scrollable content container */}
+        <div className="max-h-[90vh] overflow-y-auto">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-[#004F8C] to-[#008094] text-white p-8 pb-6">
+            <h2 className="text-white text-3xl md:text-4xl font-bold leading-tight mb-2">
+              {conditionInfo.title}
+            </h2>
+            <p className="text-blue-100 text-lg">
+              {conditionInfo.subtitle}
+            </p>
+          </div>
+
           {/* Content */}
           <div className="p-8 space-y-8 bg-white">
             {/* Description */}
@@ -2466,20 +2486,10 @@ const ConditionModal = ({
             </div>
           </div>
         </div>
-
-        {/* Close Button - Fixed position */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-white hover:text-gray-200 transition-colors bg-black/20 rounded-full p-3 shadow-lg backdrop-blur-sm z-20"
-          aria-label="Close modal"
-        >
-          <X size={24} />
-        </button>
       </motion.div>
     </motion.div>
   );
 };
-
 
 // --- HERO SECTION ---
 
