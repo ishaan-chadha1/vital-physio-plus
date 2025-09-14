@@ -214,6 +214,7 @@ const advancedTechniquesData = [
     description:
       "A non-invasive treatment that uses acoustic waves to treat chronic pain and promote the regeneration of damaged tissues.",
     techPage: "/technology#shockwave",
+    anchorId: "shockwave-therapy", // Add this
   },
   {
     id: 11,
@@ -224,6 +225,7 @@ const advancedTechniquesData = [
     description:
       "Gentle, non-surgical therapy to relieve back and neck pain by reducing pressure on the spinal discs and nerves.",
     techPage: "/technology#spinal-decompression",
+    anchorId: "spinal-decompression", // Add this
   },
   {
     id: 12,
@@ -234,6 +236,7 @@ const advancedTechniquesData = [
     description:
       "State-of-the-art equipment for advanced rehabilitation and performance enhancement exercises.",
     techPage: "/technology#aeroleap-pro",
+    anchorId: "ai-smart-gym", // Add this
   },
   {
     id: 13,
@@ -244,6 +247,7 @@ const advancedTechniquesData = [
     description:
       "Repetitive Peripheral Magnetic Stimulation (rPMS) is an advanced modality for pain management and muscle re-education.",
     techPage: "/technology#rpms",
+    anchorId: "rpms", // Add this
   },
   {
     id: 14,
@@ -254,6 +258,7 @@ const advancedTechniquesData = [
     description:
       "Specialized therapeutic chair designed for pelvic floor rehabilitation and strengthening.",
     techPage: "/technology#ui-chair",
+    anchorId: "ui-chair", // Add this
   },
   {
     id: 15,
@@ -264,6 +269,7 @@ const advancedTechniquesData = [
     description:
       "Advanced laser therapy to penetrate deep into tissue, accelerating cellular reproduction and growth for faster healing.",
     techPage: "/technology#high-intensity-laser",
+    anchorId: "high-intensity-laser", // Add this
   },
 ];
 
@@ -1868,6 +1874,11 @@ export default function ServicesPage() {
     setConditionModalData(null);
   };
   
+  // Add this function near the top of your component, before the return statement
+  const handleTechRedirect = (techPath: string) => {
+    window.location.href = `/technology${techPath}`;
+  };
+
   return (
     <>
       <Head>
@@ -2186,9 +2197,9 @@ const AdvancedTechniquesSection = () => (
             viewport={{ once: true, amount: 0.2 }}
             className="group"
           >
-            <Link
-              href={technique.techPage}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border-2 border-gray-100 hover:border-gray-200 min-h-[320px] flex flex-col"
+            <button
+              onClick={() => handleTechRedirect(`#${technique.anchorId}`)}
+              className="w-full bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border-2 border-gray-100 hover:border-gray-200 min-h-[320px] flex flex-col text-left"
             >
               <div
                 className={`p-6 bg-white border-b-4 ${technique.borderColor}`}
@@ -2215,7 +2226,7 @@ const AdvancedTechniquesSection = () => (
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
-            </Link>
+            </button>
           </motion.div>
         ))}
       </div>
@@ -2256,21 +2267,6 @@ const AutoCarouselSection = ({
     </div>
   </section>
 );
-
-// --- CONDITION MODAL ---
-
-// ...existing code...
-
-// --- CONDITION MODAL ---
-
-// ...existing code...
-
-// --- CONDITION MODAL ---
-
-// ...existing code...
-
-// --- CONDITION MODAL ---
-
 
 const ConditionModal = ({
   data,
@@ -2372,17 +2368,6 @@ const ConditionModal = ({
         onClick={handleModalContentClick}
       >
         {/* Scrollable content container */}
-        <div className="overflow-y-auto no-scrollbar max-h-[90vh]">
-          {/* Header */}
-          <div className="p-8 bg-gradient-to-r from-[#004F8C] to-[#008094] text-white sticky top-0 z-10">
-            <h1 className="text-white text-3xl md:text-4xl font-bold mb-2">
-              {conditionInfo.title}
-            </h1>
-            <p className="text-lg text-blue-100">
-              {conditionInfo.subtitle}
-            </p>
-          </div>
-
           {/* Content */}
           <div className="p-8 space-y-8 bg-white">
             {/* Description */}
