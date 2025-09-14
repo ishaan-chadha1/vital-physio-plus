@@ -2281,30 +2281,46 @@ const ConditionModal = ({
   };
 
   // Dynamic CTA messages
-  const getCtaMessage = (condition: string) => {
-    if (conditionInfo.ctaMessage) {
-      return conditionInfo.ctaMessage;
-    }
-    
-    switch (condition) {
-      case "Chronic pain":
-        return "Take the next step—regain control, reduce pain, and restore your best life with VitalPhysio⁺. Book your chronic pain assessment today.";
-      case "Muscle strains":
-        return "Book your assessment—experience tailored care, faster recovery, and lasting results.";
-      case "Arthritis":
-        return "Take control of your arthritis with a holistic program proven to improve mobility, reduce pain, and enhance life quality. Book your evaluation at VitalPhysio⁺ today!";
-      case "Back pain":
-        return "Book your back pain assessment for a return to pain-free movement, improved posture, and renewed quality of life.";
-      case "Sports injuries":
-        return "Get back to top form—book your sports injury assessment at VitalPhysio⁺ and experience the gold standard in recovery.";
-      case "Performance enhancement":
-        initial={{ scale: 0.9, y: 20 }}
-        animate={{ scale: 1, y: 0 }}
-        exit={{ scale: 0.9, y: 20 }}
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto no-scrollbar border-4 border-[#004F8C]"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
+ const getCtaMessage = (condition: string) => {
+  if (conditionInfo.ctaMessage) {
+    return conditionInfo.ctaMessage;
+  }
+  
+  switch (condition) {
+    case "Chronic pain":
+      return "Take the next step—regain control, reduce pain, and restore your best life with VitalPhysio⁺. Book your chronic pain assessment today.";
+    case "Muscle strains":
+      return "Book your assessment—experience tailored care, faster recovery, and lasting results.";
+    case "Arthritis":
+      return "Take control of your arthritis with a holistic program proven to improve mobility, reduce pain, and enhance life quality. Book your evaluation at VitalPhysio⁺ today!";
+    case "Back pain":
+      return "Book your back pain assessment for a return to pain-free movement, improved posture, and renewed quality of life.";
+    case "Sports injuries":
+      return "Get back to top form—book your sports injury assessment at VitalPhysio⁺ and experience the gold standard in recovery.";
+    case "Performance enhancement":
+      return "Ready to unlock your full potential? Book your performance assessment at VitalPhysio⁺ and take your athletic performance to the next level.";
+    default:
+      return `Ready to start your ${conditionName.toLowerCase()} recovery? Book your consultation at VitalPhysio⁺ today.`;
+  }
+};
+
+return (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.3 }}
+    className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
+    onClick={onClose}
+  >
+    <motion.div
+      initial={{ scale: 0.9, y: 20 }}
+      animate={{ scale: 1, y: 0 }}
+      exit={{ scale: 0.9, y: 20 }}
+      className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto no-scrollbar border-4 border-[#004F8C]"
+      onClick={(e) => e.stopPropagation()}
+    >
+              {/* Header */}
         <div className="p-8 bg-gradient-to-r from-[#004F8C] to-[#008094] text-white">
           <h1 className="text-white text-3xl md:text-4xl font-bold mb-2">
             {conditionInfo.title}
