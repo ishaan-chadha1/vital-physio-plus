@@ -2223,7 +2223,7 @@ const AdvancedTechniquesSection = () => {
                     {technique.description}
                   </p>
                   <div className="flex items-center text-[var(--vp-blue)] font-semibold text-sm group-hover:gap-2 transition-all mt-auto">
-                    Learn More About Technology
+                    Learn More About {technique.title}
                     <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
