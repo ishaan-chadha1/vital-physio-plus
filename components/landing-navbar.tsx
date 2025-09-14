@@ -169,15 +169,26 @@ export default function LandingNavbar() {
                     href="/"
                     className="relative px-4 py-2 group whitespace-nowrap mr-8 flex items-center"
                   >
-                    <Image
-                      src="/logo.png"
-                      alt="VitalPhysio⁺ Logo"
-                      width={240}
-                      height={240}
-                      className={`object-contain w-auto transition-all duration-300 group-hover:opacity-90 ${
-                        hovered ? "h-18" : "h-14"
-                      }`}
-                    />
+                    <div className="relative h-16 w-auto overflow-hidden">
+                      <Image
+                        src="/logo.png"
+                        alt="VitalPhysio⁺ Logo"
+                        width={240}
+                        height={240}
+                        className={`object-contain w-auto h-16 transition-all duration-500 ease-in-out ${
+                          hovered ? "opacity-0 scale-95" : "opacity-100 scale-100"
+                        }`}
+                      />
+                      <Image
+                        src="/logo1.png"
+                        alt="VitalPhysio⁺ Logo Hover"
+                        width={240}
+                        height={240}
+                        className={`absolute top-0 left-0 object-contain w-auto h-16 transition-all duration-500 ease-in-out ${
+                          hovered ? "opacity-100 scale-100" : "opacity-0 scale-105"
+                        }`}
+                      />
+                    </div>
                     <span className="absolute left-4 right-4 bottom-0 h-0.5 bg-gradient-to-r from-blue-600 to-teal-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
                   </Link>
 
