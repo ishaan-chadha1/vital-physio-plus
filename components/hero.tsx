@@ -1,8 +1,14 @@
 import { motion } from "framer-motion";
-
+import { getCalApi } from "@calcom/embed-react";
+import { useEffect } from "react";
 const Hero = () => {
   const backgroundImageUrl = "/underwater-treadmill.jpg";
-
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: "consultation" });
+      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+    })();
+  }, []);
   return (
     <section
       className="relative bg-cover bg-center bg-no-repeat h-screen flex flex-col"
@@ -39,8 +45,12 @@ const Hero = () => {
             style={{ textShadow: "1px 1px 6px rgba(0,0,0,0.7)" }}
           >
             Evidence-based physiotherapy that empowers you to{" "}
-            <span className="italic font-medium text-cyan-200">move freely</span> and{" "}
-            <span className="italic font-medium text-cyan-200">live fully</span>.
+            <span className="italic font-medium text-cyan-200">
+              move freely
+            </span>{" "}
+            and{" "}
+            <span className="italic font-medium text-cyan-200">live fully</span>
+            .
           </p>
         </motion.div>
       </div>
@@ -54,12 +64,15 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-4xl mx-auto"
         >
-          <a
-            className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded-lg text-base shadow-2xl transition-all duration-300 transform hover:scale-105"
-            href="/book-appointment"
+          <button
+            type="button"
+            data-cal-namespace="consultation"
+            data-cal-link="vital-physio-plus/consultation"
+            data-cal-config='{"layout":"month_view"}'
+            className="bg-blue-900 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-800 hover:shadow-lg transition-all duration-200 text-base transform hover:-translate-y-0.5"
           >
-            Book Your Consultation Now
-          </a>
+            Book Now
+          </button>
           <a
             className="w-full sm:w-auto border-2 border-cyan-400/80 bg-cyan-500/20 hover:bg-cyan-500/30 text-white font-medium py-3 px-8 rounded-lg text-base shadow-2xl transition-all duration-300 transform hover:scale-105 backdrop-blur-sm"
             href="#services"
