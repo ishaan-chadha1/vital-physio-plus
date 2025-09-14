@@ -1845,7 +1845,29 @@ export default function ServicesPage() {
       cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
     })();
   }, []);
+    useEffect(() => {
+    if (conditionModalData) {
+      // Prevent scrolling on body
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore scrolling on body
+      document.body.style.overflow = 'unset';
+    }
 
+    // Cleanup function to restore scrolling when component unmounts
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [conditionModalData]);
+
+  const handleConditionClick = (condition: string) => {
+    setConditionModalData(condition);
+  };
+
+  const handleModalClose = () => {
+    setConditionModalData(null);
+  };
+  
   return (
     <>
       <Head>
@@ -1885,12 +1907,21 @@ export default function ServicesPage() {
         .carousel-card-shadow:hover {
           box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
         }
+
+        /* Modal specific styles */
+        .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow: hidden;
+        }
       `}</style>
       <div className="bg-white font-lato">
         <LandingNavbar />
         <main>
-          {/* <ServicesHero /> */}
-          <AutoCarouselSection onConditionClick={setConditionModalData} />
+          <AutoCarouselSection onConditionClick={handleConditionClick} />
           <AdvancedTechniquesSection />
           <CTA />
         </main>
@@ -1899,7 +1930,7 @@ export default function ServicesPage() {
           {conditionModalData && (
             <ConditionModal 
               data={conditionModalData} 
-              onClose={() => setConditionModalData(null)} 
+              onClose={handleModalClose} 
             />
           )}
         </AnimatePresence>
@@ -2240,6 +2271,7 @@ const AutoCarouselSection = ({
 
 // --- CONDITION MODAL ---
 
+
 const ConditionModal = ({
   data,
   onClose,
@@ -2250,6 +2282,25 @@ const ConditionModal = ({
   const conditionInfo = conditionDetails[data as keyof typeof conditionDetails];
   
   if (!conditionInfo) return null;
+
+  // Prevent event propagation for modal content
+  const handleModalContentClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
+  // Handle escape key press
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [onClose]);
 
   // Extract the main condition name for the program title
   const conditionName = data.charAt(0).toUpperCase() + data.slice(1);
@@ -2281,157 +2332,161 @@ const ConditionModal = ({
   };
 
   // Dynamic CTA messages
- const getCtaMessage = (condition: string) => {
-  if (conditionInfo.ctaMessage) {
-    return conditionInfo.ctaMessage;
-  }
-  
-  switch (condition) {
-    case "Chronic pain":
-      return "Take the next step—regain control, reduce pain, and restore your best life with VitalPhysio⁺. Book your chronic pain assessment today.";
-    case "Muscle strains":
-      return "Book your assessment—experience tailored care, faster recovery, and lasting results.";
-    case "Arthritis":
-      return "Take control of your arthritis with a holistic program proven to improve mobility, reduce pain, and enhance life quality. Book your evaluation at VitalPhysio⁺ today!";
-    case "Back pain":
-      return "Book your back pain assessment for a return to pain-free movement, improved posture, and renewed quality of life.";
-    case "Sports injuries":
-      return "Get back to top form—book your sports injury assessment at VitalPhysio⁺ and experience the gold standard in recovery.";
-    case "Performance enhancement":
-      return "Ready to unlock your full potential? Book your performance assessment at VitalPhysio⁺ and take your athletic performance to the next level.";
-    default:
-      return `Ready to start your ${conditionName.toLowerCase()} recovery? Book your consultation at VitalPhysio⁺ today.`;
-  }
-};
+  const getCtaMessage = (condition: string) => {
+    if (conditionInfo.ctaMessage) {
+      return conditionInfo.ctaMessage;
+    }
+    
+    switch (condition) {
+      case "Chronic pain":
+        return "Take the next step—regain control, reduce pain, and restore your best life with VitalPhysio⁺. Book your chronic pain assessment today.";
+      case "Muscle strains":
+        return "Book your assessment—experience tailored care, faster recovery, and lasting results.";
+      case "Arthritis":
+        return "Take control of your arthritis with a holistic program proven to improve mobility, reduce pain, and enhance life quality. Book your evaluation at VitalPhysio⁺ today!";
+      case "Back pain":
+        return "Book your back pain assessment for a return to pain-free movement, improved posture, and renewed quality of life.";
+      case "Sports injuries":
+        return "Get back to top form—book your sports injury assessment at VitalPhysio⁺ and experience the gold standard in recovery.";
+      case "Performance enhancement":
+        return "Ready to unlock your full potential? Book your performance assessment at VitalPhysio⁺ and take your athletic performance to the next level.";
+      default:
+        return `Ready to start your ${conditionName.toLowerCase()} recovery? Book your consultation at VitalPhysio⁺ today.`;
+    }
+  };
 
-return (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.3 }}
-    className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
-    onClick={onClose}
-  >
+  return (
     <motion.div
-      initial={{ scale: 0.9, y: 20 }}
-      animate={{ scale: 1, y: 0 }}
-      exit={{ scale: 0.9, y: 20 }}
-      className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto no-scrollbar border-4 border-[#004F8C]"
-      onClick={(e) => e.stopPropagation()}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="modal-overlay fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
+      onClick={onClose}
     >
-              {/* Header */}
-        <div className="p-8 bg-gradient-to-r from-[#004F8C] to-[#008094] text-white">
-          <h1 className="text-white text-3xl md:text-4xl font-bold mb-2">
-            {conditionInfo.title}
-          </h1>
-          <p className="text-lg text-blue-100">
-            {conditionInfo.subtitle}
-          </p>
-        </div>
-
-        {/* Content */}
-        <div className="p-8 space-y-8 bg-white">
-          {/* Description */}
-          <div>
-            <p className="text-gray-700 leading-relaxed text-lg">
-              {conditionInfo.description}
+      <motion.div
+        initial={{ scale: 0.9, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.9, y: 20 }}
+        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden border-4 border-[#004F8C]"
+        onClick={handleModalContentClick}
+      >
+        {/* Scrollable content container */}
+        <div className="overflow-y-auto no-scrollbar max-h-[90vh]">
+          {/* Header */}
+          <div className="p-8 bg-gradient-to-r from-[#004F8C] to-[#008094] text-white sticky top-0 z-10">
+            <h1 className="text-white text-3xl md:text-4xl font-bold mb-2">
+              {conditionInfo.title}
+            </h1>
+            <p className="text-lg text-blue-100">
+              {conditionInfo.subtitle}
             </p>
           </div>
 
-          {/* Program Highlights */}
-          <div>
-            <h3 className="font-bold text-2xl mb-6 text-[#004F8C]">
-              {getProgramTitle(data)}
-            </h3>
-            <div className="space-y-6">
-              {conditionInfo.highlights.map((highlight, index) => (
-                <div key={index} className="flex gap-4">
-                  <div className="w-3 h-3 bg-[#EC691F] rounded-full flex-shrink-0 mt-2"></div>
-                  <div>
-                    <h4 className="font-bold text-lg text-gray-800 mb-2">
-                      {highlight.title}
-                    </h4>
-                    <p className="text-gray-600 leading-relaxed">
-                      {highlight.content}
-                    </p>
+          {/* Content */}
+          <div className="p-8 space-y-8 bg-white">
+            {/* Description */}
+            <div>
+              <p className="text-gray-700 leading-relaxed text-lg">
+                {conditionInfo.description}
+              </p>
+            </div>
+
+            {/* Program Highlights */}
+            <div>
+              <h3 className="font-bold text-2xl mb-6 text-[#004F8C]">
+                {getProgramTitle(data)}
+              </h3>
+              <div className="space-y-6">
+                {conditionInfo.highlights.map((highlight, index) => (
+                  <div key={index} className="flex gap-4">
+                    <div className="w-3 h-3 bg-[#EC691F] rounded-full flex-shrink-0 mt-2"></div>
+                    <div>
+                      <h4 className="font-bold text-lg text-gray-800 mb-2">
+                        {highlight.title}
+                      </h4>
+                      <p className="text-gray-600 leading-relaxed">
+                        {highlight.content}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Treatment Areas */}
-          <div>
-            <h3 className="font-bold text-2xl mb-4 text-[#004F8C]">
-              {data === "Performance enhancement" ? "Who Benefits?" : 
-               data === "Injury prevention" ? "Who Needs Injury Prevention?" :
-               data === "Return to sport" ? "Who Needs a Return to Sport Program?" :
-               "Conditions We Treat:"}
-            </h3>
-            <div className="space-y-3">
-              {conditionInfo.treatmentAreas.map((area, index) => (
-                <div key={index} className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="w-3 h-3 bg-[#008094] rounded-full flex-shrink-0 mt-2"></div>
-                  <span className="text-gray-700 leading-relaxed">{area}</span>
-                </div>
-              ))}
+            {/* Treatment Areas */}
+            <div>
+              <h3 className="font-bold text-2xl mb-4 text-[#004F8C]">
+                {data === "Performance enhancement" ? "Who Benefits?" : 
+                 data === "Injury prevention" ? "Who Needs Injury Prevention?" :
+                 data === "Return to sport" ? "Who Needs a Return to Sport Program?" :
+                 "Conditions We Treat:"}
+              </h3>
+              <div className="space-y-3">
+                {conditionInfo.treatmentAreas.map((area, index) => (
+                  <div key={index} className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <div className="w-3 h-3 bg-[#008094] rounded-full flex-shrink-0 mt-2"></div>
+                    <span className="text-gray-700 leading-relaxed">{area}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* What Sets Us Apart */}
-          <div>
-            <h3 className="font-bold text-2xl mb-4 text-[#004F8C]">
-              {data === "Return to sport" ? "Why Choose VitalPhysio⁺ for Your Sporting Comeback?" :
-               data === "Injury prevention" ? "Why Choose VitalPhysio⁺ for Injury Prevention?" :
-               data === "Performance enhancement" ? "Why Trust VitalPhysio⁺ for Performance Optimization?" :
-               "What Sets Our Approach Apart?"}
-            </h3>
-            <div className="space-y-4">
-              {conditionInfo.whyChooseUs.map((reason, index) => (
-                <div key={index} className="flex gap-4">
-                  <div className="w-3 h-3 bg-[#EC691F] rounded-full flex-shrink-0 mt-2"></div>
-                  <p className="text-gray-700 leading-relaxed">{reason}</p>
-                </div>
-              ))}
+            {/* What Sets Us Apart */}
+            <div>
+              <h3 className="font-bold text-2xl mb-4 text-[#004F8C]">
+                {data === "Return to sport" ? "Why Choose VitalPhysio⁺ for Your Sporting Comeback?" :
+                 data === "Injury prevention" ? "Why Choose VitalPhysio⁺ for Injury Prevention?" :
+                 data === "Performance enhancement" ? "Why Trust VitalPhysio⁺ for Performance Optimization?" :
+                 "What Sets Our Approach Apart?"}
+              </h3>
+              <div className="space-y-4">
+                {conditionInfo.whyChooseUs.map((reason, index) => (
+                  <div key={index} className="flex gap-4">
+                    <div className="w-3 h-3 bg-[#EC691F] rounded-full flex-shrink-0 mt-2"></div>
+                    <p className="text-gray-700 leading-relaxed">{reason}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Importance Note */}
-          <div className="bg-gradient-to-r from-blue-50 to-teal-50 p-6 rounded-lg border-l-4 border-[#008094]">
-            <h3 className="font-bold text-xl mb-3 text-[#004F8C]">
-              Why Early & Specialist-led Rehab Matters:
-            </h3>
-            <p className="text-gray-700 leading-relaxed">
-              {conditionInfo.importanceNote}
-            </p>
-          </div>
+            {/* Importance Note */}
+            <div className="bg-gradient-to-r from-blue-50 to-teal-50 p-6 rounded-lg border-l-4 border-[#008094]">
+              <h3 className="font-bold text-xl mb-3 text-[#004F8C]">
+                Why Early & Specialist-led Rehab Matters:
+              </h3>
+              <p className="text-gray-700 leading-relaxed">
+                {conditionInfo.importanceNote}
+              </p>
+            </div>
 
-          {/* CTA Section */}
-          <div className="bg-gradient-to-r from-[#004F8C] to-[#008094] p-8 rounded-xl text-center text-white">
-            <h3 className="text-white text-2xl font-bold mb-4">
-              Ready to Start Your Recovery Journey?
-            </h3>
-            <p className="text-blue-100 mb-6 text-lg">
-              {getCtaMessage(data)}
-            </p>
-            <button
-              type="button"
-              data-cal-namespace="consultation"
-              data-cal-link="vital-physio-plus/consultation"
-              data-cal-config='{"layout":"month_view"}'
-              className="bg-[#EC691F] text-white font-semibold py-4 px-8 rounded-lg shadow-md hover:bg-opacity-90 hover:shadow-lg transition-all duration-200 text-lg transform hover:-translate-y-0.5 inline-flex items-center gap-2"
-            >
-              <Clock className="w-5 h-5" />
-              Book Consultation Now
-            </button>
+            {/* CTA Section */}
+            <div className="bg-gradient-to-r from-[#004F8C] to-[#008094] p-8 rounded-xl text-center text-white">
+              <h3 className="text-white text-2xl font-bold mb-4">
+                Ready to Start Your Recovery Journey?
+              </h3>
+              <p className="text-blue-100 mb-6 text-lg">
+                {getCtaMessage(data)}
+              </p>
+              <button
+                type="button"
+                data-cal-namespace="consultation"
+                data-cal-link="vital-physio-plus/consultation"
+                data-cal-config='{"layout":"month_view"}'
+                className="bg-[#EC691F] text-white font-semibold py-4 px-8 rounded-lg shadow-md hover:bg-opacity-90 hover:shadow-lg transition-all duration-200 text-lg transform hover:-translate-y-0.5 inline-flex items-center gap-2"
+              >
+                <Clock className="w-5 h-5" />
+                Book Consultation Now
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Close Button */}
+        {/* Close Button - Fixed position */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-white hover:text-gray-200 transition-colors bg-black/20 rounded-full p-3 shadow-lg backdrop-blur-sm"
+          className="absolute top-4 right-4 text-white hover:text-gray-200 transition-colors bg-black/20 rounded-full p-3 shadow-lg backdrop-blur-sm z-20"
+          aria-label="Close modal"
         >
           <X size={24} />
         </button>
