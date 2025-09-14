@@ -175,7 +175,7 @@ export default function LandingNavbar() {
                       width={240}
                       height={240}
                       className={`object-contain w-auto transition-all duration-300 group-hover:opacity-90 ${
-                        hovered ? "h-14" : "h-10"
+                        hovered ? "h-18" : "h-14"
                       }`}
                     />
                     <span className="absolute left-4 right-4 bottom-0 h-0.5 bg-gradient-to-r from-blue-600 to-teal-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
