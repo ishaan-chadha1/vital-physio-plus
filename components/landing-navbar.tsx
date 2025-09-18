@@ -114,7 +114,7 @@ export default function LandingNavbar() {
                 width={800}
                 height={160}
                 priority
-                className="object-contain h-24 w-auto"
+                className="object-contain h-40 w-auto"
               />
             </div>
             <div className="flex-1 flex items-center justify-end space-x-6">
@@ -152,8 +152,8 @@ export default function LandingNavbar() {
         <nav
           className={`fixed left-0 w-full z-40 border-b border-gray-200 will-change-transform transition-all duration-500 ease-in-out top-0 ${
             hovered
-              ? "bg-white/98 backdrop-blur-lg shadow-xl py-3"
-              : "bg-white/30 backdrop-blur-sm shadow-md py-1.5"
+              ? "bg-white/98 backdrop-blur-lg shadow-xl py-2"
+              : "bg-white/30 backdrop-blur-sm shadow-md py-1"
           }`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -167,38 +167,37 @@ export default function LandingNavbar() {
                 <div className="flex items-center justify-center w-full max-w-7xl">
                   <Link
                     href="/"
-                    className="relative px-4 py-2 group whitespace-nowrap mr-8 flex items-center"
+                    className="relative px-4 py-1 group whitespace-nowrap mr-8 flex items-center"
                   >
-                    <div className="relative h-16 w-auto overflow-hidden">
+                    <div className="relative w-48 h-24 overflow-hidden">
                       <Image
                         src="/logo.png"
                         alt="VitalPhysio⁺ Logo"
-                        width={240}
+                        width={480}
                         height={240}
-                        className={`object-contain w-auto h-16 transition-all duration-500 ease-in-out ${
+                        className={`absolute inset-0 object-contain w-full h-full transition-all duration-500 ease-in-out ${
                           hovered ? "opacity-0 scale-95" : "opacity-100 scale-100"
                         }`}
                       />
                       <Image
                         src="/logo1.png"
                         alt="VitalPhysio⁺ Logo Hover"
-                        width={240}
+                        width={480}
                         height={240}
-                        className={`absolute top-0 left-0 object-contain w-auto h-16 transition-all duration-500 ease-in-out ${
+                        className={`absolute inset-0 object-contain w-full h-full transition-all duration-500 ease-in-out ${
                           hovered ? "opacity-100 scale-100" : "opacity-0 scale-105"
                         }`}
                       />
                     </div>
                     <span className="absolute left-4 right-4 bottom-0 h-0.5 bg-gradient-to-r from-blue-600 to-teal-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
                   </Link>
-
                   <div className="flex items-center space-x-1">
                     {navLinks.map((item) => (
                       <Link
                         key={item.name}
                         href={item.href}
-                        className={`relative text-gray-700 hover:text-teal-600 font-medium px-3 py-2 group transition-all duration-200 whitespace-nowrap ${
-                          hovered ? "text-base" : "text-sm"
+                        className={`relative text-gray-700 hover:text-teal-600 font-medium px-3 py-1 group transition-all duration-200 whitespace-nowrap ${
+                          hovered ? "text-sm" : "text-xs"
                         }`}
                       >
                         {item.name}
@@ -287,7 +286,7 @@ export default function LandingNavbar() {
       {/* Spacer (retain existing layout offset) */}
       <div
         className="w-full transition-all duration-500 ease-in-out"
-       style={{ height: scrolled ? "80px" : "144px" }}
+        style={{ height: scrolled ? "96px" : "180px" }}
       />
     </>
   );
