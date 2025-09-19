@@ -1,56 +1,108 @@
-"use client";
+import { Metadata } from 'next';"use client";
+
+import UIChairBreakthroughContent from './content';
 
 import React from "react";
-import Footer from "@/components/footer";
-import LandingNavbar from "@/components/landing-navbar";
 
-export default function UIChairBreakthrough() {
-  return (
-    <>
-      <LandingNavbar />
-      <section className="bg-gray-50 py-16 md:py-20">
-        <div className="max-w-4xl mx-auto px-6">
-          {/* SEO Meta Tags */}
-          <head>
-            <title>Understanding the UI Chair | VitalPhysio⁺ Bengaluru</title>
-            <meta
-              name="description"
-              content="Discover the UI Chair at VitalPhysio⁺ Bengaluru, a breakthrough in pelvic health care using HIFEM technology for non-invasive treatment."
-            />
-            <meta
-              name="keywords"
-              content="UI Chair, pelvic health, urinary incontinence, HIFEM technology, VitalPhysio⁺, Bengaluru, women’s health physiotherapy"
-            />
-          </head>
+export const metadata: Metadata = {import Footer from "@/components/footer";
 
-          {/* Article Content */}
-          <h1 className="text-4xl md:text-5xl font-bold text-[rgb(0,79,140)] mb-6">
-            Understanding the UI Chair: A Breakthrough in Pelvic Health
-          </h1>
-          <p className="text-[rgb(236,105,31)] text-sm mb-4">
-            A Revolutionary Solution from VitalPhysio⁺
-          </p>
-          <p className="text-gray-700 text-lg leading-relaxed mb-6">
-            Pelvic floor dysfunction—including urinary incontinence, pelvic organ prolapse, and reduced core stability—affects millions of women, impacting quality of life and self-confidence. At VitalPhysio⁺, we introduce an innovative solution: the UI Chair, powered by HIFEM technology, to transform pelvic health care safely and efficiently.
-          </p>
+  title: 'The UI Chair Breakthrough: A Physiotherapy and Ergonomics Review | VitalPhysio⁺',import LandingNavbar from "@/components/landing-navbar";
 
-          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">
-            What Is the UI Chair and How Does It Work?
-          </h2>
-          <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
-            <li>
-              <strong>Non-Invasive Treatment:</strong> Simply sit, fully clothed, while targeted electromagnetic energy causes deep, rapid pelvic floor muscle contractions.
-            </li>
-            <li>
-              <strong>Multiple Muscle Engagement:</strong> A single session triggers thousands of maximal contractions—far more than possible through conventional Kegel exercises.
-            </li>
-            <li>
-              <strong>Safe and Painless:</strong> The procedure is comfortable, requires no preparation or recovery time, and is suitable for a wide range of women, including postpartum mothers and seniors.
-            </li>
+  description: 'Comprehensive physiotherapy analysis of advanced ergonomic office chairs and how proper workplace ergonomics can prevent back pain, neck strain, and postural problems.',
+
+  keywords: 'ergonomic office chair, workplace ergonomics, back pain prevention, posture correction, neck pain prevention, Bengaluru, occupational physiotherapy, office setup, lumbar support',export default function UIChairBreakthrough() {
+
+  openGraph: {  return (
+
+    title: 'The UI Chair Breakthrough: A Physiotherapy and Ergonomics Review | VitalPhysio⁺',    <>
+
+    description: 'Comprehensive physiotherapy analysis of advanced ergonomic office chairs and how proper workplace ergonomics can prevent back pain, neck strain, and postural problems.',      <LandingNavbar />
+
+    type: 'article',      <section className="bg-gray-50 py-16 md:py-20">
+
+    publishedTime: '2024-01-20T10:00:00.000Z',        <div className="max-w-4xl mx-auto px-6">
+
+    authors: ['VitalPhysio⁺ Team'],          {/* SEO Meta Tags */}
+
+    section: 'Workplace Ergonomics',          <head>
+
+    tags: ['Ergonomic Chairs', 'Workplace Ergonomics', 'Back Pain Prevention', 'Posture Correction', 'Occupational Health'],            <title>Understanding the UI Chair | VitalPhysio⁺ Bengaluru</title>
+
+    url: 'https://vitalphysio.plus/knowledge/ui-chair-breakthrough',            <meta
+
+    siteName: 'VitalPhysio⁺',              name="description"
+
+    images: [              content="Discover the UI Chair at VitalPhysio⁺ Bengaluru, a breakthrough in pelvic health care using HIFEM technology for non-invasive treatment."
+
+      {            />
+
+        url: '/images/ergonomic-chair-breakthrough-og.jpg',            <meta
+
+        width: 1200,              name="keywords"
+
+        height: 630,              content="UI Chair, pelvic health, urinary incontinence, HIFEM technology, VitalPhysio⁺, Bengaluru, women’s health physiotherapy"
+
+        alt: 'Ergonomic office chair breakthrough preventing back pain'            />
+
+      }          </head>
+
+    ],
+
+  },          {/* Article Content */}
+
+  twitter: {          <h1 className="text-4xl md:text-5xl font-bold text-[rgb(0,79,140)] mb-6">
+
+    card: 'summary_large_image',            Understanding the UI Chair: A Breakthrough in Pelvic Health
+
+    title: 'The UI Chair Breakthrough: A Physiotherapy and Ergonomics Review | VitalPhysio⁺',          </h1>
+
+    description: 'Expert analysis of ergonomic office chairs & workplace setup for back pain prevention. Physiotherapy insights.',          <p className="text-[rgb(236,105,31)] text-sm mb-4">
+
+    images: ['/images/ergonomic-chair-breakthrough-twitter.jpg'],            A Revolutionary Solution from VitalPhysio⁺
+
+    creator: '@vitalphysioplus',          </p>
+
+    site: '@vitalphysioplus',          <p className="text-gray-700 text-lg leading-relaxed mb-6">
+
+  },            Pelvic floor dysfunction—including urinary incontinence, pelvic organ prolapse, and reduced core stability—affects millions of women, impacting quality of life and self-confidence. At VitalPhysio⁺, we introduce an innovative solution: the UI Chair, powered by HIFEM technology, to transform pelvic health care safely and efficiently.
+
+  alternates: {          </p>
+
+    canonical: 'https://vitalphysio.plus/knowledge/ui-chair-breakthrough',
+
+  },          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">
+
+  robots: {            What Is the UI Chair and How Does It Work?
+
+    index: true,          </h2>
+
+    follow: true,          <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
+
+    googleBot: {            <li>
+
+      index: true,              <strong>Non-Invasive Treatment:</strong> Simply sit, fully clothed, while targeted electromagnetic energy causes deep, rapid pelvic floor muscle contractions.
+
+      follow: true,            </li>
+
+      'max-video-preview': -1,            <li>
+
+      'max-image-preview': 'large',              <strong>Multiple Muscle Engagement:</strong> A single session triggers thousands of maximal contractions—far more than possible through conventional Kegel exercises.
+
+      'max-snippet': -1,            </li>
+
+    },            <li>
+
+  },              <strong>Safe and Painless:</strong> The procedure is comfortable, requires no preparation or recovery time, and is suitable for a wide range of women, including postpartum mothers and seniors.
+
+};            </li>
+
           </ul>
 
-          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">
-            Major Benefits for Women’s Pelvic Health
+export default function UIChairBreakthroughPage() {
+
+  return <UIChairBreakthroughContent />;          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">
+
+}            Major Benefits for Women’s Pelvic Health
           </h2>
           <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
             <li>

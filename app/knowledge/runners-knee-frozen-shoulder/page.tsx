@@ -1,56 +1,108 @@
-"use client";
+import { Metadata } from 'next';"use client";
+
+import RunnersKneeFrozenShoulderContent from './content';
 
 import React from "react";
-import Footer from "@/components/footer";
-import LandingNavbar from "@/components/landing-navbar";
-import { getCalApi } from "@calcom/embed-react";
 
-export default function RunnersKneeFrozenShoulder() {
-  React.useEffect(() => {
-    (async function () {
-      const cal = await getCalApi({ namespace: "consultation" });
-      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-    })();
-  }, []);
+export const metadata: Metadata = {import Footer from "@/components/footer";
 
-  return (
-    <>
-      <LandingNavbar />
-      <section className="bg-gray-50 py-16 md:py-20">
-        <div className="max-w-4xl mx-auto px-6">
-          {/* SEO Meta Tags */}
-          <head>
-            <title>Runner’s Knee & Frozen Shoulder | VitalPhysio⁺ Bengaluru</title>
-            <meta
-              name="description"
-              content="Discover physiotherapy solutions for runner’s knee and frozen shoulder at VitalPhysio⁺ Bengaluru. Learn prevention and recovery tips tailored to your lifestyle."
-            />
-            <meta
-              name="keywords"
-              content="runner’s knee, frozen shoulder, physiotherapy, Bengaluru, VitalPhysio⁺, knee pain, shoulder stiffness, sports recovery"
-            />
-          </head>
+  title: "Runner's Knee and Frozen Shoulder Treatment in Bengaluru | VitalPhysio⁺",import LandingNavbar from "@/components/landing-navbar";
 
-          {/* Article Content */}
-          <h1 className="text-4xl md:text-5xl font-bold text-[rgb(0,79,140)] mb-6">
-            “Runner’s Knee”, “Frozen Shoulder” & Bangalore Lifestyles: Prevention & Cure
-          </h1>
-          <p className="text-gray-700 text-lg leading-relaxed mb-6">
-            Staying active in Bengaluru’s parks, gyms, and on city roads is a healthy choice. But modern urban life, marathon training, and hours of computer use mean many face common problems: knee pain (“runner’s knee”) and frozen shoulder. Here’s how physiotherapy provides proven pathways to sustained recovery.
-          </p>
+  description: "Expert physiotherapy treatment for runner's knee and frozen shoulder in Bengaluru. Get accurate diagnosis and effective treatment plans for complete recovery.",import { getCalApi } from "@calcom/embed-react";
 
-          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">What Is Runner’s Knee?</h2>
-          <p className="text-gray-700 text-lg leading-relaxed mb-4">
-            Runner’s knee—patellofemoral pain syndrome (PFPS)—is one of the most frequent causes of knee pain among Bengaluru’s joggers, fitness fans, and sports enthusiasts.
-          </p>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Symptoms</h3>
-          <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
-            <li>Pain around (or behind) the kneecap, worse with running, stairs, or prolonged sitting.</li>
-            <li>Clicking, grinding, or “giving way” of the knee.</li>
+  keywords: "runner's knee, frozen shoulder, patellofemoral pain syndrome, adhesive capsulitis, Bengaluru, sports physiotherapy, knee pain treatment, shoulder stiffness, sports injury",
+
+  openGraph: {export default function RunnersKneeFrozenShoulder() {
+
+    title: "Runner's Knee and Frozen Shoulder Treatment in Bengaluru | VitalPhysio⁺",  React.useEffect(() => {
+
+    description: "Expert physiotherapy treatment for runner's knee and frozen shoulder in Bengaluru. Get accurate diagnosis and effective treatment plans for complete recovery.",    (async function () {
+
+    type: 'article',      const cal = await getCalApi({ namespace: "consultation" });
+
+    publishedTime: '2024-01-15T11:00:00.000Z',      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+
+    authors: ['VitalPhysio⁺ Team'],    })();
+
+    section: 'Sports Medicine',  }, []);
+
+    tags: ["Runner's Knee", "Frozen Shoulder", "Sports Physiotherapy", "Knee Pain", "Shoulder Treatment"],
+
+    url: 'https://vitalphysio.plus/knowledge/runners-knee-frozen-shoulder',  return (
+
+    siteName: 'VitalPhysio⁺',    <>
+
+    images: [      <LandingNavbar />
+
+      {      <section className="bg-gray-50 py-16 md:py-20">
+
+        url: '/images/runners-knee-frozen-shoulder-og.jpg',        <div className="max-w-4xl mx-auto px-6">
+
+        width: 1200,          {/* SEO Meta Tags */}
+
+        height: 630,          <head>
+
+        alt: "Runner's knee and frozen shoulder treatment in Bengaluru"            <title>Runner’s Knee & Frozen Shoulder | VitalPhysio⁺ Bengaluru</title>
+
+      }            <meta
+
+    ],              name="description"
+
+  },              content="Discover physiotherapy solutions for runner’s knee and frozen shoulder at VitalPhysio⁺ Bengaluru. Learn prevention and recovery tips tailored to your lifestyle."
+
+  twitter: {            />
+
+    card: 'summary_large_image',            <meta
+
+    title: "Runner's Knee and Frozen Shoulder Treatment in Bengaluru | VitalPhysio⁺",              name="keywords"
+
+    description: "Expert physiotherapy for runner's knee & frozen shoulder. Accurate diagnosis & effective treatment in Bengaluru.",              content="runner’s knee, frozen shoulder, physiotherapy, Bengaluru, VitalPhysio⁺, knee pain, shoulder stiffness, sports recovery"
+
+    images: ['/images/runners-knee-frozen-shoulder-twitter.jpg'],            />
+
+    creator: '@vitalphysioplus',          </head>
+
+    site: '@vitalphysioplus',
+
+  },          {/* Article Content */}
+
+  alternates: {          <h1 className="text-4xl md:text-5xl font-bold text-[rgb(0,79,140)] mb-6">
+
+    canonical: 'https://vitalphysio.plus/knowledge/runners-knee-frozen-shoulder',            “Runner’s Knee”, “Frozen Shoulder” & Bangalore Lifestyles: Prevention & Cure
+
+  },          </h1>
+
+  robots: {          <p className="text-gray-700 text-lg leading-relaxed mb-6">
+
+    index: true,            Staying active in Bengaluru’s parks, gyms, and on city roads is a healthy choice. But modern urban life, marathon training, and hours of computer use mean many face common problems: knee pain (“runner’s knee”) and frozen shoulder. Here’s how physiotherapy provides proven pathways to sustained recovery.
+
+    follow: true,          </p>
+
+    googleBot: {
+
+      index: true,          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">What Is Runner’s Knee?</h2>
+
+      follow: true,          <p className="text-gray-700 text-lg leading-relaxed mb-4">
+
+      'max-video-preview': -1,            Runner’s knee—patellofemoral pain syndrome (PFPS)—is one of the most frequent causes of knee pain among Bengaluru’s joggers, fitness fans, and sports enthusiasts.
+
+      'max-image-preview': 'large',          </p>
+
+      'max-snippet': -1,          <h3 className="text-xl font-bold text-gray-900 mb-2">Symptoms</h3>
+
+    },          <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
+
+  },            <li>Pain around (or behind) the kneecap, worse with running, stairs, or prolonged sitting.</li>
+
+};            <li>Clicking, grinding, or “giving way” of the knee.</li>
+
             <li>Pulling/aching feeling when standing from a chair or squatting.</li>
-          </ul>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Causes & Risk Factors</h3>
-          <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
+
+export default function RunnersKneeFrozenShoulderPage() {          </ul>
+
+  return <RunnersKneeFrozenShoulderContent />;          <h3 className="text-xl font-bold text-gray-900 mb-2">Causes & Risk Factors</h3>
+
+}          <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
             <li>Overuse or sudden increase in activity levels (common in marathon training or gym routines).</li>
             <li>Weak quadriceps, hips, or gluteal muscles.</li>
             <li>Poor foot mechanics (flat feet, worn-out running shoes).</li>

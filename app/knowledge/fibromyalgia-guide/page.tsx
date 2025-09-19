@@ -1,114 +1,48 @@
-"use client";
+import { Metadata } from 'next';
+import FibromyalgiaGuideContent from './content';
 
-import React from "react";
-import Footer from "@/components/footer";
-import LandingNavbar from "@/components/landing-navbar";
-import { getCalApi } from "@calcom/embed-react";
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "A Physiotherapist's Guide to Managing Fibromyalgia Pain | VitalPhysio⁺",
+    description: "Comprehensive physiotherapy guide for fibromyalgia management at VitalPhysio⁺ Bengaluru. Learn how structured exercise, pain relief modalities, and self-management strategies can improve quality of life for those with fibromyalgia.",
+    keywords: [
+      "fibromyalgia",
+      "physiotherapy Bengaluru",
+      "chronic pain management",
+      "fibromyalgia exercises",
+      "pain relief",
+      "fibromyalgia treatment",
+      "chronic fatigue management",
+      "VitalPhysio Plus"
+    ].join(", "),
+    openGraph: {
+      title: "A Physiotherapist's Guide to Managing Fibromyalgia Pain | VitalPhysio⁺",
+      description: "Comprehensive physiotherapy guide for fibromyalgia management at VitalPhysio⁺ Bengaluru. Learn how structured exercise, pain relief modalities, and self-management strategies can improve quality of life for those with fibromyalgia.",
+      url: "https://vitalphysio.plus/knowledge/fibromyalgia-guide",
+      siteName: "VitalPhysio⁺",
+      images: [
+        {
+          url: "https://vitalphysio.plus/logo.png",
+          width: 800,
+          height: 600,
+          alt: "VitalPhysio⁺ - Fibromyalgia Management"
+        }
+      ],
+      locale: "en_IN",
+      type: "article"
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "A Physiotherapist's Guide to Managing Fibromyalgia Pain | VitalPhysio⁺",
+      description: "Comprehensive physiotherapy guide for fibromyalgia management at VitalPhysio⁺ Bengaluru. Learn how structured exercise, pain relief modalities, and self-management strategies can improve quality of life for those with fibromyalgia.",
+      images: ["https://vitalphysio.plus/logo.png"]
+    },
+    alternates: {
+      canonical: "https://vitalphysio.plus/knowledge/fibromyalgia-guide"
+    }
+  };
+}
 
-export default function FibromyalgiaGuide() {
-  React.useEffect(() => {
-    (async function () {
-      const cal = await getCalApi({ namespace: "consultation" });
-      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-    })();
-  }, []);
-
-  return (
-    <>
-      <LandingNavbar />
-      <section className="bg-gray-50 py-16 md:py-20">
-        <div className="max-w-4xl mx-auto px-6">
-          {/* SEO Meta Tags */}
-          <head>
-            <title>Fibromyalgia Pain Management | VitalPhysio⁺ Bengaluru</title>
-            <meta
-              name="description"
-              content="Discover how VitalPhysio⁺ Bengaluru helps manage fibromyalgia pain with structured physiotherapy programs tailored to your needs."
-            />
-            <meta
-              name="keywords"
-              content="fibromyalgia, physiotherapy, pain management, VitalPhysio⁺, Bengaluru, chronic pain, fatigue, posture correction"
-            />
-          </head>
-
-          {/* Article Content */}
-          <h1 className="text-4xl md:text-5xl font-bold text-[rgb(0,79,140)] mb-6">
-            A Physiotherapist’s Guide to Managing Fibromyalgia Pain
-          </h1>
-          <p className="text-[rgb(236,105,31)] text-sm mb-4">
-            Empowering Relief with Structured Physiotherapy at VitalPhysio⁺
-          </p>
-          <p className="text-gray-700 text-lg leading-relaxed mb-6">
-            Living with fibromyalgia means enduring persistent pain, widespread tenderness, and unrelenting fatigue that can disrupt daily life. At VitalPhysio⁺, our expert physiotherapists offer a comprehensive, science-backed program designed to help you reclaim control, reduce discomfort, and renew your energy—without reliance on medication alone.
-          </p>
-
-          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">
-            What Is Fibromyalgia, and Why Is Physiotherapy Essential?
-          </h2>
-          <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
-            <li>Widespread musculoskeletal pain</li>
-            <li>Persistent fatigue</li>
-            <li>Sleep disturbances</li>
-            <li>Memory and mood difficulties</li>
-          </ul>
-          <p className="text-gray-700 text-lg leading-relaxed mb-6">
-            While the exact cause is unknown, research shows that a structured physiotherapy plan—focused on graded movement, muscle strengthening, posture, and relaxation—can significantly reduce symptoms and improve overall well-being.
-          </p>
-
-          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">
-            How Physiotherapy at VitalPhysio⁺ Helps You Manage Fibromyalgia
-          </h2>
-          <ol className="list-decimal list-inside text-gray-700 text-lg leading-relaxed mb-6">
-            <li>
-              <strong>Individualized Assessment and Goal Setting:</strong> Every program at VitalPhysio⁺ starts with a detailed evaluation to identify your pain triggers, activity limitations, and lifestyle needs.
-            </li>
-            <li>
-              <strong>Gentle Aerobic Exercise:</strong> Low-impact activities such as walking, water-based therapy (aquatic treadmill), or cycling are carefully introduced to boost stamina, circulation, and energy—while avoiding flare-ups.
-            </li>
-            <li>
-              <strong>Flexibility and Stretching Routines:</strong> Guided stretching helps alleviate muscle stiffness, improve joint mobility, and relieve tension without overexerting sensitive tissues.
-            </li>
-            <li>
-              <strong>Strengthening and Postural Re-education:</strong> Our therapists coach you through controlled strengthening exercises targeting the core, back, and limbs, helping stabilize joints and reduce fatigue. Postural correction minimizes stress on the body and prevents pain recurrence.
-            </li>
-            <li>
-              <strong>Pain Relief Modalities:</strong> Techniques such as electrotherapy, gentle manual therapy, and laser therapy calm overactive nerve signals and reduce pain intensity.
-            </li>
-            <li>
-              <strong>Education and Self-Management Strategies:</strong> We empower you to identify personal triggers, pace activities, and use relaxation methods—like breathing exercises and mindfulness—to cope with flare-ups and minimize stress.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">
-            Why Commitment to Physiotherapy Matters
-          </h2>
-          <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
-            <li>Consistent, supervised sessions lead to meaningful improvements in pain, mobility, and quality of life.</li>
-            <li>Regular reviews ensure your program evolves with your progress, adapting to both good days and challenging ones.</li>
-          </ul>
-          <p className="text-gray-700 text-lg leading-relaxed mb-6">
-            <strong>Pro Tip:</strong> Participation in group exercise or aquatic therapy can support motivation, community, and accountability.
-          </p>
-
-          <p className="text-gray-700 text-lg leading-relaxed mb-6">
-            <strong>Ready to take the next step in your fibromyalgia journey?</strong> Schedule a consultation at VitalPhysio⁺ to experience a tailored approach to fibromyalgia management. Let our experts design a pathway to pain relief, renewed vitality, and restored confidence.
-          </p>
-
-          {/* Book Now Button */}
-          <div className="text-center mt-8">
-            <button
-              type="button"
-              data-cal-namespace="consultation"
-              data-cal-link="vital-physio-plus/consultation"
-              data-cal-config='{"layout":"month_view"}'
-              className="bg-[rgb(0,79,140)] text-white font-semibold py-2.5 px-5 rounded-lg shadow-md hover:bg-[rgb(0,128,148)] hover:shadow-lg transition-all duration-200 text-sm transform hover:-translate-y-0.5"
-            >
-              Book Now
-            </button>
-          </div>
-        </div>
-      </section>
-      <Footer />
-    </>
-  );
+export default function FibromyalgiaGuidePage() {
+  return <FibromyalgiaGuideContent />;
 }

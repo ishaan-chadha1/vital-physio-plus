@@ -1,56 +1,108 @@
-"use client";
+import { Metadata } from 'next';"use client";
+
+import PhysiotherapyForSeniorsContent from './content';
 
 import React from "react";
-import Footer from "@/components/footer";
-import LandingNavbar from "@/components/landing-navbar";
-import { getCalApi } from "@calcom/embed-react";
 
-export default function PhysiotherapyForSeniors() {
-  React.useEffect(() => {
-    (async function () {
-      const cal = await getCalApi({ namespace: "consultation" });
-      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-    })();
-  }, []);
+export const metadata: Metadata = {import Footer from "@/components/footer";
 
-  return (
-    <>
-      <LandingNavbar />
-      <section className="bg-gray-50 py-16 md:py-20">
-        <div className="max-w-4xl mx-auto px-6">
-          {/* SEO Meta Tags */}
-          <head>
-            <title>Physiotherapy for Seniors | VitalPhysio⁺ Bengaluru</title>
-            <meta
-              name="description"
-              content="Discover how geriatric physiotherapy at VitalPhysio⁺ Bengaluru helps seniors stay active, independent, and pain-free with personalized care."
-            />
-            <meta
-              name="keywords"
-              content="geriatric physiotherapy, senior physiotherapy, fall prevention, Bengaluru, VitalPhysio⁺, arthritis, balance training"
-            />
-          </head>
+  title: 'Geriatric Physiotherapy: Improving Mobility for Seniors in Bengaluru | VitalPhysio⁺',import LandingNavbar from "@/components/landing-navbar";
 
-          {/* Article Content */}
-          <h1 className="text-4xl md:text-5xl font-bold text-[rgb(0,79,140)] mb-6">
-            Physiotherapy for Seniors—Keeping Bangalore’s Elderly Active & Independent
-          </h1>
-          <p className="text-gray-700 text-lg leading-relaxed mb-6">
-            Staying independent, managing pain, and reducing fall risk are top priorities for Bengaluru’s seniors and their families. Geriatric physiotherapy offers proven, gentle, and personalized solutions for the unique needs of older adults—delivering health, confidence, and quality of life.
-          </p>
+  description: 'Expert geriatric physiotherapy services in Bengaluru helping seniors manage age-related conditions, improve balance, and maintain independence. Specialized care for the elderly.',import { getCalApi } from "@calcom/embed-react";
 
-          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">Why is Physiotherapy Essential for the Elderly?</h2>
-          <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
+  keywords: 'geriatric physiotherapy, senior physiotherapy, fall prevention, balance training, elderly care, Bengaluru, arthritis management, osteoporosis treatment, mobility improvement',
+
+  openGraph: {export default function PhysiotherapyForSeniors() {
+
+    title: 'Geriatric Physiotherapy: Improving Mobility for Seniors in Bengaluru | VitalPhysio⁺',  React.useEffect(() => {
+
+    description: 'Expert geriatric physiotherapy services in Bengaluru helping seniors manage age-related conditions, improve balance, and maintain independence. Specialized care for the elderly.',    (async function () {
+
+    type: 'article',      const cal = await getCalApi({ namespace: "consultation" });
+
+    publishedTime: '2024-01-12T10:00:00.000Z',      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+
+    authors: ['VitalPhysio⁺ Team'],    })();
+
+    section: 'Geriatric Services',  }, []);
+
+    tags: ['Geriatric Physiotherapy', 'Senior Care', 'Fall Prevention', 'Balance Training', 'Elderly Independence'],
+
+    url: 'https://vitalphysio.plus/knowledge/physiotherapy-for-seniors',  return (
+
+    siteName: 'VitalPhysio⁺',    <>
+
+    images: [      <LandingNavbar />
+
+      {      <section className="bg-gray-50 py-16 md:py-20">
+
+        url: '/images/geriatric-physiotherapy-og.jpg',        <div className="max-w-4xl mx-auto px-6">
+
+        width: 1200,          {/* SEO Meta Tags */}
+
+        height: 630,          <head>
+
+        alt: 'Geriatric physiotherapy improving mobility for seniors in Bengaluru'            <title>Physiotherapy for Seniors | VitalPhysio⁺ Bengaluru</title>
+
+      }            <meta
+
+    ],              name="description"
+
+  },              content="Discover how geriatric physiotherapy at VitalPhysio⁺ Bengaluru helps seniors stay active, independent, and pain-free with personalized care."
+
+  twitter: {            />
+
+    card: 'summary_large_image',            <meta
+
+    title: 'Geriatric Physiotherapy: Improving Mobility for Seniors in Bengaluru | VitalPhysio⁺',              name="keywords"
+
+    description: 'Expert geriatric physiotherapy for seniors. Fall prevention, balance training & independence in Bengaluru.',              content="geriatric physiotherapy, senior physiotherapy, fall prevention, Bengaluru, VitalPhysio⁺, arthritis, balance training"
+
+    images: ['/images/geriatric-physiotherapy-twitter.jpg'],            />
+
+    creator: '@vitalphysioplus',          </head>
+
+    site: '@vitalphysioplus',
+
+  },          {/* Article Content */}
+
+  alternates: {          <h1 className="text-4xl md:text-5xl font-bold text-[rgb(0,79,140)] mb-6">
+
+    canonical: 'https://vitalphysio.plus/knowledge/physiotherapy-for-seniors',            Physiotherapy for Seniors—Keeping Bangalore’s Elderly Active & Independent
+
+  },          </h1>
+
+  robots: {          <p className="text-gray-700 text-lg leading-relaxed mb-6">
+
+    index: true,            Staying independent, managing pain, and reducing fall risk are top priorities for Bengaluru’s seniors and their families. Geriatric physiotherapy offers proven, gentle, and personalized solutions for the unique needs of older adults—delivering health, confidence, and quality of life.
+
+    follow: true,          </p>
+
+    googleBot: {
+
+      index: true,          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">Why is Physiotherapy Essential for the Elderly?</h2>
+
+      follow: true,          <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
+
+      'max-video-preview': -1,            <li>
+
+      'max-image-preview': 'large',              <strong>Mobility Decline:</strong> Ageing leads to loss of muscle strength, joint flexibility, and balance—making everyday activities harder.
+
+      'max-snippet': -1,            </li>
+
+    },            <li>
+
+  },              <strong>Pain & Stiffness:</strong> Arthritis, osteoporosis, and surgery recovery can cause long-term pain and movement limitations.
+
+};            </li>
+
             <li>
-              <strong>Mobility Decline:</strong> Ageing leads to loss of muscle strength, joint flexibility, and balance—making everyday activities harder.
-            </li>
-            <li>
-              <strong>Pain & Stiffness:</strong> Arthritis, osteoporosis, and surgery recovery can cause long-term pain and movement limitations.
-            </li>
-            <li>
-              <strong>Falls:</strong> 1 in 3 adults over 65 will fall at least once every year, and injuries from falls are a leading reason for hospital admission among seniors.
-            </li>
-          </ul>
+
+export default function PhysiotherapyForSeniorsPage() {              <strong>Falls:</strong> 1 in 3 adults over 65 will fall at least once every year, and injuries from falls are a leading reason for hospital admission among seniors.
+
+  return <PhysiotherapyForSeniorsContent />;            </li>
+
+}          </ul>
 
           <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">How Does Physiotherapy Help Seniors Thrive?</h2>
           <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">

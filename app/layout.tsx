@@ -8,20 +8,21 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "VitalPhysio⁺ | Advanced Physiotherapy & Rehabilitation",
-  description: "VitalPhysio⁺ offers advanced physiotherapy, rehabilitation, and wellness services. Book your appointment today!",
+  title: "VitalPhysio⁺ | Advanced Physiotherapy Clinic in Bellandur, Bengaluru",
+  description: "Leading physiotherapy and rehabilitation clinic in Bengaluru. We specialize in sports injury, neurological, and post-surgical rehab using cutting-edge technology. Book your consultation today.",
+  keywords: "physiotherapy Bengaluru, advanced physiotherapy clinic, sports injury rehabilitation, neurological rehabilitation, post-surgical rehab, VitalPhysio⁺, Bellandur physiotherapy, physiotherapy clinic near me",
   metadataBase: new URL('https://vitalphysio.plus'),
   openGraph: {
-    title: "VitalPhysio⁺ | Advanced Physiotherapy & Rehabilitation",
-    description: "VitalPhysio⁺ offers advanced physiotherapy, rehabilitation, and wellness services. Book your appointment today!",
+    title: "VitalPhysio⁺ | Advanced Physiotherapy Clinic in Bellandur, Bengaluru",
+    description: "Leading physiotherapy and rehabilitation clinic in Bengaluru. We specialize in sports injury, neurological, and post-surgical rehab using cutting-edge technology.",
     url: "https://vitalphysio.plus/",
     siteName: "VitalPhysio⁺",
     images: [
       {
-        url: "/logo.png",
-        width: 800,
-        height: 600,
-        alt: "VitalPhysio⁺ Logo",
+        url: "/VitalPhysio+.png",
+        width: 1200,
+        height: 630,
+        alt: "VitalPhysio⁺ Advanced Physiotherapy Clinic in Bengaluru",
       },
     ],
     locale: "en_US",
@@ -29,10 +30,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "VitalPhysio⁺ | Advanced Physiotherapy & Rehabilitation",
-    description: "VitalPhysio⁺ offers advanced physiotherapy, rehabilitation, and wellness services. Book your appointment today!",
-    images: ["/logo.png"],
-    creator: "@yourtwitterhandle"
+    title: "VitalPhysio⁺ | Advanced Physiotherapy Clinic in Bellandur, Bengaluru",
+    description: "Leading physiotherapy and rehabilitation clinic in Bengaluru. We specialize in sports injury, neurological, and post-surgical rehab using cutting-edge technology.",
+    images: ["/VitalPhysio+.png"],
   },
   alternates: {
     canonical: "https://vitalphysio.plus/"

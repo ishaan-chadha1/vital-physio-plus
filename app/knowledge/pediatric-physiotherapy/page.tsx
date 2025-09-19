@@ -1,56 +1,108 @@
-"use client";
+import { Metadata } from 'next';"use client";
+
+import PediatricPhysiotherapyContent from './content';
 
 import React from "react";
-import Footer from "@/components/footer";
-import LandingNavbar from "@/components/landing-navbar";
-import { getCalApi } from "@calcom/embed-react";
 
-export default function PediatricPhysiotherapy() {
-  React.useEffect(() => {
-    (async function () {
-      const cal = await getCalApi({ namespace: "consultation" });
-      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-    })();
-  }, []);
+export const metadata: Metadata = {import Footer from "@/components/footer";
 
-  return (
-    <>
-      <LandingNavbar />
-      <section className="bg-gray-50 py-16 md:py-20">
-        <div className="max-w-4xl mx-auto px-6">
-          {/* SEO Meta Tags */}
-          <head>
-            <title>Pediatric Physiotherapy | VitalPhysio⁺ Bengaluru</title>
-            <meta
-              name="description"
-              content="Discover child-friendly physiotherapy approaches at VitalPhysio⁺ Bengaluru. Help your child overcome movement challenges with expert care."
-            />
-            <meta
-              name="keywords"
-              content="pediatric physiotherapy, child physiotherapy, developmental delays, Bengaluru, VitalPhysio⁺, cerebral palsy, movement therapy"
-            />
-          </head>
+  title: 'Pediatric Physiotherapy in Bengaluru: Helping Your Child Thrive | VitalPhysio⁺',import LandingNavbar from "@/components/landing-navbar";
 
-          {/* Article Content */}
-          <h1 className="text-4xl md:text-5xl font-bold text-[rgb(0,79,140)] mb-6">
-            Pediatric Physiotherapy—Child-Friendly Approaches Parents Should Know
-          </h1>
-          <p className="text-gray-700 text-lg leading-relaxed mb-6">
-            Every child in Bengaluru deserves a bright, active start. Pediatric physiotherapy empowers babies, children, and teens to overcome movement challenges—whether due to delayed milestones, neurological/orthopedic conditions, or injuries. Here’s what every parent should know, based on the latest evidence and approaches from Bengaluru’s pediatric physiotherapists.
-          </p>
+  description: 'Expert pediatric physiotherapy services in Bengaluru for developmental delays, childhood injuries, and neurological conditions. Child-friendly approaches for better outcomes.',import { getCalApi } from "@calcom/embed-react";
 
-          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">What is Pediatric Physiotherapy?</h2>
-          <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
+  keywords: 'pediatric physiotherapy, child physiotherapy, developmental delays, Bengaluru, childhood injuries, cerebral palsy, motor development, early intervention, play-based therapy',
+
+  openGraph: {export default function PediatricPhysiotherapy() {
+
+    title: 'Pediatric Physiotherapy in Bengaluru: Helping Your Child Thrive | VitalPhysio⁺',  React.useEffect(() => {
+
+    description: 'Expert pediatric physiotherapy services in Bengaluru for developmental delays, childhood injuries, and neurological conditions. Child-friendly approaches for better outcomes.',    (async function () {
+
+    type: 'article',      const cal = await getCalApi({ namespace: "consultation" });
+
+    publishedTime: '2024-01-10T09:00:00.000Z',      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+
+    authors: ['VitalPhysio⁺ Team'],    })();
+
+    section: 'Pediatric Services',  }, []);
+
+    tags: ['Pediatric Physiotherapy', 'Child Development', 'Developmental Delays', 'Cerebral Palsy', 'Early Intervention'],
+
+    url: 'https://vitalphysio.plus/knowledge/pediatric-physiotherapy',  return (
+
+    siteName: 'VitalPhysio⁺',    <>
+
+    images: [      <LandingNavbar />
+
+      {      <section className="bg-gray-50 py-16 md:py-20">
+
+        url: '/images/pediatric-physiotherapy-og.jpg',        <div className="max-w-4xl mx-auto px-6">
+
+        width: 1200,          {/* SEO Meta Tags */}
+
+        height: 630,          <head>
+
+        alt: 'Pediatric physiotherapy helping children thrive in Bengaluru'            <title>Pediatric Physiotherapy | VitalPhysio⁺ Bengaluru</title>
+
+      }            <meta
+
+    ],              name="description"
+
+  },              content="Discover child-friendly physiotherapy approaches at VitalPhysio⁺ Bengaluru. Help your child overcome movement challenges with expert care."
+
+  twitter: {            />
+
+    card: 'summary_large_image',            <meta
+
+    title: 'Pediatric Physiotherapy in Bengaluru: Helping Your Child Thrive | VitalPhysio⁺',              name="keywords"
+
+    description: 'Expert pediatric physiotherapy for developmental delays & childhood injuries. Child-friendly care in Bengaluru.',              content="pediatric physiotherapy, child physiotherapy, developmental delays, Bengaluru, VitalPhysio⁺, cerebral palsy, movement therapy"
+
+    images: ['/images/pediatric-physiotherapy-twitter.jpg'],            />
+
+    creator: '@vitalphysioplus',          </head>
+
+    site: '@vitalphysioplus',
+
+  },          {/* Article Content */}
+
+  alternates: {          <h1 className="text-4xl md:text-5xl font-bold text-[rgb(0,79,140)] mb-6">
+
+    canonical: 'https://vitalphysio.plus/knowledge/pediatric-physiotherapy',            Pediatric Physiotherapy—Child-Friendly Approaches Parents Should Know
+
+  },          </h1>
+
+  robots: {          <p className="text-gray-700 text-lg leading-relaxed mb-6">
+
+    index: true,            Every child in Bengaluru deserves a bright, active start. Pediatric physiotherapy empowers babies, children, and teens to overcome movement challenges—whether due to delayed milestones, neurological/orthopedic conditions, or injuries. Here’s what every parent should know, based on the latest evidence and approaches from Bengaluru’s pediatric physiotherapists.
+
+    follow: true,          </p>
+
+    googleBot: {
+
+      index: true,          <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">What is Pediatric Physiotherapy?</h2>
+
+      follow: true,          <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
+
+      'max-video-preview': -1,            <li>
+
+      'max-image-preview': 'large',              Pediatric physiotherapy is a specialized branch focused on evaluating, diagnosing, and addressing movement, strength, and functional issues in children from birth through adolescence.
+
+      'max-snippet': -1,            </li>
+
+    },            <li>
+
+  },              It helps address developmental delays, frequent falls, muscle weakness, difficulty walking, cerebral palsy, genetic conditions (Down syndrome), and post-injury or post-surgery care.
+
+};            </li>
+
             <li>
-              Pediatric physiotherapy is a specialized branch focused on evaluating, diagnosing, and addressing movement, strength, and functional issues in children from birth through adolescence.
-            </li>
-            <li>
-              It helps address developmental delays, frequent falls, muscle weakness, difficulty walking, cerebral palsy, genetic conditions (Down syndrome), and post-injury or post-surgery care.
-            </li>
-            <li>
-              Treatment blends science with creativity—using games, play-based exercises, and hands-on therapy for fun, engaging rehabilitation.
-            </li>
-          </ul>
+
+export default function PediatricPhysiotherapyPage() {              Treatment blends science with creativity—using games, play-based exercises, and hands-on therapy for fun, engaging rehabilitation.
+
+  return <PediatricPhysiotherapyContent />;            </li>
+
+}          </ul>
 
           <h2 className="text-2xl font-bold text-[rgb(0,128,148)] mb-4">When Should Parents Seek Pediatric Physiotherapy?</h2>
           <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
