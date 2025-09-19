@@ -3,6 +3,8 @@
 import React from "react";
 import Footer from "@/components/footer";
 import LandingNavbar from "@/components/landing-navbar";
+import Breadcrumb from "@/components/breadcrumb";
+import { generateKnowledgeBreadcrumbs } from "@/utils/breadcrumbs";
 import { getCalApi } from "@calcom/embed-react";
 
 export default function SwimmerShoulderContent() {
@@ -147,6 +149,11 @@ export default function SwimmerShoulderContent() {
       <LandingNavbar />
       <section className="bg-gray-50 py-16 md:py-20">
         <div className="max-w-4xl mx-auto px-6">
+          {/* Breadcrumb Navigation */}
+          <Breadcrumb 
+            items={generateKnowledgeBreadcrumbs('swimmer-shoulder', "Swimmer's Shoulder")}
+          />
+
           {/* Article Content */}
           <h1 className="text-4xl md:text-5xl font-bold text-[rgb(0,79,140)] mb-6">
             Preventing Common Shoulder Injuries in Swimmers

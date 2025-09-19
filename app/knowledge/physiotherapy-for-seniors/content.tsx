@@ -3,6 +3,8 @@
 import React from "react";
 import Footer from "@/components/footer";
 import LandingNavbar from "@/components/landing-navbar";
+import Breadcrumb from "@/components/breadcrumb";
+import { generateKnowledgeBreadcrumbs } from "@/utils/breadcrumbs";
 import { getCalApi } from "@calcom/embed-react";
 
 export default function PhysiotherapyForSeniorsContent() {
@@ -146,6 +148,11 @@ export default function PhysiotherapyForSeniorsContent() {
       <LandingNavbar />
       <section className="bg-gray-50 py-16 md:py-20">
         <div className="max-w-4xl mx-auto px-6">
+          {/* Breadcrumb Navigation */}
+          <Breadcrumb 
+            items={generateKnowledgeBreadcrumbs('physiotherapy-for-seniors', 'Physiotherapy for Seniors')}
+          />
+
           {/* Article Content */}
           <h1 className="text-4xl md:text-5xl font-bold text-[rgb(0,79,140)] mb-6">
             Physiotherapy for Seniors—Keeping Bangalore's Elderly Active & Independent

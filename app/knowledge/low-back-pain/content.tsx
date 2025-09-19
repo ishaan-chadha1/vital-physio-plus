@@ -3,6 +3,8 @@
 import React from "react";
 import Footer from "@/components/footer";
 import LandingNavbar from "@/components/landing-navbar";
+import Breadcrumb from "@/components/breadcrumb";
+import { generateKnowledgeBreadcrumbs } from "@/utils/breadcrumbs";
 import { getCalApi } from "@calcom/embed-react";
 
 export default function LowBackPainContent() {
@@ -18,6 +20,11 @@ export default function LowBackPainContent() {
       <LandingNavbar />
       <section className="bg-gray-50 py-16 md:py-20">
         <div className="max-w-4xl mx-auto px-6">
+          {/* Breadcrumb Navigation */}
+          <Breadcrumb 
+            items={generateKnowledgeBreadcrumbs('low-back-pain', 'Low Back Pain Relief')}
+          />
+
           {/* Article Schema JSON-LD */}
           <script
             type="application/ld+json"
