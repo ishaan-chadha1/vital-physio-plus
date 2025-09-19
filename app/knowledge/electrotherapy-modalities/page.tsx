@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: "https://vitalphysio.plus/logo.png",
           width: 800,
           height: 600,
-          alt: "VitalPhysio⁺ - Electrotherapy Modalities"
+          alt: "Electrotherapy modalities and TENS therapy equipment for physiotherapy treatment"
         }
       ],
       locale: "en_IN",

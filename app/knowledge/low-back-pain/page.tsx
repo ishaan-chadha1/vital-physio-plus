@@ -10,8 +10,17 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "Physiotherapy for Chronic Low Back Pain in Bengaluru | VitalPhysio⁺",
       description: "Evidence-based physiotherapy solutions for chronic low back pain at VitalPhysio⁺ Bengaluru. Learn proven recovery pathways and effective treatment options.",
       url: "https://vitalphysio.plus/knowledge/low-back-pain",
-      type: "article",
-      siteName: "VitalPhysio⁺"
+      siteName: "VitalPhysio⁺",
+      images: [
+        {
+          url: "https://vitalphysio.plus/images/back-pain-treatment.jpg",
+          width: 800,
+          height: 600,
+          alt: "Lower back pain treatment and physiotherapy exercises for chronic pain relief"
+        }
+      ],
+      locale: "en_IN",
+      type: "article"
     },
     twitter: {
       card: "summary_large_image",

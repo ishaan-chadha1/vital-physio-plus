@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: "https://vitalphysio.plus/logo.png",
           width: 800,
           height: 600,
-          alt: "VitalPhysio⁺ - Sports Injury First Aid"
+          alt: "Sports injury first aid treatment and emergency care procedures for athletes"
         }
       ],
       locale: "en_IN",

@@ -22,10 +22,10 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "VitalPhysio⁺",
       images: [
         {
-          url: "https://vitalphysio.plus/logo.png",
+          url: "https://vitalphysio.plus/images/tech-neck-exercises.jpg",
           width: 800,
           height: 600,
-          alt: "VitalPhysio⁺ - Fix Tech Neck"
+          alt: "Office worker performing neck stretches and posture exercises to relieve tech neck pain"
         }
       ],
       locale: "en_IN",

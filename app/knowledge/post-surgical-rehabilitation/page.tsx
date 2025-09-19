@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: "https://vitalphysio.plus/logo.png",
           width: 800,
           height: 600,
-          alt: "VitalPhysio⁺ - Post-Surgical Rehabilitation"
+          alt: "Post-surgical rehabilitation and recovery physiotherapy treatment after orthopedic surgery"
         }
       ],
       locale: "en_IN",

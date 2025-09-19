@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: "https://vitalphysio.plus/logo.png",
           width: 800,
           height: 600,
-          alt: "VitalPhysio⁺ - Fibromyalgia Management"
+          alt: "Fibromyalgia pain management and physiotherapy treatment strategies guide"
         }
       ],
       locale: "en_IN",

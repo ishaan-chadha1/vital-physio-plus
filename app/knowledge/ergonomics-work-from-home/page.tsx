@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: "https://vitalphysio.plus/logo.png",
           width: 800,
           height: 600,
-          alt: "VitalPhysio⁺ - Work From Home Ergonomics"
+          alt: "Ergonomic workspace setup guide for work-from-home professionals to prevent injury"
         }
       ],
       locale: "en_IN",
