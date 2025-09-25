@@ -114,7 +114,7 @@ export default function LandingNavbar() {
                 width={800}
                 height={160}
                 priority
-                className="object-contain h-40 w-auto"
+                className="object-contain h-50 w-auto"
               />
             </div>
             <div className="flex-1 flex items-center justify-end space-x-6">
@@ -169,12 +169,12 @@ export default function LandingNavbar() {
                     href="/"
                     className="relative px-4 py-1 group whitespace-nowrap mr-8 flex items-center"
                   >
-                    <div className="relative w-48 h-24 overflow-hidden">
+                    <div className="relative w-72 h-36 overflow-hidden">
                       <Image
                         src="/logo.png"
                         alt="VitalPhysio⁺ Logo"
-                        width={480}
-                        height={240}
+                        width={720}
+                        height={360}
                         className={`absolute inset-0 object-contain w-full h-full transition-all duration-500 ease-in-out ${
                           hovered ? "opacity-0 scale-95" : "opacity-100 scale-100"
                         }`}
@@ -182,8 +182,8 @@ export default function LandingNavbar() {
                       <Image
                         src="/logo1.png"
                         alt="VitalPhysio⁺ Logo Hover"
-                        width={480}
-                        height={240}
+                        width={720}
+                        height={360}
                         className={`absolute inset-0 object-contain w-full h-full transition-all duration-500 ease-in-out ${
                           hovered ? "opacity-100 scale-100" : "opacity-0 scale-105"
                         }`}
@@ -286,7 +286,7 @@ export default function LandingNavbar() {
       {/* Spacer (retain existing layout offset) */}
       <div
         className="w-full transition-all duration-500 ease-in-out"
-        style={{ height: scrolled ? "96px" : "180px" }}
+        style={{ height: scrolled ? "144px" : "230px" }}
       />
     </>
   );
