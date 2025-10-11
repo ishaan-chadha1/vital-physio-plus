@@ -150,8 +150,8 @@ export default function LandingNavbar() {
         <nav
           className={`fixed left-0 w-full z-40 border-b border-gray-200 will-change-transform transition-all duration-500 ease-in-out top-0 ${
             hovered
-              ? "bg-white/98 backdrop-blur-lg shadow-xl py-4"
-              : "bg-white/30 backdrop-blur-sm shadow-md py-2.5"
+              ? "bg-white/98 backdrop-blur-lg shadow-xl py-5"
+              : "bg-white/30 backdrop-blur-sm shadow-md py-3"
           }`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -165,20 +165,20 @@ export default function LandingNavbar() {
                 <div className="flex items-center justify-center w-full max-w-7xl">
                   <Link
                     href="/"
-                    className="relative px-4 py-2 group whitespace-nowrap mr-6 flex items-center"
+                    className="relative px-4 py-2 group whitespace-nowrap mr-8 flex items-center"
                   >
                     <div 
                       className="relative overflow-hidden transition-all duration-500 ease-in-out"
                       style={{
-                        width: hovered ? '140px' : '120px',
-                        height: hovered ? '70px' : '60px'
+                        width: hovered ? '180px' : '150px',
+                        height: hovered ? '90px' : '75px'
                       }}
                     >
                       <Image
                         src="/logo.png"
                         alt="VitalPhysio⁺ Logo"
-                        width={280}
-                        height={140}
+                        width={360}
+                        height={180}
                         className="object-contain w-full h-full transition-all duration-500 ease-in-out"
                       />
                     </div>
