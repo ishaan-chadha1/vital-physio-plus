@@ -335,15 +335,18 @@ const Modal = ({
 // Services Grid Component
 const ServicesGrid = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalContent, setModalContent] = useState<React.ReactNode>(null);
+  const [modalContent, setModalContent] = useState<React.ReactNode>(null);
   const services = [
-      {
+    {
       icon: HeartPulse,
       title: "Recovering from Injury or Surgery",
       description:
         "Expert care for back pain, neck pain, joint conditions, post-fracture, and post-surgical recovery. Regain strength, flexibility, and complete range of motion.",
       link: "Discover More",
       borderColor: "border-teal-500",
+      bgColor: "bg-gradient-to-br from-teal-50/80 to-cyan-50/60",
+      iconBg: "bg-teal-500",
+      buttonColor: "bg-teal-500 hover:bg-teal-600",
       onClick: () => {
         setModalContent(
           <>
@@ -402,7 +405,10 @@ const ServicesGrid = () => {
       description:
         "Specialized programs for sprains, strains, ACL injuries, and overuse syndromes. Accelerate healing, prevent re-injury, and optimize athletic performance.",
       link: "Explore Sports Physio",
-      borderColor: "border-teal-500",
+      borderColor: "border-blue-500",
+      bgColor: "bg-gradient-to-br from-blue-50/80 to-indigo-50/60",
+      iconBg: "bg-blue-500",
+      buttonColor: "bg-blue-500 hover:bg-blue-600",
       onClick: () => {
         setModalContent(
           <>
@@ -478,242 +484,254 @@ const ServicesGrid = () => {
       },
     },
     {
-  icon: BrainCircuit,
-  title: "Managing Persistent Pain",
-  description:
-    "Comprehensive strategies for persistent back pain, neck pain, headaches, and fibromyalgia. Find lasting relief and improve coping mechanisms.",
-  link: "Learn About Pain Relief",
-  borderColor: "border-orange-500",
-  onClick: () => {
-    setModalContent(
-      <>
-        <h2 className="text-3xl font-semibold text-blue-900 tracking-tight mb-6">
-          Lasting Relief for Persistent Pain: Expert Physiotherapy for Chronic Back Pain, Neck Pain, Headaches, and Fibromyalgia
-        </h2>
-        <p className="text-gray-700 mb-4">
-          Are you searching for effective solutions for chronic pain? Our physiotherapists are experts in managing persistent pain conditions using evidence-based, multidisciplinary approaches that address both the body and mind.
-        </p>
-        <ul className="list-none space-y-4 text-gray-700 leading-relaxed">
-          <li>
-            <strong className="text-blue-900">Thorough Pain Assessment:</strong>{" "}
-            Every patient receives an in-depth evaluation to pinpoint causes—whether for chronic back pain, ongoing neck discomfort, tension headaches, or fibromyalgia.
-          </li>
-          <li>
-            <strong className="text-teal-500">Manual Therapy and Myofascial Release:</strong>{" "}
-            Hands-on techniques such as massage, joint mobilization, and myofascial release help reduce pain intensity, improve range of motion, and target trigger points for lasting comfort.
-          </li>
-          <li>
-            <strong className="text-orange-500">Guided Exercise Therapy:</strong>{" "}
-            Individualized exercise programs promote healing, restore strength and flexibility, and correct faulty movement patterns. Proven regimens include core stabilization, postural correction, stretching, and endurance-building to support the spine and joints, and reduce flare-ups.
-          </li>
-          <li>
-            <strong className="text-blue-900">Patient Education and Self-Care Techniques:</strong>{" "}
-            We teach evidence-based pain coping strategies, ergonomic modifications, and home exercises so you stay in control of your pain between visits.
-          </li>
-          <li>
-            <strong className="text-teal-500">Multimodal Therapies for Difficult Conditions:</strong>{" "}
-            For fibromyalgia and persistent headaches, we integrate modalities such as hydrotherapy or aquatic physiotherapy, gentle aerobic activity, mindfulness-based stress reduction, and relaxation techniques to address both physical and emotional aspects of pain.
-          </li>
-          <li>
-            <strong className="text-orange-500">Lasting Results with a Compassionate Approach:</strong>{" "}
-            Our programs focus on sustainable improvement—not just temporary relief. We empower you to manage pain, improve daily functioning, and reclaim a more active, joyful life.
-          </li>
-        </ul>
-        <p className="text-gray-700 mt-6">
-          <strong className="text-blue-900">We specialize in:</strong>
-        </p>
-        <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
-          <li>Persistent lower back and neck pain</li>
-          <li>Chronic tension or migraine headaches</li>
-          <li>Fibromyalgia management</li>
-          <li>Postural pain syndromes</li>
-          <li>Chronic pain after injury or surgery</li>
-        </ul>
-        <p className="text-gray-700 mt-6">
-          Get answers to your pain. Discover evidence-based physiotherapy, ongoing support, and a commitment to your comfort and recovery.
-        </p>
-      </>
-    );
-    setIsModalOpen(true);
-  },
-},
-   {
-  icon: PersonStanding,
-  title: "Women's Wellness & Pelvic Health",
-  description:
-    "Discreet and effective specialized care for pelvic floor dysfunction, pre/post-natal recovery, and osteoporosis. Regain confidence and comfort.",
-  link: "View Women's Health",
-  borderColor: "border-teal-500",
-  onClick: () => {
-    setModalContent(
-      <>
-        <h2 className="text-3xl font-semibold text-blue-900 tracking-tight mb-6">
-          Women's Health Physiotherapy: Pelvic Floor, Pre/Post-Natal, and Osteoporosis Care
-        </h2>
-        <p className="text-gray-700 mb-4">
-          Take control of your wellness with discreet, expert physiotherapy for women—solving pelvic floor dysfunction, supporting healthy pre- and post-natal recovery, and empowering osteoporosis prevention and management.
-        </p>
-        <ul className="list-none space-y-4 text-gray-700 leading-relaxed">
-          <li>
-            <strong className="text-blue-900">Pelvic Floor Dysfunction Solutions:</strong>{" "}
-            Address urinary incontinence, pelvic pain, prolapse, and sexual dysfunction with targeted pelvic floor muscle training, manual therapy, biofeedback, and lifestyle coaching. Physiotherapy is a first-line, evidence-based approach to improving pelvic floor strength, bladder control, and intimate wellbeing. Benefits include freedom from discomfort, restored confidence, and lasting symptom relief.
-          </li>
-          <li>
-            <strong className="text-teal-500">Pre- and Post-Natal Recovery:</strong>{" "}
-            Gentle, guided exercise programs help restore core and pelvic stability after childbirth, reduce back and pelvic pain, and promote a safe return to physical activity. Pre-natal care prepares your body for birth; post-natal therapy accelerates abdominal healing, posture recovery, and functional strength for daily activities and motherhood.
-          </li>
-          <li>
-            <strong className="text-orange-500">Osteoporosis Prevention and Management:</strong>{" "}
-            Weight-bearing exercise, balance retraining, posture correction, and strength training are proven to support bone density and reduce fracture risk. Our tailored osteoporosis physiotherapy programs are designed for safety, confidence, and improved quality of life at any age.
-          </li>
-          <li>
-            <strong className="text-blue-900">Empowering Education and Support:</strong>{" "}
-            We provide compassionate education about pelvic health, pain management strategies, sexual health after pregnancy or menopause, and safe exercise options for each phase of a woman’s life.
-          </li>
-          <li>
-            <strong className="text-teal-500">Discreet, Confidential Care in Comfortable Settings:</strong>{" "}
-            Every session is private and personalized, with clinical expertise and sensitive support that respects your needs and promotes confidence, comfort, and long-term well-being.
-          </li>
-        </ul>
-        <p className="text-gray-700 mt-6">
-          <strong className="text-blue-900">Conditions We Treat:</strong>
-        </p>
-        <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
-          <li>Pelvic floor dysfunction (incontinence, prolapse, pain)</li>
-          <li>Pre- and post-natal care for pregnancy recovery</li>
-          <li>Osteoporosis risk and bone health</li>
-          <li>Chronic pelvic pain and sexual dysfunction</li>
-        </ul>
-        <p className="text-gray-700 mt-6">
-          Get back to your best self. Discover trusted women’s health physiotherapy for pelvic strength, mobility, and everyday comfort.
-        </p>
-      </>
-    );
-    setIsModalOpen(true);
-  },
-},
- {
-  icon: HeartHandshake,
-  title: "Intimate Health & Pelvic Floor Support",
-  description:
-    "Discrete and compassionate care for urinary incontinence, faecal incontinence, and sexual health concerns. Regain confidence and improve quality of life.",
-  link: "Explore Intimate Health",
-  borderColor: "border-teal-500",
-  onClick: () => {
-    setModalContent(
-      <>
-        <h2 className="text-3xl font-semibold text-blue-900 tracking-tight mb-6">
-          Intimate Health & Pelvic Floor Support: Discreet, Compassionate Physiotherapy for Incontinence and Sexual Wellness
-        </h2>
-        <p className="text-gray-700 mb-4">
-          Experience judgment-free, expert physiotherapy designed to restore pelvic function, manage incontinence, and address sensitive sexual health concerns—empowering you to regain confidence and a better quality of life.
-        </p>
-        <ul className="list-none space-y-4 text-gray-700 leading-relaxed">
-          <li>
-            <strong className="text-blue-900">Urinary Incontinence:</strong>{" "}
-            Strengthen and retrain pelvic floor muscles with guided exercises, biofeedback, and electrostimulation—the gold standards for conservative management of urinary leakage, urgency, and frequency. These physiotherapy techniques significantly improve bladder control and reduce everyday disruptions.
-          </li>
-          <li>
-            <strong className="text-teal-500">Faecal Incontinence:</strong>{" "}
-            Advanced muscle re-education and targeted training for anal sphincter and pelvic muscles can dramatically enhance continence, confidence, and independence. Biofeedback, pelvic floor muscle training, and electrical stimulation are clinically recommended to alleviate symptoms and improve quality of life.
-          </li>
-          <li>
-            <strong className="text-orange-500">Sexual Health Concerns:</strong>{" "}
-            Physiotherapy for sexual dysfunction addresses pain during intercourse, arousal or orgasm difficulties, and male/female erectile or pelvic pain. Treatment combines muscle relaxation, strength training, biofeedback, and holistic emotional support, leading to improved sexual function and personal well-being.
-          </li>
-        </ul>
-        <p className="text-gray-700 mt-6">
-          <strong className="text-blue-900">How Pelvic Floor Therapy Enhances Intimate Health:</strong>
-        </p>
-        <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
-          <li>Restores muscle tone, endurance, and coordination for better bladder, bowel, and sexual function</li>
-          <li>Reduces pelvic pain and discomfort with hands-on therapy and specialized exercises</li>
-          <li>Improves blood flow, relaxation, and body awareness—vital for healthy intimacy and relationships</li>
-          <li>Gives you control, confidence, and a supportive, discreet space to discuss sensitive health issues</li>
-          <li>Suitable for women, men, and people of any gender experiencing pelvic health challenges</li>
-        </ul>
-        <p className="text-gray-700 mt-6">
-          Recover confidence, dignity, and comfort. Explore evidence-based pelvic floor therapy and take the first step to restoring control and quality of life.
-        </p>
-      </>
-    );
-    setIsModalOpen(true);
-  },
-},
-{
-  icon: Orbit,
-  title: "Restoring Movement & Function",
-  description:
-    "Specialized therapy for conditions like stroke, Parkinson's disease, and brain injuries. Improve motor control, balance, and coordination.",
-  link: "Learn About Neuro Physio",
-  borderColor: "border-teal-500",
-  onClick: () => {
-    setModalContent(
-      <>
-        <h2 className="text-3xl font-semibold text-blue-900 tracking-tight mb-6">
-          Neurological Physiotherapy: Regain Movement & Independence After Stroke, Parkinson’s, and Brain Injury
-        </h2>
-        <p className="text-gray-700 mb-4">
-          Unlock your potential for recovery with evidence-based neuro physiotherapy—specialized for restoring movement, balance, and function in neurological conditions like stroke, Parkinson’s disease, and brain injuries.
-        </p>
-        <p className="text-gray-700 mb-4">
-          <strong>What Is Neuro Physiotherapy?</strong> Neurological physiotherapy targets the nervous system to help individuals regain control of their body after injury or disease. Our programs offer hope for improved mobility, motor control, coordination, and functional independence.
-        </p>
-        <p className="text-gray-700 mt-6">
-          <strong className="text-blue-900">Expert Neurorehabilitation for:</strong>
-        </p>
-        <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
-          <li>Stroke recovery (acute, subacute, and chronic)</li>
-          <li>Parkinson’s disease and other movement disorders</li>
-          <li>Traumatic or acquired brain injuries</li>
-          <li>Balance and gait difficulties</li>
-        </ul>
-        <p className="text-gray-700 mt-6">
-          <strong className="text-blue-900">Comprehensive Neuro Physio Strategies:</strong>
-        </p>
-        <ul className="list-none space-y-4 text-gray-700 leading-relaxed">
-          <li>
-            <strong className="text-blue-900">Personalized Assessment and Goal Setting:</strong>{" "}
-            Every patient receives a detailed evaluation using best-practice clinical scales (balance, gait, independence, and cognition). We set clear, attainable goals for improved quality of life.
-          </li>
-          <li>
-            <strong className="text-teal-500">Motor Control and Functional Re-Education:</strong>{" "}
-            Cutting-edge interventions help retrain the brain and body to restore lost movements. Techniques include neuromuscular facilitation (such as PNF), functional electrical stimulation, mirror therapy, and graded motor imagery to improve strength, coordination, and control.
-          </li>
-          <li>
-            <strong className="text-orange-500">Balance, Coordination & Gait Training:</strong>{" "}
-            Our therapists use a range of balance exercises—from simple weight shifts to advanced unstable surface training—to reduce fall risk and improve confidence. Gait retraining may involve treadmill, bodyweight-supported walking, and targeted dynamic drills.
-          </li>
-          <li>
-            <strong className="text-blue-900">Management of Spasticity and Stiffness:</strong>{" "}
-            Individualized stretching, manual therapy, and the use of splints/braces help minimize spasticity and maintain joint flexibility.
-          </li>
-          <li>
-            <strong className="text-teal-500">Functional Independence and Community Integration:</strong>{" "}
-            We emphasize activities of daily living, posture, and transfers using real-world tasks, helping patients regain independence at home and in the community. Caregiver training and home exercise recommendations support ongoing recovery.
-          </li>
-          <li>
-            <strong className="text-orange-500">Long-Term Support for Progressive Neurological Conditions:</strong>{" "}
-            Regular reviews and progressive adjustment of therapy plans for conditions such as Parkinson’s ensure sustained improvement and adaptation to evolving needs.
-          </li>
-        </ul>
-        <p className="text-gray-700 mt-6">
-          <strong className="text-blue-900">Why Choose Our Neuro Physiotherapy Programs?</strong>
-        </p>
-        <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
-          <li>Advanced, patient-centered rehabilitation techniques</li>
-          <li>Focus on functional outcomes: walking, balance, hand use, speech, and more</li>
-          <li>Empathetic, multidisciplinary approach involving family and caregivers</li>
-          <li>Latest technology and research-based interventions</li>
-        </ul>
-        <p className="text-gray-700 mt-6">
-          Take the next step in your neuro-recovery journey. Experience compassionate care, real progress, and a clear roadmap to maximizing your abilities.
-        </p>
-      </>
-    );
-    setIsModalOpen(true);
-  },
-},
+      icon: BrainCircuit,
+      title: "Managing Persistent Pain",
+      description:
+        "Comprehensive strategies for persistent back pain, neck pain, headaches, and fibromyalgia. Find lasting relief and improve coping mechanisms.",
+      link: "Learn About Pain Relief",
+      borderColor: "border-sky-500",
+      bgColor: "bg-gradient-to-br from-sky-50/80 to-blue-50/60",
+      iconBg: "bg-sky-500",
+      buttonColor: "bg-sky-500 hover:bg-sky-600",
+      onClick: () => {
+        setModalContent(
+          <>
+            <h2 className="text-3xl font-semibold text-blue-900 tracking-tight mb-6">
+              Lasting Relief for Persistent Pain: Expert Physiotherapy for Chronic Back Pain, Neck Pain, Headaches, and Fibromyalgia
+            </h2>
+            <p className="text-gray-700 mb-4">
+              Are you searching for effective solutions for chronic pain? Our physiotherapists are experts in managing persistent pain conditions using evidence-based, multidisciplinary approaches that address both the body and mind.
+            </p>
+            <ul className="list-none space-y-4 text-gray-700 leading-relaxed">
+              <li>
+                <strong className="text-blue-900">Thorough Pain Assessment:</strong>{" "}
+                Every patient receives an in-depth evaluation to pinpoint causes—whether for chronic back pain, ongoing neck discomfort, tension headaches, or fibromyalgia.
+              </li>
+              <li>
+                <strong className="text-teal-500">Manual Therapy and Myofascial Release:</strong>{" "}
+                Hands-on techniques such as massage, joint mobilization, and myofascial release help reduce pain intensity, improve range of motion, and target trigger points for lasting comfort.
+              </li>
+              <li>
+                <strong className="text-orange-500">Guided Exercise Therapy:</strong>{" "}
+                Individualized exercise programs promote healing, restore strength and flexibility, and correct faulty movement patterns. Proven regimens include core stabilization, postural correction, stretching, and endurance-building to support the spine and joints, and reduce flare-ups.
+              </li>
+              <li>
+                <strong className="text-blue-900">Patient Education and Self-Care Techniques:</strong>{" "}
+                We teach evidence-based pain coping strategies, ergonomic modifications, and home exercises so you stay in control of your pain between visits.
+              </li>
+              <li>
+                <strong className="text-teal-500">Multimodal Therapies for Difficult Conditions:</strong>{" "}
+                For fibromyalgia and persistent headaches, we integrate modalities such as hydrotherapy or aquatic physiotherapy, gentle aerobic activity, mindfulness-based stress reduction, and relaxation techniques to address both physical and emotional aspects of pain.
+              </li>
+              <li>
+                <strong className="text-orange-500">Lasting Results with a Compassionate Approach:</strong>{" "}
+                Our programs focus on sustainable improvement—not just temporary relief. We empower you to manage pain, improve daily functioning, and reclaim a more active, joyful life.
+              </li>
+            </ul>
+            <p className="text-gray-700 mt-6">
+              <strong className="text-blue-900">We specialize in:</strong>
+            </p>
+            <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
+              <li>Persistent lower back and neck pain</li>
+              <li>Chronic tension or migraine headaches</li>
+              <li>Fibromyalgia management</li>
+              <li>Postural pain syndromes</li>
+              <li>Chronic pain after injury or surgery</li>
+            </ul>
+            <p className="text-gray-700 mt-6">
+              Get answers to your pain. Discover evidence-based physiotherapy, ongoing support, and a commitment to your comfort and recovery.
+            </p>
+          </>
+        );
+        setIsModalOpen(true);
+      },
+    },
+    {
+      icon: PersonStanding,
+      title: "Women's Wellness & Pelvic Health",
+      description:
+        "Discreet and effective specialized care for pelvic floor dysfunction, pre/post-natal recovery, and osteoporosis. Regain confidence and comfort.",
+      link: "View Women's Health",
+      borderColor: "border-teal-400",
+      bgColor: "bg-gradient-to-br from-teal-50/70 to-emerald-50/50",
+      iconBg: "bg-teal-400",
+      buttonColor: "bg-teal-400 hover:bg-teal-500",
+      onClick: () => {
+        setModalContent(
+          <>
+            <h2 className="text-3xl font-semibold text-blue-900 tracking-tight mb-6">
+              Women's Health Physiotherapy: Pelvic Floor, Pre/Post-Natal, and Osteoporosis Care
+            </h2>
+            <p className="text-gray-700 mb-4">
+              Take control of your wellness with discreet, expert physiotherapy for women—solving pelvic floor dysfunction, supporting healthy pre- and post-natal recovery, and empowering osteoporosis prevention and management.
+            </p>
+            <ul className="list-none space-y-4 text-gray-700 leading-relaxed">
+              <li>
+                <strong className="text-blue-900">Pelvic Floor Dysfunction Solutions:</strong>{" "}
+                Address urinary incontinence, pelvic pain, prolapse, and sexual dysfunction with targeted pelvic floor muscle training, manual therapy, biofeedback, and lifestyle coaching. Physiotherapy is a first-line, evidence-based approach to improving pelvic floor strength, bladder control, and intimate wellbeing. Benefits include freedom from discomfort, restored confidence, and lasting symptom relief.
+              </li>
+              <li>
+                <strong className="text-teal-500">Pre- and Post-Natal Recovery:</strong>{" "}
+                Gentle, guided exercise programs help restore core and pelvic stability after childbirth, reduce back and pelvic pain, and promote a safe return to physical activity. Pre-natal care prepares your body for birth; post-natal therapy accelerates abdominal healing, posture recovery, and functional strength for daily activities and motherhood.
+              </li>
+              <li>
+                <strong className="text-orange-500">Osteoporosis Prevention and Management:</strong>{" "}
+                Weight-bearing exercise, balance retraining, posture correction, and strength training are proven to support bone density and reduce fracture risk. Our tailored osteoporosis physiotherapy programs are designed for safety, confidence, and improved quality of life at any age.
+              </li>
+              <li>
+                <strong className="text-blue-900">Empowering Education and Support:</strong>{" "}
+                We provide compassionate education about pelvic health, pain management strategies, sexual health after pregnancy or menopause, and safe exercise options for each phase of a woman’s life.
+              </li>
+              <li>
+                <strong className="text-teal-500">Discreet, Confidential Care in Comfortable Settings:</strong>{" "}
+                Every session is private and personalized, with clinical expertise and sensitive support that respects your needs and promotes confidence, comfort, and long-term well-being.
+              </li>
+            </ul>
+            <p className="text-gray-700 mt-6">
+              <strong className="text-blue-900">Conditions We Treat:</strong>
+            </p>
+            <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
+              <li>Pelvic floor dysfunction (incontinence, prolapse, pain)</li>
+              <li>Pre- and post-natal care for pregnancy recovery</li>
+              <li>Osteoporosis risk and bone health</li>
+              <li>Chronic pelvic pain and sexual dysfunction</li>
+            </ul>
+            <p className="text-gray-700 mt-6">
+              Get back to your best self. Discover trusted women’s health physiotherapy for pelvic strength, mobility, and everyday comfort.
+            </p>
+          </>
+        );
+        setIsModalOpen(true);
+      },
+    },
+    {
+      icon: HeartHandshake,
+      title: "Intimate Health & Pelvic Floor Support",
+      description:
+        "Discrete and compassionate care for urinary incontinence, faecal incontinence, and sexual health concerns. Regain confidence and improve quality of life.",
+      link: "Explore Intimate Health",
+      borderColor: "border-cyan-500",
+      bgColor: "bg-gradient-to-br from-cyan-50/80 to-teal-50/60",
+      iconBg: "bg-cyan-500",
+      buttonColor: "bg-cyan-500 hover:bg-cyan-600",
+      onClick: () => {
+        setModalContent(
+          <>
+            <h2 className="text-3xl font-semibold text-blue-900 tracking-tight mb-6">
+              Intimate Health & Pelvic Floor Support: Discreet, Compassionate Physiotherapy for Incontinence and Sexual Wellness
+            </h2>
+            <p className="text-gray-700 mb-4">
+              Experience judgment-free, expert physiotherapy designed to restore pelvic function, manage incontinence, and address sensitive sexual health concerns—empowering you to regain confidence and a better quality of life.
+            </p>
+            <ul className="list-none space-y-4 text-gray-700 leading-relaxed">
+              <li>
+                <strong className="text-blue-900">Urinary Incontinence:</strong>{" "}
+                Strengthen and retrain pelvic floor muscles with guided exercises, biofeedback, and electrostimulation—the gold standards for conservative management of urinary leakage, urgency, and frequency. These physiotherapy techniques significantly improve bladder control and reduce everyday disruptions.
+              </li>
+              <li>
+                <strong className="text-teal-500">Faecal Incontinence:</strong>{" "}
+                Advanced muscle re-education and targeted training for anal sphincter and pelvic muscles can dramatically enhance continence, confidence, and independence. Biofeedback, pelvic floor muscle training, and electrical stimulation are clinically recommended to alleviate symptoms and improve quality of life.
+              </li>
+              <li>
+                <strong className="text-orange-500">Sexual Health Concerns:</strong>{" "}
+                Physiotherapy for sexual dysfunction addresses pain during intercourse, arousal or orgasm difficulties, and male/female erectile or pelvic pain. Treatment combines muscle relaxation, strength training, biofeedback, and holistic emotional support, leading to improved sexual function and personal well-being.
+              </li>
+            </ul>
+            <p className="text-gray-700 mt-6">
+              <strong className="text-blue-900">How Pelvic Floor Therapy Enhances Intimate Health:</strong>
+            </p>
+            <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
+              <li>Restores muscle tone, endurance, and coordination for better bladder, bowel, and sexual function</li>
+              <li>Reduces pelvic pain and discomfort with hands-on therapy and specialized exercises</li>
+              <li>Improves blood flow, relaxation, and body awareness—vital for healthy intimacy and relationships</li>
+              <li>Gives you control, confidence, and a supportive, discreet space to discuss sensitive health issues</li>
+              <li>Suitable for women, men, and people of any gender experiencing pelvic health challenges</li>
+            </ul>
+            <p className="text-gray-700 mt-6">
+              Recover confidence, dignity, and comfort. Explore evidence-based pelvic floor therapy and take the first step to restoring control and quality of life.
+            </p>
+          </>
+        );
+        setIsModalOpen(true);
+      },
+    },
+    {
+      icon: Orbit,
+      title: "Restoring Movement & Function",
+      description:
+        "Specialized therapy for conditions like stroke, Parkinson's disease, and brain injuries. Improve motor control, balance, and coordination.",
+      link: "Learn About Neuro Physio",
+      borderColor: "border-blue-600",
+      bgColor: "bg-gradient-to-br from-blue-50/70 to-sky-50/50",
+      iconBg: "bg-blue-600",
+      buttonColor: "bg-blue-600 hover:bg-blue-700",
+      onClick: () => {
+        setModalContent(
+          <>
+            <h2 className="text-3xl font-semibold text-blue-900 tracking-tight mb-6">
+              Neurological Physiotherapy: Regain Movement & Independence After Stroke, Parkinson's, and Brain Injury
+            </h2>
+            <p className="text-gray-700 mb-4">
+              Unlock your potential for recovery with evidence-based neuro physiotherapy—specialized for restoring movement, balance, and function in neurological conditions like stroke, Parkinson’s disease, and brain injuries.
+            </p>
+            <p className="text-gray-700 mb-4">
+              <strong>What Is Neuro Physiotherapy?</strong> Neurological physiotherapy targets the nervous system to help individuals regain control of their body after injury or disease. Our programs offer hope for improved mobility, motor control, coordination, and functional independence.
+            </p>
+            <p className="text-gray-700 mt-6">
+              <strong className="text-blue-900">Expert Neurorehabilitation for:</strong>
+            </p>
+            <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
+              <li>Stroke recovery (acute, subacute, and chronic)</li>
+              <li>Parkinson’s disease and other movement disorders</li>
+              <li>Traumatic or acquired brain injuries</li>
+              <li>Balance and gait difficulties</li>
+            </ul>
+            <p className="text-gray-700 mt-6">
+              <strong className="text-blue-900">Comprehensive Neuro Physio Strategies:</strong>
+            </p>
+            <ul className="list-none space-y-4 text-gray-700 leading-relaxed">
+              <li>
+                <strong className="text-blue-900">Personalized Assessment and Goal Setting:</strong>{" "}
+                Every patient receives a detailed evaluation using best-practice clinical scales (balance, gait, independence, and cognition). We set clear, attainable goals for improved quality of life.
+              </li>
+              <li>
+                <strong className="text-teal-500">Motor Control and Functional Re-Education:</strong>{" "}
+                Cutting-edge interventions help retrain the brain and body to restore lost movements. Techniques include neuromuscular facilitation (such as PNF), functional electrical stimulation, mirror therapy, and graded motor imagery to improve strength, coordination, and control.
+              </li>
+              <li>
+                <strong className="text-orange-500">Balance, Coordination & Gait Training:</strong>{" "}
+                Our therapists use a range of balance exercises—from simple weight shifts to advanced unstable surface training—to reduce fall risk and improve confidence. Gait retraining may involve treadmill, bodyweight-supported walking, and targeted dynamic drills.
+              </li>
+              <li>
+                <strong className="text-blue-900">Management of Spasticity and Stiffness:</strong>{" "}
+                Individualized stretching, manual therapy, and the use of splints/braces help minimize spasticity and maintain joint flexibility.
+              </li>
+              <li>
+                <strong className="text-teal-500">Functional Independence and Community Integration:</strong>{" "}
+                We emphasize activities of daily living, posture, and transfers using real-world tasks, helping patients regain independence at home and in the community. Caregiver training and home exercise recommendations support ongoing recovery.
+              </li>
+              <li>
+                <strong className="text-orange-500">Long-Term Support for Progressive Neurological Conditions:</strong>{" "}
+                Regular reviews and progressive adjustment of therapy plans for conditions such as Parkinson’s ensure sustained improvement and adaptation to evolving needs.
+              </li>
+            </ul>
+            <p className="text-gray-700 mt-6">
+              <strong className="text-blue-900">Why Choose Our Neuro Physiotherapy Programs?</strong>
+            </p>
+            <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
+              <li>Advanced, patient-centered rehabilitation techniques</li>
+              <li>Focus on functional outcomes: walking, balance, hand use, speech, and more</li>
+              <li>Empathetic, multidisciplinary approach involving family and caregivers</li>
+              <li>Latest technology and research-based interventions</li>
+            </ul>
+            <p className="text-gray-700 mt-6">
+              Take the next step in your neuro-recovery journey. Experience compassionate care, real progress, and a clear roadmap to maximizing your abilities.
+            </p>
+          </>
+        );
+        setIsModalOpen(true);
+      },
+    },
   ];
 
   return (
@@ -733,14 +751,10 @@ const ServicesGrid = () => {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.45, delay: index * 0.08 }}
               viewport={{ once: true, amount: 0.25 }}
-              className={`bg-gray-50/70 p-6 md:p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col border-t-4 ${service.borderColor}`}
+              className={`${service.bgColor} p-6 md:p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col border-t-4 ${service.borderColor}`}
             >
               <div
-                className={`mb-4 text-white rounded-full p-3 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center ${
-                  service.borderColor === "border-orange-500"
-                    ? "bg-orange-500"
-                    : "bg-teal-500"
-                }`}
+                className={`mb-4 text-white rounded-full p-3 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center ${service.iconBg}`}
               >
                 <service.icon size={24} className="md:size-28" />
               </div>
@@ -752,10 +766,10 @@ const ServicesGrid = () => {
               </p>
               <button
                 onClick={service.onClick}
-                className="font-medium text-blue-600 hover:text-blue-800 transition-colors duration-300 self-start group text-sm md:text-base flex items-center space-x-2"
+                className={`${service.buttonColor} !text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 self-start group text-sm md:text-base flex items-center space-x-2 transform hover:-translate-y-0.5`}
               >
-                <span>{service.link}</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <span className="text-white">{service.link}</span>
+                <ArrowRight className="w-4 h-4 text-white transition-transform group-hover:translate-x-1" />
               </button>
             </motion.div>
           ))}
