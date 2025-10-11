@@ -12,7 +12,6 @@ const navLinks = [
   { name: "Conditions We Treat", href: "/conditions" },
   { name: "Cutting-Edge Technology", href: "/technology" },
   { name: "About Us", href: "/about" },
-  // { name: "Our Team", href: "/team" },
   { name: "Knowledge Hub", href: "/knowledge" },
   { name: "FAQs", href: "/faq" },
   { name: "Contact Us", href: "/contact" },
@@ -60,7 +59,6 @@ export default function LandingNavbar() {
     };
   }, [handleScroll]);
 
-  // Lock body scroll when mobile menu open
   useEffect(() => {
     document.body.classList.toggle("overflow-hidden", menuOpen);
     return () => document.body.classList.remove("overflow-hidden");
@@ -152,8 +150,8 @@ export default function LandingNavbar() {
         <nav
           className={`fixed left-0 w-full z-40 border-b border-gray-200 will-change-transform transition-all duration-500 ease-in-out top-0 ${
             hovered
-              ? "bg-white/98 backdrop-blur-lg shadow-xl py-2"
-              : "bg-white/30 backdrop-blur-sm shadow-md py-1"
+              ? "bg-white/98 backdrop-blur-lg shadow-xl py-4"
+              : "bg-white/30 backdrop-blur-sm shadow-md py-2.5"
           }`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -167,37 +165,32 @@ export default function LandingNavbar() {
                 <div className="flex items-center justify-center w-full max-w-7xl">
                   <Link
                     href="/"
-                    className="relative px-4 py-1 group whitespace-nowrap mr-8 flex items-center"
+                    className="relative px-4 py-2 group whitespace-nowrap mr-6 flex items-center"
                   >
-                    <div className="relative w-48 h-24 overflow-hidden">
+                    <div 
+                      className="relative overflow-hidden transition-all duration-500 ease-in-out"
+                      style={{
+                        width: hovered ? '140px' : '120px',
+                        height: hovered ? '70px' : '60px'
+                      }}
+                    >
                       <Image
                         src="/logo.png"
                         alt="VitalPhysio⁺ Logo"
-                        width={480}
-                        height={240}
-                        className={`absolute inset-0 object-contain w-full h-full transition-all duration-500 ease-in-out ${
-                          hovered ? "opacity-0 scale-95" : "opacity-100 scale-100"
-                        }`}
-                      />
-                      <Image
-                        src="/logo1.png"
-                        alt="VitalPhysio⁺ Logo Hover"
-                        width={480}
-                        height={240}
-                        className={`absolute inset-0 object-contain w-full h-full transition-all duration-500 ease-in-out ${
-                          hovered ? "opacity-100 scale-100" : "opacity-0 scale-105"
-                        }`}
+                        width={280}
+                        height={140}
+                        className="object-contain w-full h-full transition-all duration-500 ease-in-out"
                       />
                     </div>
                     <span className="absolute left-4 right-4 bottom-0 h-0.5 bg-gradient-to-r from-blue-600 to-teal-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
                   </Link>
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center space-x-0.5">
                     {navLinks.map((item) => (
                       <Link
                         key={item.name}
                         href={item.href}
-                        className={`relative text-gray-700 hover:text-teal-600 font-medium px-3 py-1 group transition-all duration-200 whitespace-nowrap ${
-                          hovered ? "text-sm" : "text-xs"
+                        className={`relative text-gray-700 hover:text-teal-600 font-medium px-3 py-2 group transition-all duration-300 whitespace-nowrap ${
+                          hovered ? "text-base" : "text-sm"
                         }`}
                       >
                         {item.name}
