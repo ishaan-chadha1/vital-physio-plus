@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
+import ChatWidget from '@/components/ChatWidget';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -83,6 +84,7 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <ChatWidget />
         {children}
       </body>
     </html>
