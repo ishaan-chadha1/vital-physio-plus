@@ -152,23 +152,24 @@ const ContactSection = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-4">
-                  <Phone className="w-6 h-6 text-blue-600 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">
-                      Management Support:
-                    </h4>
-                    <p className="text-blue-600 font-semibold">
-                      +91 80473 59090
-                    </p>
-                  </div>
-                </div>
+                
 
                 <div className="flex items-center space-x-4">
                   <Phone className="w-6 h-6 text-blue-600 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
                       Appointments, General Queries and Support (24/7):
+                    </h4>
+                    <p className="text-blue-600 font-semibold">
+                      +91 80473 59900
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <Phone className="w-6 h-6 text-blue-600 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">
+                      Management Support:
                     </h4>
                     <p className="text-blue-600 font-semibold">
                       +91 80473 59090
