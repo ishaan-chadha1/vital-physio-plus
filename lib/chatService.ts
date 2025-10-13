@@ -165,9 +165,9 @@ class ChatService {
   /**
    * Get quick action buttons
    */
-  getQuickActions(): Array<{ label: string; action: string; type: 'link' | 'phone' | 'email' }> {
+  getQuickActions(): Array<{ label: string; action: string; type: 'link' | 'phone' | 'email' | 'cal' }> {
     return [
-      { label: "Book Appointment", action: "https://vitalphysio.plus", type: "link" },
+      { label: "Book Appointment", action: "vital-physio-plus/consultation", type: "cal" },
       { label: "Call Us", action: "+91 80353 17531", type: "phone" },
       { label: "Email Us", action: "Contact@VitalPhysio.Plus", type: "email" },
     ];

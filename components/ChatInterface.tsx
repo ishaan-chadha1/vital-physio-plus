@@ -9,10 +9,12 @@ import {
   Phone, 
   Mail, 
   ExternalLink,
+  Calendar,
   AlertCircle,
   Loader2
 } from 'lucide-react';
 import { chatService, ChatMessage } from '@/lib/chatService';
+import { getCalApi } from "@calcom/embed-react";
 
 interface ChatInterfaceProps {
   isOpen: boolean;
@@ -51,6 +53,14 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose }) => {
       setMessages([welcomeMessage]);
     }
   }, [isOpen, messages.length]);
+
+  // Initialize Cal.com API
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: "consultation" });
+      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+    })();
+  }, []);
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
@@ -102,6 +112,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose }) => {
         break;
       case 'link':
         window.open(action.action, '_blank');
+        break;
+      case 'cal':
+        // Trigger Cal.com booking
+        (async function () {
+          const cal = await getCalApi({ namespace: "consultation" });
+          cal("openModal", { eventType: action.action });
+        })();
         break;
     }
   };
@@ -281,6 +298,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose }) => {
                 {action.type === 'phone' && <Phone className="w-3 h-3" />}
                 {action.type === 'email' && <Mail className="w-3 h-3" />}
                 {action.type === 'link' && <ExternalLink className="w-3 h-3" />}
+                {action.type === 'cal' && <Calendar className="w-3 h-3" />}
                 <span>{action.label}</span>
               </button>
             ))}
