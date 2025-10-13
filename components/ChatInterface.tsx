@@ -114,11 +114,15 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose }) => {
         window.open(action.action, '_blank');
         break;
       case 'cal':
-        // Trigger Cal.com booking
-        (async function () {
-          const cal = await getCalApi({ namespace: "consultation" });
-          cal("openModal", { eventType: action.action });
-        })();
+        // Create a temporary button with Cal.com attributes and click it
+        const calButton = document.createElement('button');
+        calButton.setAttribute('data-cal-namespace', 'consultation');
+        calButton.setAttribute('data-cal-link', action.action);
+        calButton.setAttribute('data-cal-config', '{"layout":"month_view"}');
+        calButton.style.display = 'none';
+        document.body.appendChild(calButton);
+        calButton.click();
+        document.body.removeChild(calButton);
         break;
     }
   };
