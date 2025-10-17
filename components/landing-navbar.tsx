@@ -127,7 +127,7 @@ export default function LandingNavbar() {
                   Book Now
                 </button>
                 <Link
-                  href="/portal"
+                  href="/patient-portal"
                   className="bg-teal-600 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md hover:bg-teal-700 hover:shadow-lg transition-all duration-200 text-sm transform hover:-translate-y-0.5"
                 >
                   Patient Portal
@@ -265,7 +265,7 @@ export default function LandingNavbar() {
                 Book Now
               </button>
               <Link
-                href="/portal"
+                href="/patient-portal"
                 onClick={() => setMenuOpen(false)}
                 className="w-full bg-teal-600 text-white font-semibold py-4 rounded-lg text-center hover:bg-teal-700 transition-colors text-base"
               >
