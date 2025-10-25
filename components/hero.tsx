@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import { getCalApi } from "@calcom/embed-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import ChatInterface from "./ChatInterface";
 const Hero = () => {
   const backgroundImageUrl = "/underwater-treadmill.jpg";
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  
   useEffect(() => {
     (async function () {
       const cal = await getCalApi({ namespace: "consultation" });
@@ -73,14 +76,18 @@ const Hero = () => {
           >
             Book Now
           </button>
-          <a
-            className="w-full sm:w-auto border-2 border-cyan-400/80 bg-cyan-500/20 hover:bg-cyan-500/30 text-white font-medium py-3 px-8 rounded-lg text-base shadow-2xl transition-all duration-300 transform hover:scale-105 backdrop-blur-sm"
-            href="#services"
+          <button
+            type="button"
+            onClick={() => setIsChatOpen(true)}
+            className="w-full sm:w-auto border-2 border-cyan-400/80 bg-cyan-500/20 hover:bg-cyan-500/30 text-white font-medium py-3 px-8 rounded-lg text-base shadow-2xl transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-pointer"
           >
             Chat With C³ - Your Personal Concierge Care Coordinator
-          </a>
+          </button>
         </motion.div>
       </div>
+
+      {/* Chat Interface */}
+      <ChatInterface isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </section>
   );
 };

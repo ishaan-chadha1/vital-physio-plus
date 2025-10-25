@@ -1,0 +1,27 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Next.js dev server",
+			"type": "shell",
+			"command": "npm run dev",
+			"args": [],
+			"isBackground": true,
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Smoke test booking edge cases",
+			"type": "shell",
+			"command": "bash",
+			"args": [
+				"-lc",
+				"set -e\ncurl -s -X POST http://localhost:3001/api/chat -H \"Content-Type: application/json\" -d '{\"sessionId\":\"t1\",\"selectedOption\":\"start_booking\"}' >/dev/null\ncurl -s -X POST http://localhost:3001/api/chat -H \"Content-Type: application/json\" -d '{\"sessionId\":\"t1\",\"selectedOption\":\"next_monday\"}' | jq -r '.message' | head -n1\ncurl -s -X POST http://localhost:3001/api/chat -H \"Content-Type: application/json\" -d '{\"sessionId\":\"t1\",\"selectedOption\":\"time_14\"}' | jq -r '.message' | head -n1\ncurl -s -X POST http://localhost:3001/api/chat -H \"Content-Type: application/json\" -d '{\"sessionId\":\"t2\",\"selectedOption\":\"start_booking\"}' >/dev/null\ncurl -s -X POST http://localhost:3001/api/chat -H \"Content-Type: application/json\" -d '{\"sessionId\":\"t2\",\"selectedOption\":\"specific\"}' | jq -r '.requiresTextInput'\ncurl -s -X POST http://localhost:3001/api/chat -H \"Content-Type: application/json\" -d '{\"sessionId\":\"t2\",\"query\":\"next monday at 10:30 AM\"}' | jq -r '.message' | sed -n '1p'"
+			],
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}
