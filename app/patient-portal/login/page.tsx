@@ -1,5 +1,8 @@
 'use client';
 
+// Force dynamic rendering to prevent build-time errors with Firebase
+export const dynamic = 'force-dynamic';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signInWithPhoneNumber, RecaptchaVerifier, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
@@ -19,6 +22,9 @@ export default function PatientLogin() {
   const router = useRouter();
 
   const setupRecaptcha = () => {
+    if (!auth) {
+      throw new Error('Firebase auth is not initialized. Please check your Firebase configuration.');
+    }
     if (!recaptchaVerifier) {
       const verifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
         size: 'invisible',
@@ -40,6 +46,12 @@ export default function PatientLogin() {
     setLoading(true);
     setError('');
 
+    if (!auth) {
+      setError('Firebase auth is not initialized. Please check your Firebase configuration.');
+      setLoading(false);
+      return;
+    }
+
     try {
       const verifier = setupRecaptcha();
       const formattedPhone = phoneNumber.startsWith('+') ? phoneNumber : `+91${phoneNumber}`;
@@ -59,12 +71,23 @@ export default function PatientLogin() {
     setLoading(true);
     setError('');
 
+    if (!auth) {
+      setError('Firebase auth is not initialized. Please check your Firebase configuration.');
+      setLoading(false);
+      return;
+    }
+
     try {
       const credential = PhoneAuthProvider.credential(verificationId, otp);
       const userCredential = await signInWithCredential(auth, credential);
       const user = userCredential.user;
 
       // Check if patient exists in Firestore
+      if (!db) {
+        setError('Firebase Firestore is not initialized.');
+        setLoading(false);
+        return;
+      }
       const patientDoc = await getDoc(doc(db, 'patients', user.uid));
       
       if (!patientDoc.exists()) {

@@ -1,5 +1,8 @@
 'use client';
 
+// Force dynamic rendering to prevent build-time errors with Firebase
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
@@ -81,6 +84,13 @@ export default function PatientPortal() {
   const router = useRouter();
 
   useEffect(() => {
+    // Check if Firebase auth is initialized
+    if (!auth) {
+      console.error('Firebase auth is not initialized. Please check your Firebase configuration.');
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user);
@@ -98,6 +108,10 @@ export default function PatientPortal() {
   }, [router]);
 
   const fetchPatientData = async (uid: string) => {
+    if (!db) {
+      console.error('Firebase Firestore is not initialized.');
+      return;
+    }
     try {
       const patientDoc = await getDoc(doc(db, 'patients', uid));
       if (patientDoc.exists()) {
@@ -133,6 +147,10 @@ export default function PatientPortal() {
   };
 
   const fetchSubmissions = async (uid: string) => {
+    if (!db) {
+      console.error('Firebase Firestore is not initialized.');
+      return;
+    }
     try {
       const submissionsQuery = query(
         collection(db, 'submissions'),
@@ -151,6 +169,11 @@ export default function PatientPortal() {
   };
 
   const fetchTherapySessions = async (uid: string) => {
+    if (!db) {
+      console.error('Firebase Firestore is not initialized.');
+      setLoadingSessions(false);
+      return;
+    }
     setLoadingSessions(true);
     try {
       const sessionsQuery = query(
@@ -173,6 +196,10 @@ export default function PatientPortal() {
   };
 
   const fetchDoctors = async () => {
+    if (!db) {
+      console.error('Firebase Firestore is not initialized.');
+      return;
+    }
     try {
       const doctorsSnapshot = await getDocs(collection(db, 'doctors'));
       const doctorsData = doctorsSnapshot.docs.map(doc => ({
@@ -186,6 +213,11 @@ export default function PatientPortal() {
   };
 
   const handleSignOut = async () => {
+    if (!auth) {
+      console.error('Firebase auth is not initialized.');
+      router.push('/patient-portal/login');
+      return;
+    }
     try {
       await signOut(auth);
       router.push('/patient-portal/login');
@@ -193,6 +225,33 @@ export default function PatientPortal() {
       console.error('Error signing out:', error);
     }
   };
+
+  // Show error if Firebase is not initialized (after loading completes)
+  if (!loading && (!auth || !db)) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto px-4">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+            <h2 className="text-xl font-bold text-red-800 mb-2">Firebase Configuration Error</h2>
+            <p className="text-red-600 mb-4">
+              Firebase is not properly initialized. Please check your environment variables:
+            </p>
+            <ul className="text-left text-sm text-red-600 space-y-1 mb-4">
+              <li>• NEXT_PUBLIC_FIREBASE_API_KEY</li>
+              <li>• NEXT_PUBLIC_FIREBASE_PROJECT_ID</li>
+              <li>• NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN</li>
+            </ul>
+            <button
+              onClick={() => router.push('/')}
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+            >
+              Go to Home Page
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
@@ -209,7 +268,13 @@ export default function PatientPortal() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600">Please log in to access your portal.</p>
+          <p className="text-gray-600 mb-4">Please log in to access your portal.</p>
+          <button
+            onClick={() => router.push('/patient-portal/login')}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Go to Login
+          </button>
         </div>
       </div>
     );

@@ -1,10 +1,10 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import { Award, Plus } from "lucide-react"
 
 export default function c() {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -15,7 +15,7 @@ export default function c() {
     },
   }
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: {
       opacity: 0,
       y: 50,
@@ -32,7 +32,7 @@ export default function c() {
     },
   }
 
-  const titleVariants = {
+  const titleVariants: Variants = {
     hidden: {
       opacity: 0,
       y: -30,
@@ -42,7 +42,7 @@ export default function c() {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: "easeOut",
+        ease: [0, 0, 0.58, 1], // easeOut cubic-bezier equivalent
       },
     },
   }

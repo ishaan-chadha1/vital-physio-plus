@@ -1,6 +1,9 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
+import { getAuth, Auth } from 'firebase/auth';
+import { getFirestore, Firestore } from 'firebase/firestore';
+
+// Check if we're in a browser environment
+const isClient = typeof window !== 'undefined';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -11,13 +14,36 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Validate Firebase config (only in client and if config exists)
+const isConfigValid = isClient && firebaseConfig.apiKey && firebaseConfig.projectId;
 
-// Initialize Firebase Authentication and get a reference to the service
-export const auth = getAuth(app);
+// Initialize Firebase only if we're on the client and config is valid
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Firestore | null = null;
 
-// Initialize Cloud Firestore and get a reference to the service
-export const db = getFirestore(app);
+if (isConfigValid) {
+  // Check if Firebase has already been initialized
+  const existingApps = getApps();
+  if (existingApps.length === 0) {
+    try {
+      app = initializeApp(firebaseConfig);
+      auth = getAuth(app);
+      db = getFirestore(app);
+    } catch (error) {
+      console.error('Firebase initialization error:', error);
+      // In build time, we don't want to throw errors
+      if (process.env.NODE_ENV === 'production' && typeof window === 'undefined') {
+        console.warn('Firebase initialization skipped during build');
+      }
+    }
+  } else {
+    app = existingApps[0];
+    auth = getAuth(app);
+    db = getFirestore(app);
+  }
+}
 
+// Export with null checks - components should handle these gracefully
+export { auth, db };
 export default app;
