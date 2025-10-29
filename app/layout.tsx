@@ -8,9 +8,19 @@ const inter = Inter({
   display: "swap",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "VitalPhysio⁺ | Advanced Physiotherapy Clinic in Bellandur, Bengaluru",
   description: "Leading physiotherapy and rehabilitation clinic in Bengaluru. We specialize in sports injury, neurological, and post-surgical rehab using cutting-edge technology. Book your consultation today.",
+
+  // --- 3. ADD THIS ICONS OBJECT ---
+  // This points to your file in public/logo1.png
+  icons: {
+    icon: '/logo1.png', // Main favicon
+    shortcut: '/logo1.png', // For older browsers
+    apple: '/logo1.png', // For Apple 'add to home screen'
+  },
+  // ---------------------------------
+
   keywords: "physiotherapy Bengaluru, advanced physiotherapy clinic, sports injury rehabilitation, neurological rehabilitation, post-surgical rehab, VitalPhysio⁺, Bellandur physiotherapy, physiotherapy clinic near me",
   metadataBase: new URL('https://vitalphysio.plus'),
   openGraph: {
