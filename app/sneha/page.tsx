@@ -132,6 +132,43 @@ export default function SnehaKnowledgeBasePage() {
                 needs and professional guidance.
               </p>
             </article>
+
+            <article className="space-y-6">
+              <header>
+                <h2 className="text-2xl font-semibold text-gray-900">Patient FAQs</h2>
+              </header>
+              <div className="space-y-5 text-gray-700 leading-relaxed">
+                <section className="space-y-2">
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    How do I book an appointment?
+                  </h3>
+                  <p>
+                    The easiest way is to call us at +91-80473 59900 or fill out the contact form.
+                    You can also chat with our C³—your personal Concierge Care Coordinator for
+                    instant scheduling help.
+                  </p>
+                </section>
+                <section className="space-y-2">
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    What should I bring to my first session?
+                  </h3>
+                  <p>
+                    Bring any relevant medical documents (X-rays, MRI, doctor&apos;s notes) and wear
+                    comfortable clothing. You can also fill your medical history in advance via our
+                    Patient Portal to save time.
+                  </p>
+                </section>
+                <section className="space-y-2">
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    Do you accept health insurance?
+                  </h3>
+                  <p>
+                    We do not have direct empanelment, but we provide the required documentation for
+                    you to seek reimbursement after your therapy depending on your policy.
+                  </p>
+                </section>
+              </div>
+            </article>
           </div>
         </section>
       </main>
