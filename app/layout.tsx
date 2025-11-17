@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import ChatWidget from '@/components/ChatWidget';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -97,6 +98,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ChatWidget />
         {children}
+        <Analytics />
       </body>
     </html>
   );
