@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# deployment scripts with sensitive information
+deploy-cloud-run.sh
+update-env-vars.sh
+deploy-with-cloud-build.sh
+deploy-cloud-run-with-build.sh
+cloudbuild.yaml
+
+# gcloud logs
+.gcloud/
+*.log
