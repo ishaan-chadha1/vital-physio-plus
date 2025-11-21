@@ -13,6 +13,7 @@ export async function GET() {
     '/conditions',
     '/contact',
     '/faq',
+    '/feedb',
     '/form',
     '/journey',
     '/knowledge',
