@@ -401,7 +401,7 @@ export default function CustomerFeedbackPage() {
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
-              VITALPHYSIO+ PATIENT FEEDBACK FORM
+              VITALPHYSIO⁺ PATIENT FEEDBACK FORM
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-6">
               Your Insights Matter to Us
@@ -411,7 +411,7 @@ export default function CustomerFeedbackPage() {
                 <strong>Dear Valued Visitor,</strong>
               </p>
               <p className="mb-4">
-                Thank you for visiting VitalPhysio+ and for considering us as your partner in your health journey. 
+                Thank you for visiting VitalPhysio⁺ and for considering us as your partner in your health journey. 
                 We recognize that your decision to proceed with treatment involves careful consideration, and we 
                 genuinely appreciate you taking the time to experience our clinic and care approach.
               </p>
@@ -485,7 +485,7 @@ export default function CustomerFeedbackPage() {
                   <div className="space-y-6">
                     <div>
                       <Label className="text-base font-semibold mb-3 block">
-                        1.1 How would you rate your overall experience during your initial consultation at VitalPhysio+?
+                        1.1 How would you rate your overall experience during your initial consultation at VitalPhysio⁺?
                       </Label>
                       <RadioGroup
                         name="overallExperience"
@@ -613,7 +613,7 @@ export default function CustomerFeedbackPage() {
                   <div className="space-y-6">
                     <div>
                       <Label className="text-base font-semibold mb-3 block">
-                        3.1 How confident are you that VitalPhysio+'s approach will address your specific condition?
+                        3.1 How confident are you that VitalPhysio⁺'s approach will address your specific condition?
                       </Label>
                       <RadioGroup
                         name="confidenceInApproach"
@@ -691,7 +691,7 @@ export default function CustomerFeedbackPage() {
                   <div className="space-y-6">
                     <div>
                       <Label className="text-base font-semibold mb-3 block">
-                        4.1 How would you describe the pricing of VitalPhysio+ services?
+                        4.1 How would you describe the pricing of VitalPhysio⁺ services?
                       </Label>
                       <RadioGroup
                         name="pricingDescription"
@@ -782,7 +782,7 @@ export default function CustomerFeedbackPage() {
                   <div className="space-y-6">
                     <div>
                       <Label className="text-base font-semibold mb-3 block">
-                        5.1 How informed do you feel about the unique treatment modalities at VitalPhysio+ (such as the water treadmill and other advanced equipment)?
+                        5.1 How informed do you feel about the unique treatment modalities at VitalPhysio⁺ (such as the water treadmill and other advanced equipment)?
                       </Label>
                       <RadioGroup
                         name="modalityInformed"
@@ -905,7 +905,7 @@ export default function CustomerFeedbackPage() {
 
                     <div>
                       <Label className="text-base font-semibold mb-3 block">
-                        6.3 Is there anything the VitalPhysio+ team could have done differently during your visit to encourage you to start treatment?
+                        6.3 Is there anything the VitalPhysio⁺ team could have done differently during your visit to encourage you to start treatment?
                       </Label>
                       <textarea
                         name="couldHaveDoneDifferently"
@@ -933,7 +933,7 @@ export default function CustomerFeedbackPage() {
                   <div className="space-y-6">
                     <div>
                       <Label className="text-base font-semibold mb-3 block">
-                        7.1 If you were to recommend one change or improvement at VitalPhysio+, what would it be?
+                        7.1 If you were to recommend one change or improvement at VitalPhysio⁺, what would it be?
                       </Label>
                       <textarea
                         name="oneChange"
@@ -954,7 +954,7 @@ export default function CustomerFeedbackPage() {
                         options={[
                           "More detailed explanation of expected outcomes for my condition",
                           "Success stories or patient testimonials",
-                          "Comparison of VitalPhysio+'s approach vs. standard physiotherapy",
+                          "Comparison of VitalPhysio⁺'s approach vs. standard physiotherapy",
                           "Clear pricing transparency and payment options",
                           "Detailed session-by-session breakdown of a typical treatment plan",
                           "Information about what to expect at each phase",
@@ -1142,7 +1142,7 @@ export default function CustomerFeedbackPage() {
                     </p>
                     <p className="text-sm text-gray-800 font-medium">
                       <strong>Warm regards,</strong><br />
-                      <span className="text-gray-700">Dr K S Chandraprakash & VitalPhysio+ Team</span>
+                      <span className="text-gray-700">Dr K S Chandraprakash & VitalPhysio⁺ Team</span>
                     </p>
                   </div>
                   
