@@ -158,8 +158,50 @@ export default function CustomerFeedbackPage() {
     }
   };
 
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    // Name is now required
+    if (!formData.respondentName.trim()) {
+      newErrors.respondentName = "Name is required";
+    } else if (formData.respondentName.trim().length < 2) {
+      newErrors.respondentName = "Name must be at least 2 characters";
+    }
+
+    // Email validation if provided
+    if (formData.respondentEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.respondentEmail)) {
+      newErrors.respondentEmail = "Please enter a valid email address";
+    }
+
+    // Phone validation if provided
+    if (formData.respondentPhone && !/^[\d\s\-\+\(\)]+$/.test(formData.respondentPhone)) {
+      newErrors.respondentPhone = "Please enter a valid phone number";
+    }
+
+    setErrors(newErrors);
+    
+    // Scroll to first error
+    if (Object.keys(newErrors).length > 0) {
+      const firstErrorField = Object.keys(newErrors)[0];
+      const errorElement = document.getElementById(firstErrorField) || 
+                          document.querySelector(`[name="${firstErrorField}"]`);
+      if (errorElement) {
+        errorElement.scrollIntoView({ behavior: "smooth", block: "center" });
+        (errorElement as HTMLElement).focus();
+      }
+    }
+
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form before submission
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
     setErrors({});
 
@@ -283,7 +325,11 @@ export default function CustomerFeedbackPage() {
       {options.map((option) => (
         <label
           key={option}
-          className="flex items-center space-x-3 cursor-pointer group hover:bg-gray-50 p-2 rounded-md transition-colors"
+          className={`flex items-start space-x-3 cursor-pointer group p-3 rounded-lg transition-all duration-200 ${
+            value === option
+              ? "bg-blue-50 border-2 border-blue-200 shadow-sm"
+              : "hover:bg-gray-50 border-2 border-transparent"
+          }`}
         >
           <input
             type="radio"
@@ -291,9 +337,13 @@ export default function CustomerFeedbackPage() {
             value={option}
             checked={value === option}
             onChange={(e) => onChange(e.target.value)}
-            className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+            className="mt-1 w-4 h-4 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer"
           />
-          <span className="text-gray-700 group-hover:text-gray-900">{option}</span>
+          <span className={`flex-1 text-sm leading-relaxed ${
+            value === option ? "text-gray-900 font-medium" : "text-gray-700"
+          } group-hover:text-gray-900`}>
+            {option}
+          </span>
         </label>
       ))}
     </div>
@@ -306,18 +356,30 @@ export default function CustomerFeedbackPage() {
     onChange: (value: string) => void;
   }) => (
     <div className="space-y-2">
-      {options.map((option) => (
-        <label
-          key={option}
-          className="flex items-center space-x-3 cursor-pointer group hover:bg-gray-50 p-2 rounded-md transition-colors"
-        >
-          <Checkbox
-            checked={values.includes(option)}
-            onCheckedChange={() => onChange(option)}
-          />
-          <span className="text-gray-700 group-hover:text-gray-900">{option}</span>
-        </label>
-      ))}
+      {options.map((option) => {
+        const isChecked = values.includes(option);
+        return (
+          <label
+            key={option}
+            className={`flex items-start space-x-3 cursor-pointer group p-3 rounded-lg transition-all duration-200 ${
+              isChecked
+                ? "bg-teal-50 border-2 border-teal-200 shadow-sm"
+                : "hover:bg-gray-50 border-2 border-transparent"
+            }`}
+          >
+            <Checkbox
+              checked={isChecked}
+              onCheckedChange={() => onChange(option)}
+              className="mt-1"
+            />
+            <span className={`flex-1 text-sm leading-relaxed ${
+              isChecked ? "text-gray-900 font-medium" : "text-gray-700"
+            } group-hover:text-gray-900`}>
+              {option}
+            </span>
+          </label>
+        );
+      })}
     </div>
   );
 
@@ -410,10 +472,15 @@ export default function CustomerFeedbackPage() {
                 className="space-y-10"
               >
                 {/* SECTION 1: YOUR VISIT EXPERIENCE */}
-                <div className="border-b border-gray-200 pb-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                    SECTION 1: YOUR VISIT EXPERIENCE
-                  </h2>
+                <div className="border-b border-gray-200 pb-8 scroll-mt-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
+                      1
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      YOUR VISIT EXPERIENCE
+                    </h2>
+                  </div>
                   
                   <div className="space-y-6">
                     <div>
@@ -461,7 +528,7 @@ export default function CustomerFeedbackPage() {
                         value={formData.comfortDescription}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-none"
+                        className="w-full rounded-lg border-2 border-gray-200 bg-white px-4 py-3 text-sm ring-offset-background placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-400 focus-visible:ring-offset-2 resize-y transition-all duration-200"
                         placeholder="Please share your thoughts..."
                       />
                     </div>
@@ -469,10 +536,15 @@ export default function CustomerFeedbackPage() {
                 </div>
 
                 {/* SECTION 2: UNDERSTANDING OF YOUR CONDITION & TREATMENT */}
-                <div className="border-b border-gray-200 pb-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                    SECTION 2: UNDERSTANDING OF YOUR CONDITION & TREATMENT
-                  </h2>
+                <div className="border-b border-gray-200 pb-8 scroll-mt-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
+                      2
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      UNDERSTANDING OF YOUR CONDITION & TREATMENT
+                    </h2>
+                  </div>
                   
                   <div className="space-y-6">
                     <div>
@@ -520,7 +592,7 @@ export default function CustomerFeedbackPage() {
                         value={formData.threePhaseConfusion}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-none"
+                        className="w-full rounded-lg border-2 border-gray-200 bg-white px-4 py-3 text-sm ring-offset-background placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-400 focus-visible:ring-offset-2 resize-y transition-all duration-200"
                         placeholder="Please explain what was confusing..."
                       />
                     </div>
@@ -528,10 +600,15 @@ export default function CustomerFeedbackPage() {
                 </div>
 
                 {/* SECTION 3: TREATMENT EXPECTATIONS & COMMITMENT */}
-                <div className="border-b border-gray-200 pb-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                    SECTION 3: TREATMENT EXPECTATIONS & COMMITMENT
-                  </h2>
+                <div className="border-b border-gray-200 pb-8 scroll-mt-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
+                      3
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      TREATMENT EXPECTATIONS & COMMITMENT
+                    </h2>
+                  </div>
                   
                   <div className="space-y-6">
                     <div>
@@ -561,7 +638,7 @@ export default function CustomerFeedbackPage() {
                         value={formData.confidenceConcerns}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-none"
+                        className="w-full rounded-lg border-2 border-gray-200 bg-white px-4 py-3 text-sm ring-offset-background placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-400 focus-visible:ring-offset-2 resize-y transition-all duration-200"
                         placeholder="Please share your concerns..."
                       />
                     </div>
@@ -593,7 +670,7 @@ export default function CustomerFeedbackPage() {
                         value={formData.timelineConcerns}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-none"
+                        className="w-full rounded-lg border-2 border-gray-200 bg-white px-4 py-3 text-sm ring-offset-background placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-400 focus-visible:ring-offset-2 resize-y transition-all duration-200"
                         placeholder="Please explain your concerns..."
                       />
                     </div>
@@ -601,10 +678,15 @@ export default function CustomerFeedbackPage() {
                 </div>
 
                 {/* SECTION 4: FINANCIAL & ACCESSIBILITY FACTORS */}
-                <div className="border-b border-gray-200 pb-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                    SECTION 4: FINANCIAL & ACCESSIBILITY FACTORS
-                  </h2>
+                <div className="border-b border-gray-200 pb-8 scroll-mt-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
+                      4
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      FINANCIAL & ACCESSIBILITY FACTORS
+                    </h2>
+                  </div>
                   
                   <div className="space-y-6">
                     <div>
@@ -679,7 +761,7 @@ export default function CustomerFeedbackPage() {
                         value={formData.schedulingChallenges}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-none"
+                        className="w-full rounded-lg border-2 border-gray-200 bg-white px-4 py-3 text-sm ring-offset-background placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-400 focus-visible:ring-offset-2 resize-y transition-all duration-200"
                         placeholder="Please describe the challenges..."
                       />
                     </div>
@@ -687,10 +769,15 @@ export default function CustomerFeedbackPage() {
                 </div>
 
                 {/* SECTION 5: PERCEIVED VALUE OF SPECIALIZED MODALITIES */}
-                <div className="border-b border-gray-200 pb-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                    SECTION 5: PERCEIVED VALUE OF SPECIALIZED MODALITIES
-                  </h2>
+                <div className="border-b border-gray-200 pb-8 scroll-mt-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
+                      5
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      PERCEIVED VALUE OF SPECIALIZED MODALITIES
+                    </h2>
+                  </div>
                   
                   <div className="space-y-6">
                     <div>
@@ -759,10 +846,15 @@ export default function CustomerFeedbackPage() {
                 </div>
 
                 {/* SECTION 6: DECISION-MAKING FACTORS */}
-                <div className="border-b border-gray-200 pb-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                    SECTION 6: DECISION-MAKING FACTORS
-                  </h2>
+                <div className="border-b border-gray-200 pb-8 scroll-mt-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
+                      6
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      DECISION-MAKING FACTORS
+                    </h2>
+                  </div>
                   
                   <div className="space-y-6">
                     <div>
@@ -806,7 +898,7 @@ export default function CustomerFeedbackPage() {
                         value={formData.mostImpactfulFactor}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-none"
+                        className="w-full rounded-lg border-2 border-gray-200 bg-white px-4 py-3 text-sm ring-offset-background placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-400 focus-visible:ring-offset-2 resize-y transition-all duration-200"
                         placeholder="Please describe the most impactful factor..."
                       />
                     </div>
@@ -820,7 +912,7 @@ export default function CustomerFeedbackPage() {
                         value={formData.couldHaveDoneDifferently}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-none"
+                        className="w-full rounded-lg border-2 border-gray-200 bg-white px-4 py-3 text-sm ring-offset-background placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-400 focus-visible:ring-offset-2 resize-y transition-all duration-200"
                         placeholder="Please share your thoughts..."
                       />
                     </div>
@@ -828,10 +920,15 @@ export default function CustomerFeedbackPage() {
                 </div>
 
                 {/* SECTION 7: RECOMMENDATIONS FOR IMPROVEMENT */}
-                <div className="border-b border-gray-200 pb-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                    SECTION 7: RECOMMENDATIONS FOR IMPROVEMENT
-                  </h2>
+                <div className="border-b border-gray-200 pb-8 scroll-mt-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
+                      7
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      RECOMMENDATIONS FOR IMPROVEMENT
+                    </h2>
+                  </div>
                   
                   <div className="space-y-6">
                     <div>
@@ -843,7 +940,7 @@ export default function CustomerFeedbackPage() {
                         value={formData.oneChange}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-none"
+                        className="w-full rounded-lg border-2 border-gray-200 bg-white px-4 py-3 text-sm ring-offset-background placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-400 focus-visible:ring-offset-2 resize-y transition-all duration-200"
                         placeholder="Please share your recommendation..."
                       />
                     </div>
@@ -912,10 +1009,15 @@ export default function CustomerFeedbackPage() {
                 </div>
 
                 {/* SECTION 8: FINAL THOUGHTS */}
-                <div className="border-b border-gray-200 pb-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                    SECTION 8: FINAL THOUGHTS
-                  </h2>
+                <div className="border-b border-gray-200 pb-8 scroll-mt-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-md">
+                      8
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      FINAL THOUGHTS
+                    </h2>
+                  </div>
                   
                   <div>
                     <Label className="text-base font-semibold mb-3 block">
@@ -933,97 +1035,140 @@ export default function CustomerFeedbackPage() {
                 </div>
 
                 {/* RESPONDENT INFORMATION */}
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4">
-                    RESPONDENT INFORMATION (Optional)
+                <div className="bg-gradient-to-br from-blue-50 to-teal-50 rounded-lg p-6 border border-blue-100">
+                  <h2 className="text-xl font-bold text-gray-900 mb-2">
+                    RESPONDENT INFORMATION
                   </h2>
                   <p className="text-sm text-gray-600 mb-6">
                     This information helps us follow up on your feedback and address specific concerns. 
-                    Sharing is entirely voluntary and will be kept confidential.
+                    Your information will be kept confidential.
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="respondentName">Name</Label>
+                      <Label htmlFor="respondentName">
+                        Name <span className="text-red-500">*</span>
+                      </Label>
                       <Input
                         id="respondentName"
                         name="respondentName"
                         type="text"
                         value={formData.respondentName}
                         onChange={handleInputChange}
-                        placeholder="Your name (optional)"
+                        placeholder="Your full name"
+                        required
+                        className={errors.respondentName ? "border-red-500 focus-visible:ring-red-500" : ""}
+                        aria-invalid={!!errors.respondentName}
+                        aria-describedby={errors.respondentName ? "respondentName-error" : undefined}
                       />
+                      {errors.respondentName && (
+                        <p id="respondentName-error" className="text-sm text-red-600 flex items-center gap-1">
+                          <span className="text-red-500">⚠</span> {errors.respondentName}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="respondentEmail">Email</Label>
+                      <Label htmlFor="respondentEmail">Email (Optional)</Label>
                       <Input
                         id="respondentEmail"
                         name="respondentEmail"
                         type="email"
                         value={formData.respondentEmail}
                         onChange={handleInputChange}
-                        placeholder="your.email@example.com (optional)"
+                        placeholder="your.email@example.com"
+                        className={errors.respondentEmail ? "border-red-500 focus-visible:ring-red-500" : ""}
+                        aria-invalid={!!errors.respondentEmail}
+                        aria-describedby={errors.respondentEmail ? "respondentEmail-error" : undefined}
                       />
+                      {errors.respondentEmail && (
+                        <p id="respondentEmail-error" className="text-sm text-red-600 flex items-center gap-1">
+                          <span className="text-red-500">⚠</span> {errors.respondentEmail}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor="respondentPhone">Phone</Label>
+                      <Label htmlFor="respondentPhone">Phone (Optional)</Label>
                       <Input
                         id="respondentPhone"
                         name="respondentPhone"
                         type="tel"
                         value={formData.respondentPhone}
                         onChange={handleInputChange}
-                        placeholder="+91 XXXXX XXXXX (optional)"
+                        placeholder="+91 XXXXX XXXXX"
+                        className={errors.respondentPhone ? "border-red-500 focus-visible:ring-red-500" : ""}
+                        aria-invalid={!!errors.respondentPhone}
+                        aria-describedby={errors.respondentPhone ? "respondentPhone-error" : undefined}
                       />
+                      {errors.respondentPhone && (
+                        <p id="respondentPhone-error" className="text-sm text-red-600 flex items-center gap-1">
+                          <span className="text-red-500">⚠</span> {errors.respondentPhone}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
 
                 {errors.submit && (
-                  <div className="bg-red-50 border border-red-200 rounded-md p-4">
-                    <p className="text-sm text-red-600">{errors.submit}</p>
-                  </div>
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-red-50 border-2 border-red-300 rounded-lg p-4 mb-6"
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="text-red-500 text-xl">⚠️</span>
+                      <div>
+                        <p className="text-sm font-semibold text-red-800 mb-1">Submission Error</p>
+                        <p className="text-sm text-red-600">{errors.submit}</p>
+                      </div>
+                    </div>
+                  </motion.div>
                 )}
 
-                <div className="pt-6 border-t border-gray-200">
-                  <div className="bg-blue-50 rounded-lg p-6 mb-6">
-                    <p className="text-sm text-gray-700 mb-2">
-                      <strong>CLOSING NOTE</strong>
+                <div className="pt-6 border-t-2 border-gray-200">
+                  <div className="bg-gradient-to-br from-blue-50 to-teal-50 rounded-lg p-6 mb-6 border border-blue-100">
+                    <p className="text-sm font-semibold text-gray-800 mb-3">
+                      CLOSING NOTE
                     </p>
-                    <p className="text-sm text-gray-700 mb-2">
+                    <p className="text-sm text-gray-700 mb-3 leading-relaxed">
                       Thank you for taking the time to provide this valuable feedback. Your insights will directly 
                       shape how we serve you and future patients better. We remain committed to providing the most 
                       comprehensive, evidence-based, and compassionate physiotherapy care in Bengaluru.
                     </p>
-                    <p className="text-sm text-gray-700">
+                    <p className="text-sm text-gray-700 mb-4 leading-relaxed">
                       Should you change your mind or wish to discuss any aspect of your treatment plan, please don't 
                       hesitate to reach out. We genuinely want to support your journey to better health.
                     </p>
-                    <p className="text-sm text-gray-700 mt-4">
+                    <p className="text-sm text-gray-800 font-medium">
                       <strong>Warm regards,</strong><br />
-                      Dr K S Chandraprakash & VitalPhysio+ Team
+                      <span className="text-gray-700">Dr K S Chandraprakash & VitalPhysio+ Team</span>
                     </p>
                   </div>
                   
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full md:w-auto min-w-[250px] bg-gradient-to-r from-[#008094] to-[#004f8c] hover:from-[#0099aa] hover:to-[#005fa3] text-white font-semibold py-6 px-8 text-lg shadow-lg"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                        Submitting Feedback...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5 mr-2" />
-                        Submit Feedback
-                      </>
-                    )}
-                  </Button>
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-gray-50 rounded-lg p-4">
+                    <div className="text-sm text-gray-600">
+                      <p className="font-medium text-gray-700 mb-1">Ready to submit?</p>
+                      <p>Please review your responses before submitting.</p>
+                    </div>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full sm:w-auto min-w-[250px] bg-gradient-to-r from-[#008094] to-[#004f8c] hover:from-[#0099aa] hover:to-[#005fa3] text-white font-semibold py-6 px-8 text-lg shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                          Submitting Feedback...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-5 h-5 mr-2" />
+                          Submit Feedback
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </div>
               </form>
             </motion.div>
