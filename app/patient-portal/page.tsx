@@ -392,7 +392,12 @@ const extractPersonalInfoFromHistory = (compiledHistory: any) => {
 
 const formatSessionDateTime = (session: TherapySession) => {
   const date = session.scheduledDate.toDate();
-  const dateStr = date.toLocaleDateString();
+  // Use consistent locale to prevent hydration mismatch
+  const dateStr = date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
   const timeStr = `${session.startTime} - ${session.endTime}`;
   return { dateStr, timeStr };
 };

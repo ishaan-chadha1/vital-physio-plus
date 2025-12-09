@@ -1,6 +1,16 @@
+"use client";
+
+import { useState, useEffect } from 'react';
+
 const Footer = () => {
   // UPDATED: Changed to a lighter, more vibrant shade of blue
   const footerBackgroundColor = "#004a8a"; // Lighter blue for better contrast
+  const [currentYear, setCurrentYear] = useState<number>(2024);
+
+  // Set year on client side to prevent hydration mismatch
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   return (
     <footer
@@ -10,7 +20,7 @@ const Footer = () => {
       <div className="container mx-auto px-6 py-8 text-center">
         {/* Copyright Information - UPDATED to be fully white */}
         <p className="mb-2 text-sm text-white">
-          &copy; {new Date().getFullYear()} VitalPhysio⁺. All rights reserved. Bengaluru, Karnataka, India.
+          &copy; {currentYear} VitalPhysio⁺. All rights reserved. Bengaluru, Karnataka, India.
         </p>
         
         {/* Navigation Links */}

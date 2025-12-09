@@ -21,6 +21,24 @@ interface ChatInterfaceProps {
   onClose: () => void;
 }
 
+// Client-side only time formatter to prevent hydration mismatches
+const FormattedTime: React.FC<{ timestamp: string }> = ({ timestamp }) => {
+  const [formattedTime, setFormattedTime] = useState<string>('');
+
+  useEffect(() => {
+    // Format only on client side to avoid hydration mismatch
+    const date = new Date(timestamp);
+    setFormattedTime(
+      date.toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      })
+    );
+  }, [timestamp]);
+
+  return <>{formattedTime}</>;
+};
+
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -194,10 +212,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ isOpen, onClose }) => {
                 <p className={`text-xs mt-1 ${
                   message.role === 'user' ? 'text-blue-100' : 'text-gray-500'
                 }`}>
-                  {new Date(message.timestamp).toLocaleTimeString([], { 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                  })}
+                  <FormattedTime timestamp={message.timestamp} />
                 </p>
               </div>
             </motion.div>
